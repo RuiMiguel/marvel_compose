@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Marvel_Compose</string>
+    <string name="menu_characters">Characters</string>
+    <string name="menu_comics">Comics</string>
+    <string name="menu_series">Series</string>
+    <string name="menu_stories">Stories</string>
+
+    <string name="auto_login_fail">Auto login failed ヽ(゜～゜o)ノ</string>
+
+    <string name="under_construction">We are under construction.</string>
+</resources>

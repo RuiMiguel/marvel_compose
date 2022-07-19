@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="deadpool_messages">
+        <item>@string/deadpool_message1</item>
+        <item>@string/deadpool_message2</item>
+        <item>@string/deadpool_message3</item>
+        <item>@string/deadpool_message4</item>
+        <item>@string/deadpool_message5</item>
+        <item>@string/deadpool_message6</item>
+        <item>@string/deadpool_message7</item>
+        <item>@string/deadpool_message8</item>
+        <item>@string/deadpool_message9</item>
+        <item>@string/deadpool_message10</item>
+        <item>@string/deadpool_message11</item>
+        <item>@string/deadpool_message12</item>
+        <item>@string/deadpool_message13</item>
+        <item>@string/deadpool_message14</item>
+        <item>@string/deadpool_message15</item>
+        <item>@string/deadpool_message16</item>
+        <item>@string/deadpool_message17</item>
+        <item>@string/deadpool_message18</item>
+        <item>@string/deadpool_message19</item>
+        <item>@string/deadpool_message20</item>
+        <item>@string/deadpool_message21</item>
+        <item>@string/deadpool_message22</item>
+        <item>@string/deadpool_message23</item>
+        <item>@string/deadpool_message24</item>
+        <item>@string/deadpool_message25</item>
+        <item>@string/deadpool_message26</item>
+        <item>@string/deadpool_message27</item>
+        <item>@string/deadpool_message28</item>
+        <item>@string/deadpool_message29</item>
+        <item>@string/deadpool_message30</item>
+    </string-array>
+
+</resources>

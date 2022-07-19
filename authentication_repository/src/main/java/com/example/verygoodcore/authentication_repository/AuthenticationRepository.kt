@@ -3,29 +3,32 @@ package com.example.verygoodcore.authentication_repository
 import com.example.verygoodcore.authentication_repository.model.PrivateKey
 import com.example.verygoodcore.authentication_repository.model.PublicKey
 import com.example.verygoodcore.authentication_repository.model.User
+import com.example.verygoodcore.secure_storage.SecureStorage
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.first
 
 class AuthenticationRepository(private val secureStorage: SecureStorage) {
     private var _user = MutableStateFlow(User.anonymous())
     val user: StateFlow<User> = _user
 
-    suspend fun login(privateKey: PrivateKey, publicKey: PublicKey)  = flow<User> {
-        // TODO(ruimiguel): save private and public into secureStorage
+    suspend fun privateKey() = secureStorage.privateKey.first()
+
+    suspend fun publicKey() = secureStorage.publicKey.first()
+
+    suspend fun login(privateKey: PrivateKey, publicKey: PublicKey) {
+        secureStorage.saveCredentials(privateKey = privateKey.key, publicKey = publicKey.key)
         delay(3000)
-        emit(User(
+        _user.emit(User(
             privateKey = PrivateKey("privateKey"),
             publicKey = PublicKey("publicKey")
         ))
-        // TODO(ruimiguel): if exception, emit User.anonymous
     }
 
-    suspend fun logout() = flow<User>{
-        // TODO(ruimiguel): clear private and public from secureStorage
+    suspend fun logout() {
+        secureStorage.clearCredentials()
         delay(2000)
-        emit(User.anonymous())
-        // TODO(ruimiguel): if exception throw it
+        _user.emit(User.anonymous())
     }
 }

@@ -19,17 +19,21 @@ class AuthenticationRepository @Inject constructor(private val secureStorage: Se
     suspend fun publicKey() = secureStorage.publicKey.first()
 
     suspend fun login(privateKey: PrivateKey, publicKey: PublicKey) {
-        secureStorage.saveCredentials(privateKey = privateKey.key, publicKey = publicKey.key)
-        delay(3000)
-        _user.emit(User(
-            privateKey = PrivateKey("privateKey"),
-            publicKey = PublicKey("publicKey")
-        ))
+        try {
+            secureStorage.saveCredentials(privateKey = privateKey.key, publicKey = publicKey.key)
+            _user.emit(User(
+                privateKey = PrivateKey("privateKey"),
+                publicKey = PublicKey("publicKey")
+            ))
+        }
+        catch (exception: Exception) {
+            _user.emit(User.anonymous())
+            throw exception
+        }
     }
 
     suspend fun logout() {
         secureStorage.clearCredentials()
-        delay(2000)
         _user.emit(User.anonymous())
     }
 }

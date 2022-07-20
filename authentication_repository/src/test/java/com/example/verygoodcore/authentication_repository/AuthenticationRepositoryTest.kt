@@ -2,12 +2,14 @@ package com.example.verygoodcore.authentication_repository
 
 import com.example.verygoodcore.authentication_repository.model.PrivateKey
 import com.example.verygoodcore.authentication_repository.model.PublicKey
+import com.example.verygoodcore.authentication_repository.model.User
 import com.example.verygoodcore.secure_storage.SecureStorage
 import com.example.verygoodcore.secure_storage.exception.StorageException.ReadException
 import com.example.verygoodcore.secure_storage.exception.StorageException.WriteException
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.assertj.core.api.Assertions.assertThat
@@ -55,16 +57,33 @@ internal class AuthenticationRepositoryTest {
     @Nested
     inner class Login {
         @Test
-        fun `completes when secureStorage saveCredentials succeeded`(): Unit = runTest {
-            whenever(secureStorage.saveCredentials(privateKey = "privateKey", publicKey = "publicKey")).thenReturn(Unit)
-            assertThat(authenticationRepository.login(privateKey = PrivateKey("privateKey"), publicKey = PublicKey("publicKey"))).isEqualTo(Unit)
+        fun `completes when secureStorage saveCredentials succeeded and emit User`(): Unit = runTest {
+            whenever(secureStorage.saveCredentials(privateKey = "privateKey", publicKey = "publicKey"))
+                .thenReturn(Unit)
+
+            assertThat(
+                authenticationRepository.login(
+                    privateKey = PrivateKey("privateKey"),
+                    publicKey = PublicKey("publicKey")
+                )
+            ).isEqualTo(Unit)
+
+            assertThat(authenticationRepository.user.first())
+                .isEqualTo(
+                    User(privateKey = PrivateKey("privateKey"), PublicKey("publicKey"))
+                )
         }
 
         @Test
-        fun `throws WriteException when secureStorage saveCredentials fails`() = runTest {
-            whenever(secureStorage.saveCredentials(privateKey = any(), publicKey = any())).thenThrow(WriteException("error"))
+        fun `throws WriteException when secureStorage saveCredentials fails and emit anonymous`() = runTest {
+            whenever(secureStorage.saveCredentials(privateKey = any(), publicKey = any()))
+                .thenThrow(WriteException("error"))
             assertThrows<WriteException> {
-                authenticationRepository.login(privateKey = PrivateKey("privateKey"), publicKey = PublicKey("publicKey"))
+                authenticationRepository.login(
+                    privateKey = PrivateKey("privateKey"),
+                    publicKey = PublicKey("publicKey")
+                )
+                assertThat(authenticationRepository.user.first()).isEqualTo(User.anonymous())
             }
         }
     }
@@ -72,9 +91,10 @@ internal class AuthenticationRepositoryTest {
     @Nested
     inner class Logout {
         @Test
-        fun `completes when secureStorage clearCredentials succeeded`(): Unit = runTest {
+        fun `completes when secureStorage clearCredentials succeeded and emit anonymous`(): Unit = runTest {
             whenever(secureStorage.clearCredentials()).thenReturn(Unit)
             assertThat(authenticationRepository.logout()).isEqualTo(Unit)
+            assertThat(authenticationRepository.user.first()).isEqualTo(User.anonymous())
         }
 
         @Test
@@ -85,5 +105,4 @@ internal class AuthenticationRepositoryTest {
             }
         }
     }
-
 }

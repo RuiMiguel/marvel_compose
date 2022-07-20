@@ -1,7 +1,7 @@
 package com.example.verygoodcore.marvel_compose.di
 
-import com.example.verygoodcore.authentication_repository.AuthenticationRepository
-import com.example.verygoodcore.secure_storage.SecureStorage
+import com.example.verygoodcore.marvel_compose.authentication_repository.AuthenticationRepository
+import com.example.verygoodcore.marvel_compose.secure_storage.SecureStorage
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

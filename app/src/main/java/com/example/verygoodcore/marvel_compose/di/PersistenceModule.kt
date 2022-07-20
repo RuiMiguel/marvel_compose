@@ -8,7 +8,7 @@ import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.preferencesDataStoreFile
-import com.example.verygoodcore.secure_storage.SecureStorage
+import com.example.verygoodcore.marvel_compose.secure_storage.SecureStorage
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

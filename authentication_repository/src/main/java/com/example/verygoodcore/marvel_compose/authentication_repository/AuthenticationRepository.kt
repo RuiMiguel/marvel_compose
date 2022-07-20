@@ -1,13 +1,12 @@
-package com.example.verygoodcore.authentication_repository
+package com.example.verygoodcore.marvel_compose.authentication_repository
 
-import com.example.verygoodcore.authentication_repository.model.PrivateKey
-import com.example.verygoodcore.authentication_repository.model.PublicKey
-import com.example.verygoodcore.authentication_repository.model.User
-import com.example.verygoodcore.secure_storage.SecureStorage
+import com.example.verygoodcore.marvel_compose.authentication_repository.model.PrivateKey
+import com.example.verygoodcore.marvel_compose.authentication_repository.model.PublicKey
+import com.example.verygoodcore.marvel_compose.authentication_repository.model.User
+import com.example.verygoodcore.marvel_compose.secure_storage.SecureStorage
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 class AuthenticationRepository @Inject constructor(private val secureStorage: SecureStorage) {

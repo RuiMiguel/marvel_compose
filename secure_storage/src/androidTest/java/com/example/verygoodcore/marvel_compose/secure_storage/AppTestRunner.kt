@@ -1,4 +1,4 @@
-package com.example.verygoodcore.secure_storage
+package com.example.verygoodcore.marvel_compose.secure_storage
 
 import android.app.Application
 import android.content.Context

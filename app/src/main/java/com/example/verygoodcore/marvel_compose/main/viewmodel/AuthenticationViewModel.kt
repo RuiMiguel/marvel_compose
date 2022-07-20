@@ -4,8 +4,8 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.verygoodcore.authentication_repository.AuthenticationRepository
-import com.example.verygoodcore.authentication_repository.model.User
+import com.example.verygoodcore.marvel_compose.authentication_repository.AuthenticationRepository
+import com.example.verygoodcore.marvel_compose.authentication_repository.model.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

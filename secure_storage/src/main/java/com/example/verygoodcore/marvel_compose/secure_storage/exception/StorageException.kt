@@ -1,4 +1,4 @@
-package com.example.verygoodcore.secure_storage.exception
+package com.example.verygoodcore.marvel_compose.secure_storage.exception
 
 sealed class StorageException(msg: String?) : RuntimeException(msg) {
     class ReadException(message: String?) : StorageException(message)

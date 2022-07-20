@@ -1,14 +1,12 @@
-package com.example.verygoodcore.secure_storage
+package com.example.verygoodcore.marvel_compose.secure_storage
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
-import com.example.verygoodcore.secure_storage.exception.StorageException.ReadException
-import com.example.verygoodcore.secure_storage.exception.StorageException.WriteException
-import kotlinx.coroutines.GlobalScope
+import com.example.verygoodcore.marvel_compose.secure_storage.exception.StorageException.ReadException
+import com.example.verygoodcore.marvel_compose.secure_storage.exception.StorageException.WriteException
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class SecureStorage @Inject constructor(private val dataStore: DataStore<Preferences>) {

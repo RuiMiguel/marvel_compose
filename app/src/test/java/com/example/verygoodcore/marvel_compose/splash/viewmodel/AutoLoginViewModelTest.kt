@@ -1,6 +1,6 @@
 package com.example.verygoodcore.marvel_compose.splash.viewmodel
 
-import com.example.verygoodcore.authentication_repository.AuthenticationRepository
+import com.example.verygoodcore.marvel_compose.authentication_repository.AuthenticationRepository
 import com.example.verygoodcore.marvel_compose.TestCoroutinesRule
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock

@@ -12,7 +12,7 @@ android {
         minSdk 26
         targetSdk 32
 
-        testInstrumentationRunner "com.example.verygoodcore.secure_storage.AppTestRunner"
+        testInstrumentationRunner "com.example.verygoodcore.marvel_compose.secure_storage.AppTestRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
 

@@ -1,4 +1,4 @@
-package com.example.verygoodcore.secure_storage
+package com.example.verygoodcore.marvel_compose.secure_storage
 
 import android.content.Context
 import androidx.datastore.core.DataStore
@@ -9,9 +9,9 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.example.verygoodcore.secure_storage.exception.StorageException
-import com.example.verygoodcore.secure_storage.exception.StorageException.ReadException
-import com.example.verygoodcore.secure_storage.exception.StorageException.WriteException
+import com.example.verygoodcore.marvel_compose.secure_storage.exception.StorageException
+import com.example.verygoodcore.marvel_compose.secure_storage.exception.StorageException.ReadException
+import com.example.verygoodcore.marvel_compose.secure_storage.exception.StorageException.WriteException
 import dagger.hilt.android.testing.HiltAndroidTest
 import io.mockk.coEvery
 import io.mockk.mockk

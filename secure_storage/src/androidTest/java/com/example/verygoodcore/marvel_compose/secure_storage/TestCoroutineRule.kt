@@ -1,4 +1,4 @@
-package com.example.verygoodcore.secure_storage
+package com.example.verygoodcore.marvel_compose.secure_storage
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.TestDispatcher

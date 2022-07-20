@@ -1,4 +1,4 @@
-package com.example.verygoodcore.authentication_repository.model
+package com.example.verygoodcore.marvel_compose.authentication_repository.model
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test

@@ -1,16 +1,15 @@
-package com.example.verygoodcore.authentication_repository
+package com.example.verygoodcore.marvel_compose.authentication_repository
 
-import com.example.verygoodcore.authentication_repository.model.PrivateKey
-import com.example.verygoodcore.authentication_repository.model.PublicKey
-import com.example.verygoodcore.authentication_repository.model.User
-import com.example.verygoodcore.secure_storage.SecureStorage
-import com.example.verygoodcore.secure_storage.exception.StorageException.ReadException
-import com.example.verygoodcore.secure_storage.exception.StorageException.WriteException
+import com.example.verygoodcore.marvel_compose.authentication_repository.model.PrivateKey
+import com.example.verygoodcore.marvel_compose.authentication_repository.model.PublicKey
+import com.example.verygoodcore.marvel_compose.authentication_repository.model.User
+import com.example.verygoodcore.marvel_compose.secure_storage.SecureStorage
+import com.example.verygoodcore.marvel_compose.secure_storage.exception.StorageException.ReadException
+import com.example.verygoodcore.marvel_compose.secure_storage.exception.StorageException.WriteException
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Nested

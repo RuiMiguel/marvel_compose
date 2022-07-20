@@ -1,4 +1,4 @@
-package com.example.verygoodcore.secure_storage.exception
+package com.example.verygoodcore.marvel_compose.secure_storage.exception
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test

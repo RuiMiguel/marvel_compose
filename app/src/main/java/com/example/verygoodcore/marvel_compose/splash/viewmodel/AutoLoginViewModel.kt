@@ -4,12 +4,11 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.verygoodcore.authentication_repository.AuthenticationRepository
-import com.example.verygoodcore.authentication_repository.model.PrivateKey
-import com.example.verygoodcore.authentication_repository.model.PublicKey
+import com.example.verygoodcore.marvel_compose.authentication_repository.AuthenticationRepository
+import com.example.verygoodcore.marvel_compose.authentication_repository.model.PrivateKey
+import com.example.verygoodcore.marvel_compose.authentication_repository.model.PublicKey
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
-import kotlinx.coroutines.delay
 import javax.inject.Inject
 
 @HiltViewModel

@@ -1,4 +1,4 @@
-package com.example.verygoodcore.authentication_repository.model
+package com.example.verygoodcore.marvel_compose.authentication_repository.model
 
 @JvmInline
 value class PrivateKey(val key: String)

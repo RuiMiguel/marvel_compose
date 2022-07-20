@@ -1,15 +1,16 @@
 package com.example.verygoodcore.marvel_compose.home.view
 
 import android.content.res.Configuration
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
 import com.example.verygoodcore.marvel_compose.characters.view.CharactersPage
 import com.example.verygoodcore.marvel_compose.comics.view.ComicsPage
 import com.example.verygoodcore.marvel_compose.home.viewmodel.SectionViewModel
@@ -21,25 +22,22 @@ import com.example.verygoodcore.marvel_compose.stories.view.StoriesPage
 import com.example.verygoodcore.marvel_compose.ui.theme.MainTheme
 
 @Composable
-fun HomePage() {
+fun HomePage(navController: NavController? = null) {
     val sectionViewModel = SectionViewModel()
-    HomeView(sectionViewModel)
+    HomeView(navController = navController, sectionViewModel = sectionViewModel)
 }
 
 @Composable
-fun HomeView(sectionViewModel: SectionViewModel) {
+fun HomeView(navController: NavController? = null, sectionViewModel: SectionViewModel) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
-            HeroesAppBar()
-        },
-        content = {
-            when (sectionViewModel.selectedItem) {
-                HeroeBottomNavigationItem.Characters -> CharactersPage()
-                HeroeBottomNavigationItem.Comics -> ComicsPage()
-                HeroeBottomNavigationItem.Series -> SeriesPage()
-                HeroeBottomNavigationItem.Stories -> StoriesPage()
-            }
+            HeroesAppBar(
+                withActions = true,
+                onLoginAction = {
+                    navController?.navigate("login")
+                },
+            )
         },
         bottomBar = {
             HeroesBottomNavigationBar(
@@ -52,7 +50,18 @@ fun HomeView(sectionViewModel: SectionViewModel) {
                 ),
             )
         },
-    )
+    ) { innerPadding ->
+        Box(modifier = Modifier.padding(innerPadding)) {
+            Surface(color = MaterialTheme.colors.background) {
+                when (sectionViewModel.selectedItem) {
+                    HeroeBottomNavigationItem.Characters -> CharactersPage()
+                    HeroeBottomNavigationItem.Comics -> ComicsPage()
+                    HeroeBottomNavigationItem.Series -> SeriesPage()
+                    HeroeBottomNavigationItem.Stories -> StoriesPage()
+                }
+            }
+        }
+    }
 }
 
 

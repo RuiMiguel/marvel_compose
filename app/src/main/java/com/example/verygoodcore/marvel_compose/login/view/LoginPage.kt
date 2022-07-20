@@ -11,29 +11,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
-import com.example.verygoodcore.marvel_compose.characters.view.CharactersPage
-import com.example.verygoodcore.marvel_compose.comics.view.ComicsPage
-import com.example.verygoodcore.marvel_compose.home.viewmodel.SectionViewModel
-import com.example.verygoodcore.marvel_compose.home.widget.HeroeBottomNavigationItem
 import com.example.verygoodcore.marvel_compose.home.widget.HeroesAppBar
-import com.example.verygoodcore.marvel_compose.home.widget.HeroesBottomNavigationBar
 import com.example.verygoodcore.marvel_compose.login.viewmodel.LoginViewModel
-import com.example.verygoodcore.marvel_compose.series.view.SeriesPage
-import com.example.verygoodcore.marvel_compose.stories.view.StoriesPage
 import com.example.verygoodcore.marvel_compose.ui.theme.MainTheme
 
 @Composable
 fun LoginPage(navController: NavController? = null) {
     val loginViewModel = LoginViewModel()
-    LoginView(loginViewModel)
+    LoginView(navController = navController, loginViewModel = loginViewModel)
 }
 
 @Composable
-fun LoginView(loginViewModel: LoginViewModel) {
+fun LoginView(navController: NavController? = null, loginViewModel: LoginViewModel) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
-            HeroesAppBar(withActions = false)
+            HeroesAppBar(withBack = true, onBack = { navController?.popBackStack() })
         },
     ) { innerPadding ->
         Box(modifier = Modifier.padding(innerPadding)) {

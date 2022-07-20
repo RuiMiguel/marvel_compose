@@ -8,8 +8,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
+import javax.inject.Inject
 
-class AuthenticationRepository(private val secureStorage: SecureStorage) {
+class AuthenticationRepository @Inject constructor(private val secureStorage: SecureStorage) {
     private var _user = MutableStateFlow(User.anonymous())
     val user: StateFlow<User> = _user
 

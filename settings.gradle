@@ -1,5 +1,5 @@
 pluginManagement {
-    repositories {
+   repositories {
         gradlePluginPortal()
         google()
         mavenCentral()
@@ -8,9 +8,13 @@ pluginManagement {
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
+        maven { url = "https://plugins.gradle.org/m2/" }
         google()
         mavenCentral()
+        jcenter()
     }
 }
 rootProject.name = "Marvel_Compose"
 include ':app'
+include ':secure_storage'
+include ':authentication_repository'

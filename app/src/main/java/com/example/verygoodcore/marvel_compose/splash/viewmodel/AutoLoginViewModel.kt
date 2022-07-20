@@ -7,10 +7,13 @@ import androidx.lifecycle.viewModelScope
 import com.example.verygoodcore.authentication_repository.AuthenticationRepository
 import com.example.verygoodcore.authentication_repository.model.PrivateKey
 import com.example.verygoodcore.authentication_repository.model.PublicKey
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
+import javax.inject.Inject
 
-class AutoLoginViewModel(private val authenticationRepository: AuthenticationRepository) : ViewModel() {
+@HiltViewModel
+class AutoLoginViewModel @Inject constructor(private val authenticationRepository: AuthenticationRepository) : ViewModel() {
     private var _state = mutableStateOf(AutoLoginState())
     val state: State<AutoLoginState>
         get() = _state

@@ -4,6 +4,7 @@
     package="com.example.verygoodcore.marvel_compose">
 
     <application
+        android:name=".MarvelApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -14,7 +15,7 @@
         tools:targetApi="31"
         android:networkSecurityConfig="@xml/network_security_config">
         <activity
-            android:name=".MainActivity"
+            android:name=".main.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/SplashTheme"

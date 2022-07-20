@@ -12,8 +12,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import java.io.IOException
+import javax.inject.Inject
 
-class SecureStorage(private val context: Context) {
+class SecureStorage @Inject constructor(private val context: Context) {
     private val CREDENTIALS_NAME = "credentials"
 
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = CREDENTIALS_NAME)

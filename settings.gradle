@@ -18,3 +18,4 @@ rootProject.name = "Marvel_Compose"
 include ':app'
 include ':secure_storage'
 include ':authentication_repository'
+include ':api_client'

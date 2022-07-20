@@ -18,7 +18,10 @@ import com.example.verygoodcore.marvel_compose.ui.theme.MainTheme
 @Composable
 fun LoginPage(navController: NavController? = null) {
     val loginViewModel = LoginViewModel()
-    LoginView(navController = navController, loginViewModel = loginViewModel)
+
+    MainTheme {
+        LoginView(navController = navController, loginViewModel = loginViewModel)
+    }
 }
 
 @Composable
@@ -41,15 +44,11 @@ fun LoginView(navController: NavController? = null, loginViewModel: LoginViewMod
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, name = "Dark mode")
 @Composable
 fun LoginPageDarkPreview() {
-    MainTheme() {
-        LoginPage()
-    }
+    LoginPage()
 }
 
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_NO, name = "Light mode")
 @Composable
 fun LoginPageLightPreview() {
-    MainTheme() {
-        LoginPage()
-    }
+    LoginPage()
 }

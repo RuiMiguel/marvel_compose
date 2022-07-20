@@ -7,9 +7,8 @@ import com.example.verygoodcore.marvel_compose.secure_storage.SecureStorage
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import javax.inject.Inject
 
-class AuthenticationRepository @Inject constructor(private val secureStorage: SecureStorage) {
+class AuthenticationRepository(private val secureStorage: SecureStorage) {
     private var _user = MutableStateFlow(User.anonymous())
     val user: StateFlow<User> = _user
 
@@ -25,8 +24,7 @@ class AuthenticationRepository @Inject constructor(private val secureStorage: Se
                 privateKey = PrivateKey("privateKey"),
                 publicKey = PublicKey("publicKey")
             ))
-        }
-        catch (exception: Exception) {
+        } catch (exception: Exception) {
             _user.emit(User.anonymous())
             throw exception
         }

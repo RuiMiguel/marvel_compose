@@ -18,15 +18,18 @@ import com.example.verygoodcore.marvel_compose.home.viewmodel.SectionViewModel
 import com.example.verygoodcore.marvel_compose.home.widget.HeroeBottomNavigationItem
 import com.example.verygoodcore.marvel_compose.home.widget.HeroesAppBar
 import com.example.verygoodcore.marvel_compose.home.widget.HeroesBottomNavigationBar
+import com.example.verygoodcore.marvel_compose.navigation.PageRoute
 import com.example.verygoodcore.marvel_compose.series.view.SeriesPage
-import com.example.verygoodcore.marvel_compose.splash.viewmodel.AutoLoginViewModel
 import com.example.verygoodcore.marvel_compose.stories.view.StoriesPage
 import com.example.verygoodcore.marvel_compose.ui.theme.MainTheme
 
 @Composable
 fun HomePage(navController: NavController? = null) {
     val sectionViewModel = hiltViewModel<SectionViewModel>()
-    HomeView(navController = navController, sectionViewModel = sectionViewModel)
+
+    MainTheme {
+        HomeView(navController = navController, sectionViewModel = sectionViewModel)
+    }
 }
 
 @Composable
@@ -37,7 +40,9 @@ fun HomeView(navController: NavController? = null, sectionViewModel: SectionView
             HeroesAppBar(
                 withActions = true,
                 onLoginAction = {
-                    navController?.navigate("login")
+                    navController?.navigate(PageRoute.Login.route) {
+                        popUpTo(PageRoute.Splash.route) { inclusive = true }
+                    }
                 },
             )
         },
@@ -70,15 +75,11 @@ fun HomeView(navController: NavController? = null, sectionViewModel: SectionView
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, name = "Dark mode")
 @Composable
 fun HomePageDarkPreview() {
-    MainTheme() {
-        HomePage()
-    }
+    HomePage()
 }
 
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_NO, name = "Light mode")
 @Composable
 fun HomePageLightPreview() {
-    MainTheme() {
-        HomePage()
-    }
+    HomePage()
 }

@@ -34,7 +34,9 @@ import com.example.verygoodcore.marvel_compose.ui.theme.white
 fun SplashPage(navController: NavController? = null) {
     val autoLoginViewModel = hiltViewModel<AutoLoginViewModel>()
 
-    LaunchedEffect(Unit) { autoLoginViewModel.autoLogin() }
+    LaunchedEffect(Unit) {
+        autoLoginViewModel.autoLogin()
+    }
 
     SplashView(navController, autoLoginViewModel)
 }
@@ -46,8 +48,10 @@ fun SplashView(navController: NavController?, autoLoginViewModel: AutoLoginViewM
 
     when (state.status) {
         AutoLoginStatus.success -> {
-            navController?.navigate("home") {
-                popUpTo("splash") { inclusive = true }
+            LaunchedEffect(Unit) {
+                navController?.navigate("home") {
+                    popUpTo("splash") { inclusive = true }
+                }
             }
         }
         AutoLoginStatus.error -> {

@@ -60,6 +60,10 @@ fun SplashView(navController: NavController?, autoLoginViewModel: AutoLoginViewM
             val errorMessage = stringResource(id = R.string.auto_login_fail)
             LaunchedEffect(Unit) {
                 snackbarHostState.showSnackbar(errorMessage)
+
+                navController?.navigate("login") {
+                    popUpTo("splash") { inclusive = true }
+                }
             }
         }
     }

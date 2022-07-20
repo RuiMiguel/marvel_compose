@@ -9,7 +9,6 @@ import com.example.verygoodcore.authentication_repository.model.PrivateKey
 import com.example.verygoodcore.authentication_repository.model.PublicKey
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
-import kotlinx.coroutines.delay
 import javax.inject.Inject
 
 @HiltViewModel
@@ -23,14 +22,15 @@ class AutoLoginViewModel @Inject constructor(private val authenticationRepositor
 
         viewModelScope.async {
             try {
+                val privateKey = authenticationRepository.privateKey()
+                val publicKey = authenticationRepository.publicKey()
+
                 authenticationRepository.login(
-                    privateKey = PrivateKey("privateKey"),
-                    publicKey = PublicKey("publicKey")
+                    privateKey = PrivateKey(privateKey),
+                    publicKey = PublicKey(publicKey)
                 )
-                delay(5000)
                 _state.value = _state.value.copy(status = AutoLoginStatus.success)
-            }
-            catch (exception: Exception) {
+            } catch (exception: Exception) {
                 _state.value = _state.value.copy(status = AutoLoginStatus.error)
             }
         }

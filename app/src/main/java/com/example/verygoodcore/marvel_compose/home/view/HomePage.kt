@@ -10,6 +10,7 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.verygoodcore.marvel_compose.characters.view.CharactersPage
 import com.example.verygoodcore.marvel_compose.comics.view.ComicsPage
@@ -18,12 +19,13 @@ import com.example.verygoodcore.marvel_compose.home.widget.HeroeBottomNavigation
 import com.example.verygoodcore.marvel_compose.home.widget.HeroesAppBar
 import com.example.verygoodcore.marvel_compose.home.widget.HeroesBottomNavigationBar
 import com.example.verygoodcore.marvel_compose.series.view.SeriesPage
+import com.example.verygoodcore.marvel_compose.splash.viewmodel.AutoLoginViewModel
 import com.example.verygoodcore.marvel_compose.stories.view.StoriesPage
 import com.example.verygoodcore.marvel_compose.ui.theme.MainTheme
 
 @Composable
 fun HomePage(navController: NavController? = null) {
-    val sectionViewModel = SectionViewModel()
+    val sectionViewModel = hiltViewModel<SectionViewModel>()
     HomeView(navController = navController, sectionViewModel = sectionViewModel)
 }
 

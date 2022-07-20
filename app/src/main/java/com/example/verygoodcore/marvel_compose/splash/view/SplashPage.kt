@@ -23,6 +23,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.verygoodcore.authentication_repository.AuthenticationRepository
 import com.example.verygoodcore.marvel_compose.R
@@ -35,11 +36,8 @@ import com.example.verygoodcore.secure_storage.SecureStorage
 
 @Composable
 fun SplashPage(navController: NavController? = null) {
-    val autoLoginViewModel = AutoLoginViewModel(
-        AuthenticationRepository(
-            SecureStorage(context = LocalContext.current)
-        )
-    )
+    val autoLoginViewModel = hiltViewModel<AutoLoginViewModel>()
+
     LaunchedEffect(Unit) { autoLoginViewModel.autoLogin() }
 
     SplashView(navController, autoLoginViewModel)

@@ -14,13 +14,14 @@ class AuthenticationRepository @Inject constructor(private val secureStorage: Se
     private var _user = MutableStateFlow(User.anonymous())
     val user: StateFlow<User> = _user
 
-    suspend fun privateKey() = secureStorage.privateKey.first()
+    suspend fun privateKey() = secureStorage.privateKey()
 
-    suspend fun publicKey() = secureStorage.publicKey.first()
+    suspend fun publicKey() = secureStorage.publicKey()
 
     suspend fun login(privateKey: PrivateKey, publicKey: PublicKey) {
         try {
             secureStorage.saveCredentials(privateKey = privateKey.key, publicKey = publicKey.key)
+            delay(3000)
             _user.emit(User(
                 privateKey = PrivateKey("privateKey"),
                 publicKey = PublicKey("publicKey")
@@ -34,6 +35,7 @@ class AuthenticationRepository @Inject constructor(private val secureStorage: Se
 
     suspend fun logout() {
         secureStorage.clearCredentials()
+        delay(2000)
         _user.emit(User.anonymous())
     }
 }

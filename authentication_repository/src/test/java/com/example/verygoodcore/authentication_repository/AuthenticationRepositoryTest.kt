@@ -28,13 +28,13 @@ internal class AuthenticationRepositoryTest {
 
     @Test
     fun `returns privateKey from storage`(): Unit = runTest {
-        whenever(secureStorage.privateKey).thenReturn(flowOf("privateKey"))
+        whenever(secureStorage.privateKey()).thenReturn("privateKey")
         assertThat(authenticationRepository.privateKey()).isEqualTo("privateKey")
     }
 
     @Test
     fun `throws ReadException when secureStorage privateKey fails`(): Unit = runTest {
-        whenever(secureStorage.privateKey).thenThrow(ReadException("error"))
+        whenever(secureStorage.privateKey()).thenThrow(ReadException("error"))
         assertThrows<ReadException> {
             authenticationRepository.privateKey()
         }
@@ -42,13 +42,13 @@ internal class AuthenticationRepositoryTest {
 
     @Test
     fun `returns publicKey from storage`(): Unit = runTest {
-        whenever(secureStorage.publicKey).thenReturn(flowOf("publicKey"))
+        whenever(secureStorage.publicKey()).thenReturn("publicKey")
         assertThat(authenticationRepository.publicKey()).isEqualTo("publicKey")
     }
 
     @Test
     fun `throws ReadException when secureStorage publicKey fails`() = runTest {
-        whenever(secureStorage.publicKey).thenThrow(ReadException("error"))
+        whenever(secureStorage.publicKey()).thenThrow(ReadException("error"))
         assertThrows<ReadException> {
             authenticationRepository.publicKey()
         }

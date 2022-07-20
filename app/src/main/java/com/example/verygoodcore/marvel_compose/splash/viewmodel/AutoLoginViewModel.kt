@@ -9,6 +9,7 @@ import com.example.verygoodcore.authentication_repository.model.PrivateKey
 import com.example.verygoodcore.authentication_repository.model.PublicKey
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import javax.inject.Inject
 
 @HiltViewModel

@@ -11,7 +11,7 @@ class NavigationTest : ComposableHiltTest() {
     @Test
     fun hasANavHost() {
         composeTestRule.setContent {
-            NavigationComponent(navController = rememberNavController(), navigator = Navigator())
+            AppNavigation(navController = rememberNavController(), navigator = Navigator())
         }
 
         composeTestRule.onNodeWithTag("NavHost").apply {

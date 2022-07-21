@@ -18,8 +18,8 @@ class AuthenticationRepository(private val secureStorage: SecureStorage) {
 
     suspend fun login(privateKey: PrivateKey, publicKey: PublicKey) {
         try {
-            secureStorage.saveCredentials(privateKey = privateKey.key, publicKey = publicKey.key)
             delay(3000)
+            secureStorage.saveCredentials(privateKey = privateKey.key, publicKey = publicKey.key)
             _user.emit(User(
                 privateKey = PrivateKey("privateKey"),
                 publicKey = PublicKey("publicKey")
@@ -31,8 +31,8 @@ class AuthenticationRepository(private val secureStorage: SecureStorage) {
     }
 
     suspend fun logout() {
-        secureStorage.clearCredentials()
         delay(2000)
+        secureStorage.clearCredentials()
         _user.emit(User.anonymous())
     }
 }

@@ -17,6 +17,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
@@ -49,7 +50,6 @@ fun SplashPage(navController: NavController? = null) {
 @Composable
 fun SplashView(navController: NavController? = null, autoLoginViewModel: AutoLoginViewModel) {
     val state = autoLoginViewModel.state.value
-
     val snackbarHostState = remember { SnackbarHostState() }
 
     when (state.status) {
@@ -64,12 +64,11 @@ fun SplashView(navController: NavController? = null, autoLoginViewModel: AutoLog
             val errorMessage = stringResource(id = R.string.auto_login_fail)
             LaunchedEffect(Unit) {
                 snackbarHostState.showSnackbar(errorMessage)
-                navController?.navigate(PageRoute.Login.route) {
+                navController?.navigate(PageRoute.Home.route) {
                     popUpTo(PageRoute.Splash.route) { inclusive = true }
                 }
             }
         }
-        else -> {}
     }
 
     Scaffold(

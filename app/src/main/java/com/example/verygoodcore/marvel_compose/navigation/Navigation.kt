@@ -32,7 +32,7 @@ class Navigator() {
 }
 
 @Composable
-fun NavigationComponent(navController: NavHostController, navigator: Navigator) {
+fun AppNavigation(navController: NavHostController, navigator: Navigator) {
     LaunchedEffect("navigation") {
         navigator.sharedFlow.onEach { pageRoute ->
             navController.navigate(pageRoute.route) {

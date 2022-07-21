@@ -1,7 +1,8 @@
 package com.example.verygoodcore.marvel_compose.splash.viewmodel
 
-import com.example.verygoodcore.marvel_compose.authentication_repository.AuthenticationRepository
 import com.example.verygoodcore.marvel_compose.TestCoroutinesRule
+import com.example.verygoodcore.marvel_compose.authentication_repository.AuthenticationRepository
+import com.example.verygoodcore.marvel_compose.secure_storage.SecureStorage
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
@@ -24,7 +25,9 @@ internal class AutoLoginViewModelTest {
     }
 
     @Test
-    fun `emit loading, success when login succeeded`(): Unit = testCoroutinesRule.testScope.runTest {
+    fun `emit loading, success when login succeeded`(): Unit = runTest {
+        whenever(authenticationRepository.privateKey()).thenReturn("privateKey")
+        whenever(authenticationRepository.publicKey()).thenReturn("publicKey")
         whenever(authenticationRepository.login(privateKey = any(), publicKey = any())).thenReturn(Unit)
 
         autoLoginViewModel.autoLogin()
@@ -39,11 +42,12 @@ internal class AutoLoginViewModelTest {
 
     @Test
     fun `emit loading, success when login fails`() = runTest {
-        val authenticationRepository = mock<AuthenticationRepository>() {
-            on(this.mock.login(privateKey = any(), publicKey = any())).thenReturn(Unit)
-        }
+        val authenticationRepository = mock<AuthenticationRepository>()
+        whenever(authenticationRepository.privateKey()).thenReturn("privateKey")
+        whenever(authenticationRepository.publicKey()).thenReturn("publicKey")
         whenever(authenticationRepository.login(privateKey = any(), publicKey = any())).thenThrow(RuntimeException(""))
 
+        val autoLoginViewModel = AutoLoginViewModel(authenticationRepository)
         autoLoginViewModel.autoLogin()
 
         assertThat(autoLoginViewModel.state).isEqualTo(

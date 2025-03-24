@@ -11,12 +11,10 @@ class AuthInterceptor(private val security: Security) : Interceptor {
         val originalRequest = chain.request()
 
         return try {
-            val hashTimestamp = security.hashTimestamp()
-            val hash = hashTimestamp.first
-            val timestamp = hashTimestamp.second
+            val (hash, timestamp) = security.hashTimestamp()
             val publicKey = security.publicKey
 
-            val queryParameters = mutableMapOf<String, String>(
+            val queryParameters = mutableMapOf(
                 "ts" to timestamp,
                 "hash" to hash,
                 "apikey" to publicKey

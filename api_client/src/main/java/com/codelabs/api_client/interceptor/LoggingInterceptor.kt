@@ -6,7 +6,7 @@ import okhttp3.Response
 import java.io.IOException
 
 @Suppress("unused")
-class LoggingInterceptor(var logEnabled: Boolean) : Interceptor {
+class LoggingInterceptor(private var logEnabled: Boolean) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
 

@@ -24,7 +24,7 @@ class AutoLoginViewModelTest {
     @get:Rule
     val testCoroutinesRule = TestCoroutinesRule(testDispatcher = StandardTestDispatcher())
 
-    lateinit var authenticationRepository: AuthenticationRepository
+    private lateinit var authenticationRepository: AuthenticationRepository
 
     private lateinit var autoLoginViewModel: AutoLoginViewModel
 

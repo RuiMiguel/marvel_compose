@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.library)
+    alias(libs.plugins.junit5)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.ksp)
 }
@@ -36,14 +37,23 @@ android {
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
-    implementation(libs.converter.moshi)
-    implementation(libs.logging.interceptor)
+    api(libs.converter.moshi)
+    api(libs.logging.interceptor)
     implementation(libs.material)
-    implementation(libs.moshi)
-    implementation(libs.retrofit)
+    api(libs.moshi)
+    api(libs.retrofit)
 
+    testImplementation(libs.jetbrains.kotlinx.coroutines.test)
     testImplementation(libs.junit)
+    testImplementation(libs.junit.jupiter.api)
+    testImplementation(libs.junit.jupiter.params)
+    testImplementation(libs.kluent)
+    testImplementation(libs.mockk)
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.mockk.mockk.android)
 
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    testImplementation(kotlin("test"))
 }

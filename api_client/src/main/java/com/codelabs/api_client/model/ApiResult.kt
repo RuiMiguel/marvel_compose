@@ -17,8 +17,8 @@ class ApiResult<T>(
     @Json(name = "data") val data: ApiData<T>?,
     @Json(name = "results") val results: String?,
 ) : BaseNetworkApiResponse() {
-    override fun errorCode(): String? = ""
-    override fun errorData(): String? = ""
+    override fun errorCode(): String = ""
+    override fun errorData(): String = ""
     override fun isSuccess(): Boolean = true
 }
 

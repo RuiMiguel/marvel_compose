@@ -77,6 +77,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.view.model.compose)
 
+    implementation(project(":api_client"))
     implementation(project(":authentication_repository"))
 
     testImplementation(libs.androidx.junit)

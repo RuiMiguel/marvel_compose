@@ -1,6 +1,5 @@
 package com.codelabs.marvelcompose.comics.view
 
-import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,7 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
+import com.codelabs.marvelcompose.DarkLightPreviews
 import com.codelabs.marvelcompose.R
 import com.codelabs.marvelcompose.common.widget.UnderConstructionView
 import com.codelabs.marvelcompose.ui.theme.Typography
@@ -41,17 +40,9 @@ fun ComicsPage() {
 }
 
 
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, name = "Dark mode")
+@DarkLightPreviews
 @Composable
-fun ComicsPageDarkPreview() {
-    MaterialTheme() {
-        ComicsPage()
-    }
-}
-
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_NO, name = "Light mode")
-@Composable
-fun ComicsPageLightPreview() {
+fun ComicsPagetPreview() {
     MaterialTheme() {
         ComicsPage()
     }

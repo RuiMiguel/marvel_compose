@@ -18,6 +18,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.codelabs.marvelcompose.DarkLightPreviews
 import com.codelabs.marvelcompose.R
 import com.codelabs.marvelcompose.ui.theme.Typography
 
@@ -53,17 +54,9 @@ fun UnderConstructionView() {
     }
 }
 
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, name = "Dark mode")
+@DarkLightPreviews
 @Composable
-fun UnderConstructionViewDarkPreview() {
-    MaterialTheme() {
-        UnderConstructionView()
-    }
-}
-
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_NO, name = "Light mode")
-@Composable
-fun UnderConstructionViewLightPreview() {
+fun UnderConstructionViewPreview() {
     MaterialTheme() {
         UnderConstructionView()
     }

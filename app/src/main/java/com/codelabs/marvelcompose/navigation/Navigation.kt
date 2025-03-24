@@ -44,7 +44,7 @@ fun AppNavigation(navController: NavHostController, navigator: Navigator) {
     }
 
 
-    NavHost(modifier = Modifier.semantics { testTag = "NavHost" }, navController = navController, startDestination = PageRoute.Splash.route) {
+    NavHost(navController = navController, startDestination = PageRoute.Splash.route) {
         composable(PageRoute.Splash.route) { SplashPage(navController) }
         composable(PageRoute.Home.route) { HomePage(navController) }
         composable(PageRoute.Login.route) { LoginPage(navController) }
@@ -52,7 +52,7 @@ fun AppNavigation(navController: NavHostController, navigator: Navigator) {
 }
 
 sealed class PageRoute(val route: String, var popUpTo: PageRoute? = null, var inclusive: Boolean = false) {
-    object Splash : PageRoute("splash")
-    object Home : PageRoute("home", popUpTo = Splash, inclusive = true)
-    object Login : PageRoute("login")
+    data object Splash : PageRoute("splash")
+    data object Home : PageRoute("home", popUpTo = Splash, inclusive = true)
+    data object Login : PageRoute("login")
 }

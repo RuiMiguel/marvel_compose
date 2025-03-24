@@ -1,6 +1,5 @@
 package com.codelabs.marvelcompose.home.view
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -9,9 +8,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.codelabs.marvelcompose.DarkLightPreviews
 import com.codelabs.marvelcompose.characters.view.CharactersPage
 import com.codelabs.marvelcompose.comics.view.ComicsPage
 import com.codelabs.marvelcompose.home.viewmodel.SectionViewModel
@@ -71,15 +70,8 @@ fun HomeView(navController: NavController? = null, sectionViewModel: SectionView
     }
 }
 
-
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, name = "Dark mode")
+@DarkLightPreviews
 @Composable
-fun HomePageDarkPreview() {
-    HomePage()
-}
-
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_NO, name = "Light mode")
-@Composable
-fun HomePageLightPreview() {
+fun HomePagePreview() {
     HomePage()
 }

@@ -15,6 +15,7 @@ import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -24,10 +25,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.codelabs.marvelcompose.DarkLightPreviews
 import com.codelabs.marvelcompose.R
 import com.codelabs.marvelcompose.home.viewmodel.SectionViewModel
 import com.codelabs.marvelcompose.ui.theme.LightBlue
 import com.codelabs.marvelcompose.ui.theme.LightGreen
+import com.codelabs.marvelcompose.ui.theme.LightGrey
 import com.codelabs.marvelcompose.ui.theme.LightRed
 import com.codelabs.marvelcompose.ui.theme.LightYellow
 import com.codelabs.marvelcompose.ui.theme.MainTheme
@@ -89,7 +92,13 @@ fun HeroesBottomNavigationBar(
             Row(modifier = Modifier.fillMaxWidth()) {
                 items.forEach {
                     NavigationBarItem(
-                        modifier = Modifier,
+                        colors = NavigationBarItemDefaults.colors(
+                            indicatorColor = MaterialTheme.colorScheme.primary,
+                            selectedIconColor = it.color,
+                            selectedTextColor = it.color,
+                            unselectedIconColor = LightGrey,
+                            unselectedTextColor = LightGrey
+                        ),
                         label = {
                             Text(
                                 text = stringResource(it.label),
@@ -106,8 +115,6 @@ fun HeroesBottomNavigationBar(
                             )
                         },
                         selected = sectionViewModel.selectedItem == it,
-                        //selectedContentColor = it.color,
-                        //unselectedContentColor = LightGrey,
                         onClick = {
                             sectionViewModel.selectedItem = it
                         },
@@ -119,26 +126,9 @@ fun HeroesBottomNavigationBar(
     }
 }
 
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, name = "Dark mode")
+@DarkLightPreviews
 @Composable
-fun HeroesBottomNavigationBarDarkPreview() {
-    MainTheme() {
-        HeroesBottomNavigationBar(
-            sectionViewModel = SectionViewModel(),
-            items = listOf(
-                HeroeBottomNavigationItem.Characters,
-                HeroeBottomNavigationItem.Comics,
-                HeroeBottomNavigationItem.Series,
-                HeroeBottomNavigationItem.Stories,
-            )
-        )
-    }
-}
-
-
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_NO, name = "Light mode")
-@Composable
-fun HeroesBottomNavigationBarLightPreview() {
+fun HeroesBottomNavigationBarPreview() {
     MainTheme() {
         HeroesBottomNavigationBar(
             sectionViewModel = SectionViewModel(),

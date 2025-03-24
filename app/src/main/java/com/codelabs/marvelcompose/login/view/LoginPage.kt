@@ -1,6 +1,5 @@
 package com.codelabs.marvelcompose.login.view
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -9,8 +8,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
+import com.codelabs.marvelcompose.DarkLightPreviews
 import com.codelabs.marvelcompose.home.widget.HeroesAppBar
 import com.codelabs.marvelcompose.login.viewmodel.LoginViewModel
 import com.codelabs.marvelcompose.ui.theme.MainTheme
@@ -40,15 +39,8 @@ fun LoginView(navController: NavController? = null, loginViewModel: LoginViewMod
     }
 }
 
-
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, name = "Dark mode")
+@DarkLightPreviews
 @Composable
-fun LoginPageDarkPreview() {
-    LoginPage()
-}
-
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_NO, name = "Light mode")
-@Composable
-fun LoginPageLightPreview() {
+fun LoginPagePreview() {
     LoginPage()
 }

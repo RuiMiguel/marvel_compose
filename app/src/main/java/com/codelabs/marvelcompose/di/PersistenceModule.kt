@@ -29,12 +29,12 @@ object PersistenceModule {
     @Provides
     @Singleton
     fun provideDataStore(@ApplicationContext context: Context): DataStore<Preferences> {
-        val CREDENTIALS = "credentials"
+        val _credentialsName = "credentials"
 
         return PreferenceDataStoreFactory.create(
             corruptionHandler = ReplaceFileCorruptionHandler(produceNewData = { emptyPreferences() }),
-            migrations = listOf(SharedPreferencesMigration(context, CREDENTIALS)),
-            produceFile = { context.preferencesDataStoreFile(CREDENTIALS) }
+            migrations = listOf(SharedPreferencesMigration(context, _credentialsName)),
+            produceFile = { context.preferencesDataStoreFile(_credentialsName) }
         )
     }
 }

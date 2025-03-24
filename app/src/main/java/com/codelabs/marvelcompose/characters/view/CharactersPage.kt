@@ -1,6 +1,5 @@
 package com.codelabs.marvelcompose.characters.view
 
-import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,7 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
+import com.codelabs.marvelcompose.DarkLightPreviews
 import com.codelabs.marvelcompose.R
 import com.codelabs.marvelcompose.common.widget.UnderConstructionView
 import com.codelabs.marvelcompose.ui.theme.Typography
@@ -34,24 +33,16 @@ fun CharactersPage() {
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = stringResource(R.string.menu_series), style = Typography.bodyLarge)
+            Text(text = stringResource(R.string.menu_characters), style = Typography.bodyLarge)
             UnderConstructionView()
         }
     }
 }
 
 
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, name = "Dark mode")
+@DarkLightPreviews
 @Composable
 fun CharactersPageDarkPreview() {
-    MaterialTheme() {
-        CharactersPage()
-    }
-}
-
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_NO, name = "Light mode")
-@Composable
-fun CharactersPageLightPreview() {
     MaterialTheme() {
         CharactersPage()
     }

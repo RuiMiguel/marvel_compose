@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -26,6 +27,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.codelabs.marvelcompose.DarkLightPreviews
 import com.codelabs.marvelcompose.R
 import com.codelabs.marvelcompose.ui.theme.MainTheme
 import com.codelabs.marvelcompose.ui.theme.Red
@@ -53,8 +55,7 @@ fun HeroesAppBar(
                     Image(
                         painterResource(id = R.drawable.placeholder),
                         contentScale = ContentScale.Crop,
-                        modifier = Modifier
-                            .fillMaxHeight(),
+                        modifier = Modifier.fillMaxHeight(),
                         contentDescription = stringResource(R.string.app_name)
                     )
                 }
@@ -91,24 +92,15 @@ fun HeroesAppBar(
     }
 }
 
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, name = "Dark mode")
+@DarkLightPreviews
 @Composable
-fun HeroesAppBarDarkPreview() {
+fun HeroesAppBarPreview() {
     MainTheme() {
         HeroesAppBar()
     }
 }
 
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_NO, name = "Light mode")
-@Composable
-fun HeroesAppBarLightPreview() {
-    MainTheme() {
-        HeroesAppBar()
-    }
-}
-
-
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_NO, name = "Action icon")
+@DarkLightPreviews
 @Composable
 fun HeroesAppBarWithActionsPreview() {
     MainTheme() {
@@ -116,7 +108,7 @@ fun HeroesAppBarWithActionsPreview() {
     }
 }
 
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_NO, name = "Navigation icon")
+@DarkLightPreviews
 @Composable
 fun HeroesAppBarWithBackPreview() {
     MainTheme() {
@@ -124,7 +116,7 @@ fun HeroesAppBarWithBackPreview() {
     }
 }
 
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_NO, name = "Navigation and Action icon")
+@DarkLightPreviews
 @Composable
 fun HeroesAppBarWithBackAndActionsPreview() {
     MainTheme() {

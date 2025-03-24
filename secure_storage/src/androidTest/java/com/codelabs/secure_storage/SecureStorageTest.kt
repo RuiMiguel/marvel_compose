@@ -20,6 +20,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Assert.fail
 import org.junit.Before
 import org.junit.Rule
@@ -56,7 +57,7 @@ class SecureStorageTest() {
 
  @Test
  fun canBeInstantiated() {
-  checkNotNull(SecureStorage(testDataStore))
+  assertNotNull(SecureStorage(testDataStore))
  }
 
  @Test
@@ -91,7 +92,7 @@ class SecureStorageTest() {
 
    secureStorage.privateKey()
    fail("Expecting exception but none was thrown.");
-  } catch (exception: ReadException) {
+  } catch (exception: StorageException) {
    assert(exception is ReadException)
   }
  }

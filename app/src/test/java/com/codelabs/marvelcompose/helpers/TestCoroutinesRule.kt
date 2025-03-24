@@ -1,4 +1,4 @@
-package com.codelabs.secure_storage
+package com.codelabs.marvelcompose.helpers
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

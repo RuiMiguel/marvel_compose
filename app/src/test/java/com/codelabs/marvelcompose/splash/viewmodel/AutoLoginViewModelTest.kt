@@ -1,18 +1,17 @@
 package com.codelabs.marvelcompose.splash.viewmodel
 
 import com.codelabs.authentication_repository.AuthenticationRepository
+import com.codelabs.marvelcompose.helpers.TestCoroutinesRule
 import io.mockk.Runs
 import io.mockk.coEvery
 import io.mockk.just
 import io.mockk.mockk
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
-import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
-import org.junit.jupiter.api.AfterEach
+import org.junit.Rule
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
@@ -22,9 +21,10 @@ import org.junit.jupiter.api.TestInstance
 @OptIn(ExperimentalCoroutinesApi::class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class AutoLoginViewModelTest {
-    lateinit var authenticationRepository: AuthenticationRepository
+    @get:Rule
+    val testCoroutinesRule = TestCoroutinesRule(testDispatcher = StandardTestDispatcher())
 
-    private val testDispatcher = StandardTestDispatcher()
+    lateinit var authenticationRepository: AuthenticationRepository
 
     private lateinit var autoLoginViewModel: AutoLoginViewModel
 
@@ -34,13 +34,8 @@ class AutoLoginViewModelTest {
 
         autoLoginViewModel = AutoLoginViewModel(
             authenticationRepository = authenticationRepository,
-            dispatcher = testDispatcher,
+            dispatcher = testCoroutinesRule.testDispatcher,
         )
-    }
-
-    @AfterEach
-    fun tearDown() {
-        Dispatchers.resetMain()
     }
 
     @Test

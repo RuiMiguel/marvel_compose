@@ -10,8 +10,4 @@ class ApiCharacter(
     @Json(name = "resourceURI") val resourceURI: String?,
     @Json(name = "urls") val urls: List<ApiUrl>?,
     @Json(name = "thumbnail") val thumbnail: ApiThumbnail?
-) : BaseNetworkApiResponse() {
-    override fun errorCode(): String = ""
-    override fun errorData(): String = ""
-    override fun isSuccess(): Boolean = true
-}
+)

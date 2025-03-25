@@ -1,8 +1,6 @@
 package com.codelabs.api_client.exception
 
-import java.io.IOException
-
-sealed class ApiException(val msg: String?): IOException() {
+sealed class ApiException(override val message: String?): Exception() {
     class NetworkException(message: String?): ApiException(message)
     class ServerException(message: String?): ApiException(message)
     class AuthenticationException(message: String?): ApiException(message)

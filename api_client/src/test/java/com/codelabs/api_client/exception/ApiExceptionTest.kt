@@ -8,29 +8,33 @@ import org.junit.jupiter.api.Test
 internal class ApiExceptionTest {
     @Test
     fun testNetworkException() {
-        val exception: ApiException = ApiException.NetworkException("Network error")
+        val errorMessage = "Network error"
+        val exception: ApiException = ApiException.NetworkException(errorMessage)
         assertNotNull(exception)
-        assertEquals("Network error", exception.msg)
+        assertEquals(errorMessage, exception.message)
     }
 
     @Test
     fun testServerException() {
-        val exception = ApiException.ServerException("Server error")
+        val errorMessage = "Server error"
+        val exception = ApiException.ServerException(errorMessage)
         assertNotNull(exception)
-        assertEquals("Server error", exception.msg)
+        assertEquals(errorMessage, exception.message)
     }
 
     @Test
     fun testAuthenticationException() {
-        val exception: ApiException = ApiException.AuthenticationException("Auth failed")
+        val errorMessage = "Auth failed"
+        val exception: ApiException = ApiException.AuthenticationException(errorMessage)
         assertNotNull(exception)
-        assertEquals("Auth failed", exception.msg)
+        assertEquals(errorMessage, exception.message)
     }
 
     @Test
     fun testDeserializationException() {
-        val exception: ApiException = DeserializationException("Deserialization error")
+        val errorMessage = "Deserialization error"
+        val exception: ApiException = DeserializationException(errorMessage)
         assertNotNull(exception)
-        assertEquals("Deserialization error", exception.msg)
+        assertEquals(errorMessage, exception.message)
     }
 }

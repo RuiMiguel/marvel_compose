@@ -2,12 +2,6 @@ package com.codelabs.api_client.model
 
 import com.squareup.moshi.Json
 
-open class BaseNetworkApiResponse {
-    open fun isSuccess(): Boolean = false
-    open fun errorCode(): String? = null
-    open fun errorData(): Any? = null
-}
-
 class ApiResult<T>(
     @Json(name = "code") val code: Int?,
     @Json(name = "status") val status: String?,
@@ -16,11 +10,7 @@ class ApiResult<T>(
     @Json(name = "attributionHTML") val attributionHTML: String?,
     @Json(name = "data") val data: ApiData<T>?,
     @Json(name = "results") val results: String?,
-) : BaseNetworkApiResponse() {
-    override fun errorCode(): String = ""
-    override fun errorData(): String = ""
-    override fun isSuccess(): Boolean = true
-}
+)
 
 class ApiData<T>(
     @Json(name = "offset") val offset: Int?,

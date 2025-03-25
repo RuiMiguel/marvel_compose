@@ -23,11 +23,7 @@ class ApiComic(
     @Json(name = "prices") val prices: List<ApiPrice>?,
     @Json(name = "thumbnail") val thumbnail: ApiThumbnail?,
     @Json(name = "images") val images: List<ApiComicImage>?
-    ) : BaseNetworkApiResponse() {
-    override fun errorCode(): String = ""
-    override fun errorData(): String = ""
-    override fun isSuccess(): Boolean = true
-}
+    )
 
 class ApiTextObject(
     @Json(name = "type") val type: String?,

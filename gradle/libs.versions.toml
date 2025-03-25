@@ -44,6 +44,7 @@ uiTestJunit4Android = "1.7.8"
 uiTestManifest = "1.7.8"
 uiTooling = "1.7.8"
 viewModelCompose = "2.8.7"
+jetbrainsKotlinJvm = "2.0.0"
 
 [libraries]
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
@@ -119,6 +120,7 @@ dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "daggerHilt
 junit5 = { id = "de.mannodermaus.android-junit5", version.ref = "junit5" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
 
 
 

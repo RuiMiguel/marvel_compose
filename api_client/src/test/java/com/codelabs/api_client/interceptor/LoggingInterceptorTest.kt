@@ -1,9 +1,8 @@
 package com.codelabs.api_client.interceptor
 
-import android.util.Log
+import com.sun.org.slf4j.internal.Logger
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.mockkStatic
 import io.mockk.verify
 import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType
@@ -18,26 +17,25 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import java.io.IOException
 
-
 class LoggingInterceptorTest {
 
     private val testRequest = Request.Builder().url("https://example.com").build()
-    lateinit var chain: Interceptor.Chain
+    private lateinit var chain: Interceptor.Chain
+    private lateinit var logger: Logger
 
     private lateinit var loggingInterceptor: LoggingInterceptor
 
     @BeforeEach
     fun setUp() {
-        mockkStatic(Log::class)
-
         chain = mockk()
-        every { Log.d(any(), any()) } returns 0
-        every { Log.e(any(), any()) } returns 0
+        logger = mockk(relaxed = true)
+
+        every { logger.debug(any()) } returns Unit
     }
 
     @Test
     fun `intercept should log request and response when logging is enabled`() {
-        loggingInterceptor = LoggingInterceptor(true)
+        loggingInterceptor = LoggingInterceptor(true, logger)
 
         val testResponse = Response.Builder()
             .request(testRequest)
@@ -55,14 +53,14 @@ class LoggingInterceptorTest {
         assertNotNull(response)
         assertEquals(200, response.code)
 
-        verify { Log.d("HTTP Request", "GET https://example.com") }
-        verify { Log.d("headers", testRequest.headers.toString()) }
-        verify { Log.d("HTTP Response", "200 ResponseBody") }
+        verify { logger.debug("HTTP Request: GET https://example.com") }
+        verify { logger.debug("headers: ${testRequest.headers}") }
+        verify { logger.debug("HTTP Response: 200 ResponseBody") }
     }
 
     @Test
     fun `intercept should not log when logging is disabled`() {
-        loggingInterceptor = LoggingInterceptor(false)
+        loggingInterceptor = LoggingInterceptor(false, logger)
 
         val testResponse = Response.Builder()
             .request(testRequest)
@@ -80,12 +78,12 @@ class LoggingInterceptorTest {
         assertNotNull(response)
         assertEquals(200, response.code)
 
-        verify(exactly = 0) { Log.d(any(), any()) }
+        verify(exactly = 0) { logger.debug(any()) }
     }
 
     @Test
     fun `intercept should log errors and throw IOException when request fails`() {
-        loggingInterceptor = LoggingInterceptor(true)
+        loggingInterceptor = LoggingInterceptor(true, logger)
 
         every { chain.request() } returns testRequest
         every { chain.proceed(testRequest) } throws IOException("Network error")
@@ -93,6 +91,6 @@ class LoggingInterceptorTest {
         val exception = assertThrows<IOException> { loggingInterceptor.intercept(chain) }
 
         assertEquals("Network error", exception.message)
-        verify { Log.e("HTTP Error", "Network error") }
+        verify { logger.debug("HTTP Error: Network error") }
     }
 }

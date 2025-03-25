@@ -1,6 +1,5 @@
 package com.codelabs.api_client.interceptor
 
-import com.sun.org.slf4j.internal.Logger
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -16,6 +15,8 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import java.io.IOException
+import java.util.logging.Level
+import java.util.logging.Logger
 
 class LoggingInterceptorTest {
 
@@ -30,7 +31,8 @@ class LoggingInterceptorTest {
         chain = mockk()
         logger = mockk(relaxed = true)
 
-        every { logger.debug(any()) } returns Unit
+        every { logger.info(any<String>()) } returns Unit
+        every { logger.log(any(), any<String>()) } returns Unit
     }
 
     @Test
@@ -53,9 +55,9 @@ class LoggingInterceptorTest {
         assertNotNull(response)
         assertEquals(200, response.code)
 
-        verify { logger.debug("HTTP Request: GET https://example.com") }
-        verify { logger.debug("headers: ${testRequest.headers}") }
-        verify { logger.debug("HTTP Response: 200 ResponseBody") }
+        verify { logger.info("HTTP Request: GET https://example.com") }
+        verify { logger.info("headers: ${testRequest.headers}") }
+        verify { logger.info("HTTP Response: 200 ResponseBody") }
     }
 
     @Test
@@ -78,7 +80,7 @@ class LoggingInterceptorTest {
         assertNotNull(response)
         assertEquals(200, response.code)
 
-        verify(exactly = 0) { logger.debug(any()) }
+        verify(exactly = 0) { logger.info(any<String>()) }
     }
 
     @Test
@@ -91,6 +93,6 @@ class LoggingInterceptorTest {
         val exception = assertThrows<IOException> { loggingInterceptor.intercept(chain) }
 
         assertEquals("Network error", exception.message)
-        verify { logger.debug("HTTP Error: Network error") }
+        verify { logger.log(Level.SEVERE, "HTTP Error: Network error") }
     }
 }

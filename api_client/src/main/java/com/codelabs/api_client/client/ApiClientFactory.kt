@@ -4,10 +4,10 @@ import com.codelabs.api_client.interceptor.AuthInterceptor
 import com.codelabs.api_client.interceptor.LoggingInterceptor
 import com.codelabs.api_client.security.Security
 import com.squareup.moshi.Moshi
-import com.sun.org.slf4j.internal.LoggerFactory
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import java.util.logging.Logger
 
 object ApiClientFactory {
     fun createAuthInterceptor(
@@ -21,7 +21,7 @@ object ApiClientFactory {
     ): LoggingInterceptor {
         return LoggingInterceptor(
             logEnabled = logEnabled,
-            logger = LoggerFactory.getLogger(LoggingInterceptor::class.java),
+            logger = Logger.getLogger(LoggingInterceptor::class.java.name),
         )
     }
 

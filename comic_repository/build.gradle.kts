@@ -13,10 +13,8 @@ kotlin {
 }
 
 dependencies {
-    api(libs.converter.moshi)
-    api(libs.logging.interceptor)
-    api(libs.moshi)
-    api(libs.retrofit)
+    implementation(project(":api_client"))
+    implementation(project(":domain"))
 
     testImplementation(libs.jetbrains.kotlinx.coroutines.test)
     testImplementation(libs.junit)
@@ -27,8 +25,6 @@ dependencies {
     testImplementation(libs.mockito.core)
     testImplementation(libs.mockito.kotlin)
     testImplementation(kotlin("test"))
-
-    testRuntimeOnly(libs.junit.jupiter.engine)
 }
 
 tasks.withType<Test> {

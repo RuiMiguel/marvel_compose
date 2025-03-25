@@ -18,7 +18,7 @@ import retrofit2.Response
 import java.io.IOException
 import kotlin.test.assertFailsWith
 
-class ComicServiceTest {
+internal class ComicServiceTest {
     private lateinit var apiClient: ApiClient
     private lateinit var comicService: ComicService
 

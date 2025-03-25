@@ -21,8 +21,10 @@ dependencyResolutionManagement {
 
 rootProject.name = "MarvelCompose"
 include(":app")
-include(":api_client")
-include(":secure_storage")
-include(":authentication_repository")
 include(":character_repository")
 include(":comic_repository")
+include(":authentication_repository")
+include(":secure_storage")
+include(":api_client")
+
+include(":domain")

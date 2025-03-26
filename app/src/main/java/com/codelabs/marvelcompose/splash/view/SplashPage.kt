@@ -69,7 +69,9 @@ fun SplashView(navController: NavController? = null, autoLoginViewModel: AutoLog
                 val errorMessage =
                     (authState as? AutoLoginState.Error)?.message ?: defaultErrorMessage
                 snackbarHostState.showSnackbar(errorMessage, duration = SnackbarDuration.Short)
-                navController?.navigate(PageRoute.Home.route)
+                navController?.navigate(PageRoute.Login.route) {
+                    popUpTo(PageRoute.Splash.route) { inclusive = true }
+                }
             }
             else -> Unit
         }

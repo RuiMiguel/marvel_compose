@@ -1,20 +1,21 @@
 package com.codelabs.marvelcompose.main.viewmodel
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.codelabs.authentication_repository.AuthenticationRepository
 import com.codelabs.authentication_repository.model.User
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AuthenticationViewModel @Inject constructor(private val authenticationRepository: AuthenticationRepository) : ViewModel() {
-    private var _state = mutableStateOf(AuthenticationState())
-    val state: State<AuthenticationState>
-        get() = _state
+class AuthenticationViewModel @Inject constructor(private val authenticationRepository: AuthenticationRepository) :
+    ViewModel() {
+    private var _status =
+        MutableStateFlow<AuthenticationStatus>(AuthenticationStatus.Unauthenticated)
+    val status: StateFlow<AuthenticationStatus> = _status
 
     init {
         subscribe()
@@ -22,21 +23,28 @@ class AuthenticationViewModel @Inject constructor(private val authenticationRepo
 
     private fun subscribe() {
         viewModelScope.launch {
-            authenticationRepository.user.collect {
-                _state.value = if (it == User.anonymous()) {
-                    AuthenticationState.authenticated(it)
+            authenticationRepository.user.collect { user ->
+                _status.value = if (!user.isAnonymous()) {
+                    AuthenticationStatus.Authenticated(user)
                 } else {
-                    AuthenticationState.unauthenticated()
+                    AuthenticationStatus.Unauthenticated
                 }
             }
         }
     }
 }
 
-enum class AuthenticationStatus { authenticated, unauthenticated }
-data class AuthenticationState(val status: AuthenticationStatus = AuthenticationStatus.unauthenticated, val user: User = User.anonymous()) {
-    companion object {
-        fun authenticated(user: User) = AuthenticationState(status = AuthenticationStatus.authenticated, user = user)
-        fun unauthenticated() = AuthenticationState(status = AuthenticationStatus.unauthenticated, user = User.anonymous())
+
+sealed class AuthenticationStatus {
+    abstract val user: User
+
+    data class Authenticated(override val user: User) : AuthenticationStatus()
+
+    data object Unauthenticated : AuthenticationStatus() {
+        override val user: User = User.anonymous()
     }
+
+    val isAuthenticated: Boolean
+        get() = this is Authenticated
+
 }

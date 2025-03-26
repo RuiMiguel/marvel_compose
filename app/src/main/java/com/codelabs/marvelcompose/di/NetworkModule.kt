@@ -5,6 +5,7 @@ import com.codelabs.api_client.client.ApiClientFactory
 import com.codelabs.api_client.interceptor.AuthInterceptor
 import com.codelabs.api_client.interceptor.LoggingInterceptor
 import com.codelabs.api_client.security.Security
+import com.codelabs.secure_storage.SecureStorage
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
@@ -25,18 +26,26 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideAuthInterceptor(
-        security: Security
-    ): AuthInterceptor {
-        return ApiClientFactory.createAuthInterceptor(security)
+    fun provideSecurity(): Security {
+        return Security()
     }
 
     @Provides
     @Singleton
-    fun provideLoggingInterceptor(
-        logEnabled: Boolean
-    ): LoggingInterceptor {
-        return ApiClientFactory.createLoggingInterceptor(logEnabled = logEnabled)
+    fun provideAuthInterceptor(
+        security: Security,
+        secureStorage: SecureStorage,
+    ): AuthInterceptor {
+        return ApiClientFactory.createAuthInterceptor(
+            security = security,
+            secureStorage = secureStorage
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideLoggingInterceptor(): LoggingInterceptor {
+        return ApiClientFactory.createLoggingInterceptor(logEnabled = true)
     }
 
     @Provides

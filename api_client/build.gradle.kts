@@ -1,24 +1,51 @@
 plugins {
-    id("java-library")
-    alias(libs.plugins.jetbrains.kotlin.jvm)
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.junit5)
+    alias(libs.plugins.kotlin.android)
+    //alias(libs.plugins.ksp)
+    id("com.google.devtools.ksp")
 }
-java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
-}
-kotlin {
-    compilerOptions {
-        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
+
+android {
+    namespace = "com.codelabs.api_client"
+    compileSdk = 35
+
+    defaultConfig {
+        minSdk = 26
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
+    }
+
+    buildTypes {
+        release {
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = "17"
     }
 }
 
 dependencies {
-    api(libs.converter.moshi)
-    api(libs.logging.interceptor)
-    api(libs.moshi)
-    api(libs.retrofit)
+    implementation(project(":secure_storage"))
 
-    testImplementation(libs.jetbrains.kotlinx.coroutines.test)
+    implementation(libs.logging.interceptor)
+    implementation(libs.moshi)
+    ksp(libs.moshi.kotlin.codegen)
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.moshi)
+    implementation(libs.kotlinx.coroutines.core.jvm)
+
+    testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.junit)
     testImplementation(libs.junit.jupiter.api)
     testImplementation(libs.junit.jupiter.params)

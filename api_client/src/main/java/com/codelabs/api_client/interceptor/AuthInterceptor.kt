@@ -2,17 +2,30 @@ package com.codelabs.api_client.interceptor
 
 import com.codelabs.api_client.exception.ApiException.AuthenticationException
 import com.codelabs.api_client.security.Security
+import com.codelabs.secure_storage.SecureStorage
+import kotlinx.coroutines.async
 import okhttp3.Interceptor
 import okhttp3.Response
 import java.io.IOException
+import kotlinx.coroutines.runBlocking
 
-class AuthInterceptor(private val security: Security) : Interceptor {
+class AuthInterceptor(private val security: Security, private val secureStorage: SecureStorage) :
+    Interceptor {
+
     override fun intercept(chain: Interceptor.Chain): Response {
         val originalRequest = chain.request()
 
         return try {
-            val (hash, timestamp) = security.hashTimestamp()
-            val publicKey = security.publicKey
+            val (privateKey, publicKey) = runBlocking {
+                val privateKeyDeferred = async { secureStorage.privateKey() }
+                val publicKeyDeferred = async { secureStorage.publicKey() }
+                privateKeyDeferred.await() to publicKeyDeferred.await()
+            }
+
+            val (hash, timestamp) = security.hashTimestamp(
+                privateKey = privateKey,
+                publicKey = publicKey,
+            )
 
             val queryParameters = mutableMapOf(
                 "ts" to timestamp,

@@ -39,11 +39,11 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
 
-    api(project(":secure_storage"))
+    implementation(project(":secure_storage"))
 
     testImplementation(libs.androidx.junit)
     testImplementation(libs.assertj.core)
-    testImplementation(libs.jetbrains.kotlinx.coroutines.test)
+    testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.junit)
     testImplementation(libs.junit.jupiter.api)
     testImplementation(libs.junit.jupiter.params)

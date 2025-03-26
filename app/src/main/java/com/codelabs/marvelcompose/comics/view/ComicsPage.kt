@@ -10,16 +10,26 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.codelabs.marvelcompose.DarkLightPreviews
 import com.codelabs.marvelcompose.R
+import com.codelabs.marvelcompose.comics.viewmodel.ComicsViewModel
 import com.codelabs.marvelcompose.common.widget.UnderConstructionView
 import com.codelabs.marvelcompose.ui.theme.Typography
 
 @Composable
-fun ComicsPage() {
+fun ComicsPage(
+    comicsViewModel: ComicsViewModel = hiltViewModel(),
+) {
+
+    LaunchedEffect(Unit) {
+        comicsViewModel.loadComics()
+    }
+
     Row(
         modifier = Modifier
             .fillMaxSize()

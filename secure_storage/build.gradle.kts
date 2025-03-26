@@ -2,7 +2,6 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.junit5)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.ksp)
 }
 
 android {
@@ -40,8 +39,6 @@ dependencies {
     implementation(libs.androidx.datastore.core.android)
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.material)
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.android.compiler)
 
     testImplementation(libs.assertj.core)
     testImplementation(libs.junit)
@@ -54,10 +51,8 @@ dependencies {
     androidTestImplementation(libs.androidx.runner)
     androidTestImplementation(libs.androidx.rules)
     androidTestImplementation(libs.core.ktx)
-    androidTestImplementation(libs.hilt.android.testing)
-    androidTestImplementation(libs.jetbrains.kotlinx.coroutines.test)
+    androidTestImplementation(libs.kotlinx.coroutines.test)
     androidTestImplementation(libs.mockk.mockk.android)
-    kspAndroidTest(libs.hilt.compiler)
 
 
 }

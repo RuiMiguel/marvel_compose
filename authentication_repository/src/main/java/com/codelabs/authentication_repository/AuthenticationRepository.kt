@@ -22,8 +22,8 @@ class AuthenticationRepository(private val secureStorage: SecureStorage) {
             secureStorage.saveCredentials(privateKey = privateKey.key, publicKey = publicKey.key)
             _user.emit(
                 User(
-                    privateKey = PrivateKey("privateKey"),
-                    publicKey = PublicKey("publicKey")
+                    privateKey = PrivateKey(privateKey.key),
+                    publicKey = PublicKey(publicKey.key)
                 ),
             )
         } catch (exception: Exception) {

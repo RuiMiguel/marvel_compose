@@ -33,7 +33,7 @@ mockitoKotlin = "2.2.0"
 mockk = "1.12.0"
 mockkAndroidVersion = "1.12.0"
 #mockkJunit5 = "1.13.0"
-moshi = "1.12.0"
+moshi = "1.15.0"
 navigation = "2.8.9"
 retrofit = "2.9.0"
 rules = "1.6.1"
@@ -78,13 +78,11 @@ androidx-rules = { module = "androidx.test:rules", version.ref = "rules" }
 androidx-runner = { module = "androidx.test:runner", version.ref = "runner" }
 androidx-runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata", version.ref = "runtimeLivedata" }
 assertj-core = { module = "org.assertj:assertj-core", version.ref = "assertjCore" }
-converter-moshi = {group = "com.squareup.retrofit2", name = "converter-moshi", version.ref = "retrofit"}
 core-ktx = { module = "androidx.test:core-ktx", version.ref = "coreKtxVersion" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "daggerHilt" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "daggerHilt" }
 hilt-android-testing = { module = "com.google.dagger:hilt-android-testing", version.ref = "daggerHilt" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "daggerHilt" }
-jetbrains-kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junitJupiter" }
 junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junitJupiter" }
@@ -94,6 +92,7 @@ junit-vintage-engine = { module = "org.junit.vintage:junit-vintage-engine", vers
 kluent = { module = "org.amshove.kluent:kluent", version.ref = "kluent" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutines" }
 kotlinx-coroutines-core-jvm = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm", version.ref = "kotlinxCoroutines" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
 #kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlinTest" }
 logging-interceptor = {group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "loggingInterceptor"}
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
@@ -105,6 +104,7 @@ mockk-mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockkA
 moshi = {group = "com.squareup.moshi", name = "moshi-kotlin", version.ref = "moshi"}
 moshi-kotlin-codegen = {group = "com.squareup.moshi", name = "moshi-kotlin-codegen", version.ref = "moshi"}
 retrofit = {group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit"}
+retrofit-converter-moshi = {group = "com.squareup.retrofit2", name = "converter-moshi", version.ref = "retrofit"}
 ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "uiTestJunit4" }
 ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "uiTestManifest" }
 ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "uiTooling" }

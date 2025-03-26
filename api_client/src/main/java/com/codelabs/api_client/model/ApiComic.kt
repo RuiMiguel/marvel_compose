@@ -1,7 +1,9 @@
 package com.codelabs.api_client.model
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 class ApiComic(
     @Json(name = "id") val id: Int?,
     @Json(name = "digitalId") val digitalId: Int?,
@@ -25,17 +27,20 @@ class ApiComic(
     @Json(name = "images") val images: List<ApiComicImage>?
     )
 
+@JsonClass(generateAdapter = true)
 class ApiTextObject(
     @Json(name = "type") val type: String?,
     @Json(name = "language") val language: String?,
     @Json(name = "text") val text: String?
 )
 
+@JsonClass(generateAdapter = true)
 class ApiPrice(
     @Json(name = "type") val type: String?,
     @Json(name = "price") val price: String?
 )
 
+@JsonClass(generateAdapter = true)
 class ApiComicImage(
     @Json(name = "path") val path: String?,
     @Json(name = "extension") val extension: String?

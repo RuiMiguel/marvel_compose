@@ -7,9 +7,8 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import com.codelabs.secure_storage.exception.StorageException.ReadException
 import com.codelabs.secure_storage.exception.StorageException.WriteException
 import kotlinx.coroutines.flow.first
-import javax.inject.Inject
 
-class SecureStorage @Inject constructor(private val dataStore: DataStore<Preferences>) {
+class SecureStorage(private val dataStore: DataStore<Preferences>) {
     suspend fun privateKey(): String {
         try {
             val value = dataStore.data.first().toPreferences()[PRIVATE_KEY]

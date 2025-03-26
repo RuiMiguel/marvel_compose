@@ -1,7 +1,9 @@
 package com.codelabs.api_client.model
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 class ApiResult<T>(
     @Json(name = "code") val code: Int?,
     @Json(name = "status") val status: String?,
@@ -12,6 +14,7 @@ class ApiResult<T>(
     @Json(name = "results") val results: String?,
 )
 
+@JsonClass(generateAdapter = true)
 class ApiData<T>(
     @Json(name = "offset") val offset: Int?,
     @Json(name = "limit") val limit: Int?,
@@ -20,11 +23,13 @@ class ApiData<T>(
     @Json(name = "results") val results: List<T>?,
 )
 
+@JsonClass(generateAdapter = true)
 class ApiUrl(
     @Json(name = "type") val type: String?,
     @Json(name = "url") val url: String?
 )
 
+@JsonClass(generateAdapter = true)
 class ApiThumbnail(
     @Json(name = "path") val path: String?,
     @Json(name = "extension") val extension: String?

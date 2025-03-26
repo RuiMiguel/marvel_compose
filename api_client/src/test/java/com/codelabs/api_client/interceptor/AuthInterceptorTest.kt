@@ -2,6 +2,8 @@ package com.codelabs.api_client.interceptor
 
 import com.codelabs.api_client.exception.ApiException.AuthenticationException
 import com.codelabs.api_client.security.Security
+import com.codelabs.secure_storage.SecureStorage
+import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
@@ -19,20 +21,29 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import java.io.IOException
 
-class AuthInterceptorTest {
-
-    private val security: Security = mockk()
-    private val chain: Interceptor.Chain = mockk()
-    private val authInterceptor = AuthInterceptor(security)
+internal class AuthInterceptorTest {
+    private lateinit var security: Security
+    private lateinit var secureStorage: SecureStorage
+    private lateinit var chain: Interceptor.Chain
+    private lateinit var authInterceptor: AuthInterceptor
 
     private val testHash = "testHash"
     private val testTimestamp = "1234567890"
     private val testPublicKey = "testPublicKey"
+    private val testPrivateKey = "testPrivateKey"
 
     @BeforeEach
     fun setUp() {
-        every { security.hashTimestamp() } returns Pair(testHash, testTimestamp)
-        every { security.publicKey } returns testPublicKey
+        security = mockk()
+        secureStorage = mockk()
+        chain = mockk()
+
+        authInterceptor =
+            AuthInterceptor(security = security, secureStorage = secureStorage)
+
+        every { security.hashTimestamp(any(), any()) } returns Pair(testHash, testTimestamp)
+        coEvery { secureStorage.publicKey() } returns testPublicKey
+        coEvery { secureStorage.privateKey() } returns testPrivateKey
     }
 
     @Test
@@ -68,7 +79,7 @@ class AuthInterceptorTest {
         val originalRequest = Request.Builder().url("https://example.com").build()
 
         every { chain.request() } returns originalRequest
-        every { security.hashTimestamp() } throws IOException("Test Exception")
+        every { security.hashTimestamp(any(), any()) } throws IOException("Test Exception")
 
         assertThrows<AuthenticationException> { authInterceptor.intercept(chain) }
     }

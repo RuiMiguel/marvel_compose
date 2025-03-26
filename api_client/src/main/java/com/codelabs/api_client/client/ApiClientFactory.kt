@@ -3,6 +3,7 @@ package com.codelabs.api_client.client
 import com.codelabs.api_client.interceptor.AuthInterceptor
 import com.codelabs.api_client.interceptor.LoggingInterceptor
 import com.codelabs.api_client.security.Security
+import com.codelabs.secure_storage.SecureStorage
 import com.squareup.moshi.Moshi
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -11,9 +12,10 @@ import java.util.logging.Logger
 
 object ApiClientFactory {
     fun createAuthInterceptor(
-        security: Security
+        security: Security,
+        secureStorage: SecureStorage,
     ): AuthInterceptor {
-        return AuthInterceptor(security)
+        return AuthInterceptor(security = security, secureStorage = secureStorage)
     }
 
     fun createLoggingInterceptor(

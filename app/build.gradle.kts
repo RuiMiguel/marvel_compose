@@ -54,6 +54,13 @@ android {
 }
 
 dependencies {
+    implementation(project(":domain"))
+    implementation(project(":character_repository"))
+    implementation(project(":comic_repository"))
+    implementation(project(":api_client"))
+    implementation(project(":authentication_repository"))
+    implementation(project(":secure_storage"))
+
     implementation(libs.androidx.activity)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.appcompat)
@@ -75,16 +82,15 @@ dependencies {
     ksp(libs.hilt.compiler)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.material)
+    implementation(libs.moshi)
+    implementation(libs.retrofit)
     implementation(libs.view.model.compose)
-
-    implementation(project(":api_client"))
-    implementation(project(":authentication_repository"))
 
     testImplementation(libs.androidx.junit)
     testImplementation(libs.androidx.core.testing)
     testImplementation(libs.androidx.compose.ui.test.junit4.android)
     testImplementation(libs.assertj.core)
-    testImplementation(libs.jetbrains.kotlinx.coroutines.test)
+    testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.junit)
     testImplementation(libs.junit.jupiter)
     testImplementation(libs.junit.jupiter.api)
@@ -95,8 +101,8 @@ dependencies {
     testImplementation(libs.mockito.core)
     testImplementation(libs.mockito.kotlin)
     testImplementation(libs.mockk)
-//    testImplementation(libs.mockk.junit5)
     testImplementation(libs.mockk.mockk.android)
+    testImplementation(kotlin("test"))
 
 
     //testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.1")
@@ -125,5 +131,4 @@ dependencies {
     androidTestImplementation(libs.mockk.mockk.android)
     androidTestImplementation(libs.ui.test.junit4)
     kspAndroidTest(libs.hilt.compiler)
-    testImplementation(kotlin("test"))
 }

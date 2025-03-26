@@ -19,6 +19,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object PersistenceModule {
+    private const val CREDENTIALS_DATA_STORE_FILE = "credentials"
 
     @Provides
     @Singleton
@@ -29,12 +30,10 @@ object PersistenceModule {
     @Provides
     @Singleton
     fun provideDataStore(@ApplicationContext context: Context): DataStore<Preferences> {
-        val _credentialsName = "credentials"
-
         return PreferenceDataStoreFactory.create(
             corruptionHandler = ReplaceFileCorruptionHandler(produceNewData = { emptyPreferences() }),
-            migrations = listOf(SharedPreferencesMigration(context, _credentialsName)),
-            produceFile = { context.preferencesDataStoreFile(_credentialsName) }
+            migrations = listOf(SharedPreferencesMigration(context, CREDENTIALS_DATA_STORE_FILE)),
+            produceFile = { context.preferencesDataStoreFile(CREDENTIALS_DATA_STORE_FILE) }
         )
     }
 }

@@ -18,79 +18,81 @@ import com.codelabs.domain.model.DomainUrl
 
 fun ApiResult<ApiComic>.toDomainResult(): DomainResult<DomainComic> {
     return DomainResult(
-        code = code,
-        status = status,
-        copyright = copyright,
+        code = code ?: 0,
+        status = status ?: "",
+        copyright = copyright ?: "",
         data = DomainData(
-            offset = data?.offset,
-            limit = data?.limit,
-            total = data?.total,
-            count = data?.count,
-            results = data?.results?.map { it.toDomainComic() }
+            offset = data?.offset ?: 0,
+            limit = data?.limit ?: 0,
+            total = data?.total ?: 0,
+            count = data?.count ?: 0,
+            results = data?.results?.map { it.toDomainComic() } ?: emptyList()
         ),
-        attributionText = attributionText,
-        attributionHTML = attributionHTML,
-        results = results,
+        attributionText = attributionText ?: "",
+        attributionHTML = attributionHTML ?: "",
+        results = results ?: "",
     )
 }
 
 fun ApiComic.toDomainComic(): DomainComic {
     return DomainComic(
-        id = id,
-        digitalId = digitalId,
-        title = title,
-        issueNumber = issueNumber,
-        variantDescription = variantDescription,
-        description = description,
-        modified = modified,
-        isbn = isbn,
-        upc = upc,
-        diamondCode = diamondCode,
-        ean = ean,
-        issn = issn,
-        format = format,
-        pageCount = pageCount,
-        textObjects = textObjects?.map { it.toDomainTextObject() },
-        resourceURI = resourceURI,
-        urls = urls?.map { it.toDomainUrl() },
-        prices = prices?.map { it.toDomainPrice() },
-        thumbnail = thumbnail?.toDomainThumbnail(),
-        images = images?.map { it.toDomainComicImage() }
+        id = id ?: 0,
+        digitalId = digitalId ?: 0,
+        title = title ?: "",
+        issueNumber = issueNumber ?: 0.0,
+        variantDescription = variantDescription ?: "",
+        description = description ?: "",
+        modified = modified ?: "",
+        isbn = isbn ?: "",
+        upc = upc ?: "",
+        diamondCode = diamondCode ?: "",
+        ean = ean ?: "",
+        issn = issn ?: "",
+        format = format ?: "",
+        pageCount = pageCount ?: 0,
+        textObjects = textObjects?.map { it.toDomainTextObject() } ?: emptyList(),
+        resourceURI = resourceURI ?: "",
+        urls = urls?.map { it.toDomainUrl() } ?: emptyList(),
+        prices = prices?.map { it.toDomainPrice() } ?: emptyList(),
+        thumbnail = thumbnail?.toDomainThumbnail() ?: emptyDomainThumbnail(),
+        images = images?.map { it.toDomainComicImage() } ?: emptyList()
     )
 }
 
 fun ApiTextObject.toDomainTextObject(): DomainTextObject {
     return DomainTextObject(
-        type = type,
-        language = language,
-        text = text
+        type = type ?: "",
+        language = language ?: "",
+        text = text ?: ""
     )
 }
 
 fun ApiUrl.toDomainUrl(): DomainUrl {
     return DomainUrl(
-        type = type,
-        url = url
+        type = type ?: "",
+        url = url ?: ""
     )
 }
 
 fun ApiPrice.toDomainPrice(): DomainPrice {
     return DomainPrice(
-        type = type,
-        price = price
+        type = type ?: "",
+        price = price ?: ""
     )
 }
 
 fun ApiThumbnail.toDomainThumbnail(): DomainThumbnail {
     return DomainThumbnail(
-        path = path,
-        extension = extension
+        path = path ?: "",
+        extension = extension ?: ""
     )
 }
 
+private fun emptyDomainThumbnail() = DomainThumbnail("", "")
+
 fun ApiComicImage.toDomainComicImage(): DomainComicImage {
     return DomainComicImage(
-        path = path,
-        extension = extension
+        path = path ?: "",
+        extension = extension ?: ""
     )
 }

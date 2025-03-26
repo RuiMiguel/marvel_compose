@@ -1,10 +1,9 @@
-package com.codelabs.comic_repository
+package com.codelabs.comic_repository.repository
 
 import com.codelabs.api_client.model.ApiComic
 import com.codelabs.api_client.model.ApiData
 import com.codelabs.api_client.model.ApiResult
 import com.codelabs.api_client.service.ComicService
-import com.codelabs.comic_repository.repository.ComicRepository
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
@@ -17,11 +16,6 @@ import kotlin.test.assertFailsWith
 internal class ComicRepositoryTest {
     private lateinit var comicRepository: ComicRepository
     private lateinit var comicService: ComicService
-
-    @Test
-    fun runtest() {
-        assertNotNull(Unit)
-    }
 
     @BeforeEach
     fun setUp() {

@@ -1,10 +1,9 @@
-package com.codelabs.character_repository
+package com.codelabs.character_repository.repository
 
 import com.codelabs.api_client.model.ApiCharacter
 import com.codelabs.api_client.model.ApiData
 import com.codelabs.api_client.model.ApiResult
 import com.codelabs.api_client.service.CharacterService
-import com.codelabs.character_repository.repository.CharacterRepository
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking

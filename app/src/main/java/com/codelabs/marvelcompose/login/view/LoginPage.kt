@@ -85,7 +85,7 @@ fun LoginView(
             val isAuthenticated = authenticationStatus.isAuthenticated
             val isLoading = loginStatus.isLoading
 
-            LaunchedEffect(Unit){
+            LaunchedEffect(userPrivateKey, userPublicKey){
                 loginViewModel.publicKeyChange(userPublicKey)
                 loginViewModel.privateKeyChange(userPrivateKey)
             }
@@ -110,8 +110,8 @@ fun LoginView(
                     publicKey = publicKey,
                     onSave = { loginViewModel.login() },
                     onLogout = { loginViewModel.logout() },
-                    onPublicKeyChange = { key -> loginViewModel.publicKeyChange(key) },
-                    onPrivateKeyChange = { key -> loginViewModel.privateKeyChange(key) },
+                    onPublicKeyChange = loginViewModel::publicKeyChange,
+                    onPrivateKeyChange = loginViewModel::privateKeyChange,
                     isLoading = isLoading
                 )
             } else {
@@ -119,8 +119,8 @@ fun LoginView(
                     privateKey = privateKey,
                     publicKey = publicKey,
                     onLogin = { loginViewModel.login() },
-                    onPublicKeyChange = { key -> loginViewModel.publicKeyChange(key) },
-                    onPrivateKeyChange = { key -> loginViewModel.privateKeyChange(key) },
+                    onPublicKeyChange = loginViewModel::publicKeyChange,
+                    onPrivateKeyChange = loginViewModel::privateKeyChange ,
                     isLoading = isLoading
                 )
             }

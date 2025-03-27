@@ -5,6 +5,8 @@
     <string name="menu_series">Series</string>
     <string name="menu_stories">Stories</string>
 
+    <string name="back">Back</string>
+
     <string name="add_your_developer_credentials_to_login">Put your Marvel Developer Credentials to access Marvel Api. If you don\'t have please visit </string>
     <string name="add_your_developer_credentials_link">https://developer.marvel.com/account</string>
     <string name="your_current_credentials">Your current credentials</string>

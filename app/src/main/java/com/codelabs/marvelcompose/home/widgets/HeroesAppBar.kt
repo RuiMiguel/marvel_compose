@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -24,8 +25,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.codelabs.marvelcompose.base.ui.DarkLightPreviews
 import com.codelabs.marvelcompose.R
+import com.codelabs.marvelcompose.base.ui.DarkLightPreviews
 import com.codelabs.marvelcompose.ui.theme.MainTheme
 import com.codelabs.marvelcompose.ui.theme.Red
 
@@ -43,10 +44,14 @@ fun HeroesAppBar(
             .background(MaterialTheme.colorScheme.primary)
             .shadow(8.dp),
     ) {
+        val startOffset = if (withBack) 0.dp else 16.dp
+
         TopAppBar(
             title = {
                 Column(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .offset(x = startOffset),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Image(
@@ -62,7 +67,7 @@ fun HeroesAppBar(
                     IconButton(onClick = onBack) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = ""
+                            contentDescription = stringResource(R.string.back)
                         )
                     }
                 }
@@ -92,7 +97,7 @@ fun HeroesAppBar(
 @DarkLightPreviews
 @Composable
 fun HeroesAppBarPreview() {
-    MainTheme() {
+    MainTheme {
         HeroesAppBar()
     }
 }
@@ -100,7 +105,7 @@ fun HeroesAppBarPreview() {
 @DarkLightPreviews
 @Composable
 fun HeroesAppBarWithActionsPreview() {
-    MainTheme() {
+    MainTheme {
         HeroesAppBar(withActions = true)
     }
 }
@@ -108,7 +113,7 @@ fun HeroesAppBarWithActionsPreview() {
 @DarkLightPreviews
 @Composable
 fun HeroesAppBarWithBackPreview() {
-    MainTheme() {
+    MainTheme {
         HeroesAppBar(withBack = true)
     }
 }
@@ -116,7 +121,7 @@ fun HeroesAppBarWithBackPreview() {
 @DarkLightPreviews
 @Composable
 fun HeroesAppBarWithBackAndActionsPreview() {
-    MainTheme() {
+    MainTheme {
         HeroesAppBar(withBack = true, withActions = true)
     }
 }

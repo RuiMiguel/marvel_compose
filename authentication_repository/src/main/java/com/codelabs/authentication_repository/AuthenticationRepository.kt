@@ -20,14 +20,14 @@ class AuthenticationRepository(private val secureStorage: SecureStorage) {
         try {
             delay(3000)
             secureStorage.saveCredentials(privateKey = privateKey.key, publicKey = publicKey.key)
-            _user.value = User(
-                privateKey = PrivateKey(privateKey.key),
-                publicKey = PublicKey(publicKey.key)
+            _user.emit(
+                User(
+                    privateKey = PrivateKey(privateKey.key),
+                    publicKey = PublicKey(publicKey.key)
+                )
             )
-            delay(3000)
-            println("User: ${_user.value}")
         } catch (exception: Exception) {
-            _user.value = User.anonymous()
+            _user.emit(User.anonymous())
             throw exception
         }
     }

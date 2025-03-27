@@ -2,7 +2,7 @@ package com.codelabs.marvelcompose.main.view
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.rememberNavController
-import com.codelabs.marvelcompose.DarkLightPreviews
+import com.codelabs.marvelcompose.base.ui.DarkLightPreviews
 import com.codelabs.marvelcompose.navigation.AppNavigation
 import com.codelabs.marvelcompose.navigation.Navigator
 import com.codelabs.marvelcompose.splash.view.SplashPage

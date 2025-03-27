@@ -24,8 +24,8 @@ import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 
-@HiltAndroidTest
-@ExperimentalCoroutinesApi
+//@HiltAndroidTest
+//@ExperimentalCoroutinesApi
 class SplashPageTest {
 
     @get:Rule
@@ -45,7 +45,7 @@ class SplashPageTest {
         every { mSplashViewModel.state } returns MutableStateFlow(SplashState.Loading)
 
         composeTestRule.setContent {
-            SplashPage(pSplashViewModel = mSplashViewModel)
+            SplashPage(splashViewModel = mSplashViewModel)
         }
 
         val contentDescription = composeTestRule.activity.getString(R.string.app_name)
@@ -59,7 +59,7 @@ class SplashPageTest {
         every { mSplashViewModel.state } returns MutableStateFlow(SplashState.Loading)
 
         composeTestRule.setContent {
-            SplashPage(pSplashViewModel = mSplashViewModel)
+            SplashPage(splashViewModel = mSplashViewModel)
         }
 
         composeTestRule.onNode(hasProgressBar())
@@ -76,7 +76,7 @@ class SplashPageTest {
         )
 
         composeTestRule.setContent {
-            SplashPage(pSplashViewModel = mSplashViewModel)
+            SplashPage(splashViewModel = mSplashViewModel)
         }
 
         composeTestRule.awaitIdle()
@@ -91,7 +91,7 @@ class SplashPageTest {
         every { mSplashViewModel.state } returns MutableStateFlow(SplashState.Error("Login failed"))
 
         composeTestRule.setContent {
-            SplashPage(navController = navController, pSplashViewModel = mSplashViewModel)
+            SplashPage(navController = navController, splashViewModel = mSplashViewModel)
         }
 
         composeTestRule.waitUntil(timeoutMillis = 5_000) {
@@ -113,7 +113,7 @@ class SplashPageTest {
         every { mSplashViewModel.state } returns MutableStateFlow(SplashState.Success)
 
         composeTestRule.setContent {
-            SplashPage(navController = navController, pSplashViewModel = mSplashViewModel)
+            SplashPage(navController = navController, splashViewModel = mSplashViewModel)
         }
 
         verify {

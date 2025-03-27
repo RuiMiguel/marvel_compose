@@ -10,13 +10,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.codelabs.marvelcompose.DarkLightPreviews
+import com.codelabs.marvelcompose.base.ui.DarkLightPreviews
 import com.codelabs.marvelcompose.characters.view.CharactersPage
 import com.codelabs.marvelcompose.comics.view.ComicsPage
 import com.codelabs.marvelcompose.home.viewmodel.SectionViewModel
-import com.codelabs.marvelcompose.home.widget.HeroeBottomNavigationItem
-import com.codelabs.marvelcompose.home.widget.HeroesAppBar
-import com.codelabs.marvelcompose.home.widget.HeroesBottomNavigationBar
+import com.codelabs.marvelcompose.home.widgets.HeroeBottomNavigationItem
+import com.codelabs.marvelcompose.home.widgets.HeroesAppBar
+import com.codelabs.marvelcompose.home.widgets.HeroesBottomNavigationBar
 import com.codelabs.marvelcompose.navigation.PageRoute
 import com.codelabs.marvelcompose.series.view.SeriesPage
 import com.codelabs.marvelcompose.stories.view.StoriesPage

@@ -25,7 +25,7 @@ import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
-import com.codelabs.marvelcompose.DarkLightPreviews
+import com.codelabs.marvelcompose.base.ui.DarkLightPreviews
 import com.codelabs.marvelcompose.R
 import com.codelabs.marvelcompose.base.ui.BaseButton
 import com.codelabs.marvelcompose.base.ui.BaseTextInput

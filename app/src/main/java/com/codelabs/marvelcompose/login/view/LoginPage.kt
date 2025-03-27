@@ -20,9 +20,9 @@ import androidx.navigation.NavController
 import com.codelabs.authentication_repository.model.PrivateKey
 import com.codelabs.authentication_repository.model.PublicKey
 import com.codelabs.authentication_repository.model.User
-import com.codelabs.marvelcompose.DarkLightPreviews
+import com.codelabs.marvelcompose.base.ui.DarkLightPreviews
 import com.codelabs.marvelcompose.R
-import com.codelabs.marvelcompose.home.widget.HeroesAppBar
+import com.codelabs.marvelcompose.home.widgets.HeroesAppBar
 import com.codelabs.marvelcompose.login.viewmodel.LoginStatus
 import com.codelabs.marvelcompose.login.viewmodel.LoginViewModel
 import com.codelabs.marvelcompose.login.widgets.AuthenticatedLoginForm
@@ -75,14 +75,20 @@ fun LoginView(
         ) {
 
             val authenticationStatus by authenticationViewModel.status.collectAsStateWithLifecycle()
+            val userPrivateKey = authenticationStatus.user.privateKey.key
+            val userPublicKey = authenticationStatus.user.publicKey.key
+
             val loginStatus by loginViewModel.status.collectAsStateWithLifecycle()
             val privateKey by loginViewModel.privateKey.collectAsStateWithLifecycle()
             val publicKey by loginViewModel.publicKey.collectAsStateWithLifecycle()
 
-            //val privateKey = authenticationStatus.user.privateKey.key
-            //val publicKey = authenticationStatus.user.publicKey.key
             val isAuthenticated = authenticationStatus.isAuthenticated
             val isLoading = loginStatus.isLoading
+
+            LaunchedEffect(Unit){
+                loginViewModel.publicKeyChange(userPublicKey)
+                loginViewModel.privateKeyChange(userPrivateKey)
+            }
 
             LaunchedEffect(loginStatus){
                 when (loginStatus) {

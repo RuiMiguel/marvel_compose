@@ -5,20 +5,20 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.codelabs.marvelcompose.DarkLightPreviews
 import com.codelabs.marvelcompose.R
 import com.codelabs.marvelcompose.base.ui.BaseButton
 import com.codelabs.marvelcompose.base.ui.BaseTextInput
+import com.codelabs.marvelcompose.base.ui.DarkLightPreviews
 import com.codelabs.marvelcompose.ui.theme.MainTheme
 import com.codelabs.marvelcompose.ui.theme.Red
 import com.codelabs.marvelcompose.ui.theme.White
@@ -79,9 +79,7 @@ fun AuthenticatedButtons(
     onLogout: () -> Unit,
     enabled: Boolean
 ) {
-    Row(
-        horizontalArrangement = Arrangement.spacedBy(30.dp)
-    ) {
+    Row(horizontalArrangement = Arrangement.spacedBy(30.dp)) {
         BaseButton(
             modifier = Modifier.weight(1f),
             onClick = onSave,
@@ -101,15 +99,17 @@ fun AuthenticatedButtons(
 @Composable
 fun AuthenticatedLoginFormPreview() {
     MainTheme {
-        AuthenticatedLoginForm(
-            privateKey = "",
-            publicKey = "",
-            onSave = {},
-            onLogout = {},
-            onPrivateKeyChange = {},
-            onPublicKeyChange = {},
-            isLoading = false
-        )
+        Surface {
+            AuthenticatedLoginForm(
+                privateKey = "",
+                publicKey = "",
+                onSave = {},
+                onLogout = {},
+                onPrivateKeyChange = {},
+                onPublicKeyChange = {},
+                isLoading = false
+            )
+        }
     }
 }
 
@@ -117,14 +117,16 @@ fun AuthenticatedLoginFormPreview() {
 @Composable
 fun AuthenticatedLoadingLoginFormPreview() {
     MainTheme {
-        AuthenticatedLoginForm(
-            privateKey = "",
-            publicKey = "",
-            onSave = {},
-            onLogout = {},
-            onPrivateKeyChange = {},
-            onPublicKeyChange = {},
-            isLoading = true
-        )
+        Surface {
+            AuthenticatedLoginForm(
+                privateKey = "",
+                publicKey = "",
+                onSave = {},
+                onLogout = {},
+                onPrivateKeyChange = {},
+                onPublicKeyChange = {},
+                isLoading = true
+            )
+        }
     }
 }

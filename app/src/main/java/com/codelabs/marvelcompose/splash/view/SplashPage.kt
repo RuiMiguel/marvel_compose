@@ -41,7 +41,6 @@ fun SplashPage(
     navController: NavController? = null,
     splashViewModel: SplashViewModel = hiltViewModel(),
 ) {
-
     SplashTheme {
         SplashView(navController = navController, splashViewModel = splashViewModel)
     }

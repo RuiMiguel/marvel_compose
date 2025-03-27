@@ -1,4 +1,4 @@
-package com.codelabs.marvelcompose
+package com.codelabs.marvelcompose.base.ui
 
 import android.content.res.Configuration
 import androidx.compose.ui.tooling.preview.Preview

@@ -30,8 +30,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.codelabs.marvelcompose.R
 import com.codelabs.marvelcompose.navigation.PageRoute
-import com.codelabs.marvelcompose.splash.viewmodel.AutoLoginState
-import com.codelabs.marvelcompose.splash.viewmodel.AutoLoginViewModel
+import com.codelabs.marvelcompose.splash.viewmodel.SplashState
+import com.codelabs.marvelcompose.splash.viewmodel.SplashViewModel
 import com.codelabs.marvelcompose.ui.theme.Red
 import com.codelabs.marvelcompose.ui.theme.SplashTheme
 import com.codelabs.marvelcompose.ui.theme.White
@@ -39,40 +39,44 @@ import com.codelabs.marvelcompose.ui.theme.White
 @Composable
 fun SplashPage(
     navController: NavController? = null,
-    autoLoginViewModel: AutoLoginViewModel = hiltViewModel(),
+    splashViewModel: SplashViewModel = hiltViewModel(),
 ) {
 
     SplashTheme {
-        SplashView(navController = navController, autoLoginViewModel = autoLoginViewModel)
+        SplashView(navController = navController, splashViewModel = splashViewModel)
     }
 }
 
 @Composable
-fun SplashView(navController: NavController? = null, autoLoginViewModel: AutoLoginViewModel) {
-    val authState by autoLoginViewModel.state.collectAsState()
+fun SplashView(navController: NavController? = null, splashViewModel: SplashViewModel) {
+    val authState by splashViewModel.state.collectAsState()
 
+    // We want to start the auth flow as soon as the app starts. Only do this once.
     LaunchedEffect(Unit) {
-        autoLoginViewModel.autoLogin()
+        splashViewModel.autoLogin()
     }
 
     val snackbarHostState = remember { SnackbarHostState() }
     val defaultErrorMessage = stringResource(id = R.string.auto_login_fail)
 
+    // Wee only want to execute this code once, when the authState changes.
     LaunchedEffect(authState) {
         when (authState) {
-            AutoLoginState.Success -> {
+            SplashState.Success -> {
                 navController?.navigate(PageRoute.Home.route) {
                     popUpTo(PageRoute.Splash.route) { inclusive = true }
                 }
             }
-            is AutoLoginState.Error -> {
+
+            is SplashState.Error -> {
                 val errorMessage =
-                    (authState as? AutoLoginState.Error)?.message ?: defaultErrorMessage
+                    (authState as? SplashState.Error)?.message ?: defaultErrorMessage
                 snackbarHostState.showSnackbar(errorMessage, duration = SnackbarDuration.Short)
                 navController?.navigate(PageRoute.Login.route) {
                     popUpTo(PageRoute.Splash.route) { inclusive = true }
                 }
             }
+
             else -> Unit
         }
     }

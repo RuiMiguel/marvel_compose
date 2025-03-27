@@ -20,19 +20,19 @@ import org.junit.jupiter.api.TestInstance
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class AutoLoginViewModelTest {
+class SplashViewModelTest {
     @get:Rule
     val testCoroutinesRule = TestCoroutinesRule(testDispatcher = StandardTestDispatcher())
 
     private lateinit var authenticationRepository: AuthenticationRepository
 
-    private lateinit var autoLoginViewModel: AutoLoginViewModel
+    private lateinit var mSplashViewModel: SplashViewModel
 
     @BeforeEach
     fun setUp() {
         authenticationRepository = mockk(relaxed = true)
 
-        autoLoginViewModel = AutoLoginViewModel(
+        mSplashViewModel = SplashViewModel(
             authenticationRepository = authenticationRepository,
             dispatcher = testCoroutinesRule.testDispatcher,
         )
@@ -44,13 +44,13 @@ class AutoLoginViewModelTest {
         coEvery { authenticationRepository.publicKey() } returns "mockPublicKey"
         coEvery { authenticationRepository.login(any(), any()) } just Runs
 
-        autoLoginViewModel.autoLogin()
+        mSplashViewModel.autoLogin()
 
-        assertEquals(AutoLoginState.Loading, autoLoginViewModel.state.first())
+        assertEquals(SplashState.Loading, mSplashViewModel.state.first())
 
         advanceUntilIdle()
 
-        assertEquals(AutoLoginState.Success, autoLoginViewModel.state.first())
+        assertEquals(SplashState.Success, mSplashViewModel.state.first())
     }
 
     @Test
@@ -58,16 +58,16 @@ class AutoLoginViewModelTest {
         val errorMessage = "Login failed"
         coEvery { authenticationRepository.privateKey() } throws Exception(errorMessage)
 
-        autoLoginViewModel.autoLogin()
+        mSplashViewModel.autoLogin()
 
-        assertEquals(AutoLoginState.Loading, autoLoginViewModel.state.first())
+        assertEquals(SplashState.Loading, mSplashViewModel.state.first())
 
         advanceUntilIdle()
 
-        assertTrue(autoLoginViewModel.state.first() is AutoLoginState.Error)
+        assertTrue(mSplashViewModel.state.first() is SplashState.Error)
         assertEquals(
             errorMessage,
-            (autoLoginViewModel.state.first() as AutoLoginState.Error).message
+            (mSplashViewModel.state.first() as SplashState.Error).message
         )
     }
 }

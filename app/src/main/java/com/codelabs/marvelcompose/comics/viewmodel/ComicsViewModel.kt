@@ -3,7 +3,7 @@ package com.codelabs.marvelcompose.comics.viewmodel
 import androidx.lifecycle.viewModelScope
 import com.codelabs.comic_repository.repository.ComicRepository
 import com.codelabs.domain.model.DomainComic
-import com.codelabs.marvelcompose.base.BaseViewModel
+import com.codelabs.marvelcompose.base.viewmodel.BaseViewModel
 import com.codelabs.marvelcompose.di.IODispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher

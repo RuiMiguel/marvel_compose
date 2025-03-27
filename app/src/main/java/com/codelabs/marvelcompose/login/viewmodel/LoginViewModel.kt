@@ -4,7 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.codelabs.authentication_repository.AuthenticationRepository
 import com.codelabs.authentication_repository.model.PrivateKey
 import com.codelabs.authentication_repository.model.PublicKey
-import com.codelabs.marvelcompose.base.BaseViewModel
+import com.codelabs.marvelcompose.base.viewmodel.BaseViewModel
 import com.codelabs.marvelcompose.di.IODispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher

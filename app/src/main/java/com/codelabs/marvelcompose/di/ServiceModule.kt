@@ -6,15 +6,15 @@ import com.codelabs.api_client.service.ComicService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ViewModelComponent
-import dagger.hilt.android.scopes.ViewModelScoped
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
 @Module
-@InstallIn(ViewModelComponent::class)
+@InstallIn(SingletonComponent::class)
 object ServiceModule {
 
     @Provides
-    @ViewModelScoped
+    @Singleton
     fun provideComicService(
         apiClient: ApiClient
     ): ComicService {
@@ -22,7 +22,7 @@ object ServiceModule {
     }
 
     @Provides
-    @ViewModelScoped
+    @Singleton
     fun provideCharacterService(
         apiClient: ApiClient
     ): CharacterService {

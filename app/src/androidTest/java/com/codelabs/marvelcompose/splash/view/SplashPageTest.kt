@@ -10,8 +10,8 @@ import com.codelabs.marvelcompose.R
 import com.codelabs.marvelcompose.helpers.hasContentDescriptionAndRole
 import com.codelabs.marvelcompose.helpers.hasProgressBar
 import com.codelabs.marvelcompose.navigation.PageRoute
-import com.codelabs.marvelcompose.splash.viewmodel.AutoLoginState
-import com.codelabs.marvelcompose.splash.viewmodel.AutoLoginViewModel
+import com.codelabs.marvelcompose.splash.viewmodel.SplashState
+import com.codelabs.marvelcompose.splash.viewmodel.SplashViewModel
 import dagger.hilt.android.testing.HiltAndroidTest
 import io.mockk.every
 import io.mockk.mockk
@@ -31,21 +31,21 @@ class SplashPageTest {
     @get:Rule
     val composeTestRule = createAndroidComposeRule<ComponentActivity>()
 
-    private lateinit var autoLoginViewModel: AutoLoginViewModel
+    private lateinit var mSplashViewModel: SplashViewModel
     private lateinit var navController: NavHostController
 
     @Before
     fun setup() {
-        autoLoginViewModel = mockk(relaxed = true)
+        mSplashViewModel = mockk(relaxed = true)
         navController = mockk(relaxed = true)
     }
 
     @Test
     fun splashPage_showsImage() {
-        every { autoLoginViewModel.state } returns MutableStateFlow(AutoLoginState.Loading)
+        every { mSplashViewModel.state } returns MutableStateFlow(SplashState.Loading)
 
         composeTestRule.setContent {
-            SplashPage(autoLoginViewModel = autoLoginViewModel)
+            SplashPage(pSplashViewModel = mSplashViewModel)
         }
 
         val contentDescription = composeTestRule.activity.getString(R.string.app_name)
@@ -56,10 +56,10 @@ class SplashPageTest {
 
     @Test
     fun splashPage_showsLoadingIndicator_whenLoadingState() {
-        every { autoLoginViewModel.state } returns MutableStateFlow(AutoLoginState.Loading)
+        every { mSplashViewModel.state } returns MutableStateFlow(SplashState.Loading)
 
         composeTestRule.setContent {
-            SplashPage(autoLoginViewModel = autoLoginViewModel)
+            SplashPage(pSplashViewModel = mSplashViewModel)
         }
 
         composeTestRule.onNode(hasProgressBar())
@@ -69,14 +69,14 @@ class SplashPageTest {
     @Test
     fun splashPage_showsSnackbar_whenErrorState() = runTest {
         val errorMessage = "Login failed"
-        every { autoLoginViewModel.state } returns MutableStateFlow(
-            AutoLoginState.Error(
+        every { mSplashViewModel.state } returns MutableStateFlow(
+            SplashState.Error(
                 errorMessage
             )
         )
 
         composeTestRule.setContent {
-            SplashPage(autoLoginViewModel = autoLoginViewModel)
+            SplashPage(pSplashViewModel = mSplashViewModel)
         }
 
         composeTestRule.awaitIdle()
@@ -88,10 +88,10 @@ class SplashPageTest {
     @Test
     @Ignore("Verification failed call to navController was not called")
     fun splashPage_navigatesToHome_whenError() = runTest {
-        every { autoLoginViewModel.state } returns MutableStateFlow(AutoLoginState.Error("Login failed"))
+        every { mSplashViewModel.state } returns MutableStateFlow(SplashState.Error("Login failed"))
 
         composeTestRule.setContent {
-            SplashPage(navController = navController, autoLoginViewModel = autoLoginViewModel)
+            SplashPage(navController = navController, pSplashViewModel = mSplashViewModel)
         }
 
         composeTestRule.waitUntil(timeoutMillis = 5_000) {
@@ -110,10 +110,10 @@ class SplashPageTest {
     @Test
     @Ignore("Verification failed call to navController was not called")
     fun splashPage_navigatesToHome_whenSuccess() {
-        every { autoLoginViewModel.state } returns MutableStateFlow(AutoLoginState.Success)
+        every { mSplashViewModel.state } returns MutableStateFlow(SplashState.Success)
 
         composeTestRule.setContent {
-            SplashPage(navController = navController, autoLoginViewModel = autoLoginViewModel)
+            SplashPage(navController = navController, pSplashViewModel = mSplashViewModel)
         }
 
         verify {

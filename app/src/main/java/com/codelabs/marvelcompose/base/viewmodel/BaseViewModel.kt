@@ -1,4 +1,4 @@
-package com.codelabs.marvelcompose.base
+package com.codelabs.marvelcompose.base.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.ViewModel

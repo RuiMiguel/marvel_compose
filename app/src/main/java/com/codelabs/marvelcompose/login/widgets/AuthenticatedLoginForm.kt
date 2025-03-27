@@ -2,29 +2,23 @@ package com.codelabs.marvelcompose.login.widgets
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.codelabs.marvelcompose.DarkLightPreviews
 import com.codelabs.marvelcompose.R
-import com.codelabs.marvelcompose.ui.theme.Grey
-import com.codelabs.marvelcompose.ui.theme.LightGrey
+import com.codelabs.marvelcompose.base.ui.BaseButton
+import com.codelabs.marvelcompose.base.ui.BaseTextInput
 import com.codelabs.marvelcompose.ui.theme.MainTheme
 import com.codelabs.marvelcompose.ui.theme.Red
 import com.codelabs.marvelcompose.ui.theme.White
@@ -47,13 +41,13 @@ fun AuthenticatedLoginForm(
     ) {
         AuthenticatedDescription()
         Spacer(modifier = Modifier.size(20.dp))
-        LoginTextInput(
+        BaseTextInput(
             value = privateKey,
             label = stringResource(R.string.private_key),
             onValueChange = onPrivateKeyChange
         )
         Spacer(modifier = Modifier.size(30.dp))
-        LoginTextInput(
+        BaseTextInput(
             value = publicKey,
             label = stringResource(R.string.public_key),
             onValueChange = onPublicKeyChange
@@ -79,55 +73,29 @@ fun AuthenticatedDescription() {
     )
 }
 
-
 @Composable
 fun AuthenticatedButtons(
     onSave: () -> Unit,
     onLogout: () -> Unit,
     enabled: Boolean
 ) {
-    Row {
-        Button(
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(30.dp)
+    ) {
+        BaseButton(
+            modifier = Modifier.weight(1f),
             onClick = onSave,
             enabled = enabled,
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Red,
-                contentColor = White,
-                disabledContainerColor = Grey,
-                disabledContentColor = LightGrey
-            ),
-            contentPadding = PaddingValues(horizontal = 30.dp, vertical = 15.dp),
-            shape = RoundedCornerShape(12.dp),
-        ) {
-            Text(
-                stringResource(R.string.save),
-                fontSize = 24.sp,
-                style = MaterialTheme.typography.bodyMedium,
-                color = White
-            )
-        }
-        Spacer(modifier = Modifier.size(30.dp))
-        Button(
+            label = stringResource(R.string.save),
+        )
+        BaseButton(
+            modifier = Modifier.weight(1f),
             onClick = onLogout,
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Red,
-                contentColor = White,
-                disabledContainerColor = Grey,
-                disabledContentColor = LightGrey
-            ),
-            contentPadding = PaddingValues(horizontal = 30.dp, vertical = 15.dp),
-            shape = RoundedCornerShape(12.dp),
-        ) {
-            Text(
-                stringResource(R.string.logout),
-                fontSize = 24.sp,
-                style = MaterialTheme.typography.bodyMedium,
-                color = White
-            )
-        }
+            enabled = enabled,
+            label = stringResource(R.string.logout),
+        )
     }
 }
-
 
 @DarkLightPreviews
 @Composable

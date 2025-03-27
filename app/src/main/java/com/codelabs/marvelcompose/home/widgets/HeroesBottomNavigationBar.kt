@@ -33,50 +33,52 @@ import com.codelabs.marvelcompose.ui.theme.LightRed
 import com.codelabs.marvelcompose.ui.theme.LightYellow
 import com.codelabs.marvelcompose.ui.theme.MainTheme
 import com.codelabs.marvelcompose.ui.theme.Red
-import com.codelabs.marvelcompose.ui.theme.Typography
 
 enum class Section(val color: Color) {
-    characters(LightBlue), comics(LightGreen), series(LightYellow), stories(
-        LightRed
-    )
+    Characters(LightBlue),
+    Comics(LightGreen),
+    Series(LightYellow),
+    Stories(LightRed)
 }
 
-sealed class HeroeBottomNavigationItem(
+sealed class HeroesBottomNavigationItem(
     @StringRes val label: Int,
     @DrawableRes val image: Int,
     val color: Color,
 ) {
-    data object Characters : HeroeBottomNavigationItem(
+    data object Characters : HeroesBottomNavigationItem(
         label = R.string.menu_characters,
         image = R.drawable.captain_america,
-        color = Section.characters.color
+        color = Section.Characters.color
     )
 
-    data object Comics : HeroeBottomNavigationItem(
+    data object Comics : HeroesBottomNavigationItem(
         label = R.string.menu_comics,
         image = R.drawable.hulk,
-        color = Section.comics.color
+        color = Section.Comics.color
     )
 
-    data object Series : HeroeBottomNavigationItem(
+    data object Series : HeroesBottomNavigationItem(
         label = R.string.menu_series,
         image = R.drawable.thor,
-        color = Section.series.color
+        color = Section.Series.color
     )
 
-    data object Stories : HeroeBottomNavigationItem(
+    data object Stories : HeroesBottomNavigationItem(
         label = R.string.menu_stories,
         image = R.drawable.iron_man,
-        color = Section.stories.color
+        color = Section.Stories.color
     )
 }
 
 @Composable
 fun HeroesBottomNavigationBar(
-    sectionViewModel: SectionViewModel,
-    items: List<HeroeBottomNavigationItem>
+    items: List<HeroesBottomNavigationItem>,
+    isItemSelected: (HeroesBottomNavigationItem) -> Boolean = { false },
+    onItemClick: (HeroesBottomNavigationItem) -> Unit,
+    modifier: Modifier = Modifier
 ) {
-    Column(modifier = Modifier.fillMaxWidth()) {
+    Column(modifier = modifier.fillMaxWidth()) {
         Box(
             modifier = Modifier
                 .background(Red)
@@ -100,7 +102,7 @@ fun HeroesBottomNavigationBar(
                         label = {
                             Text(
                                 text = stringResource(it.label),
-                                style = Typography.titleLarge
+                                style = MaterialTheme.typography.titleLarge
                             )
                         },
                         icon = {
@@ -112,10 +114,8 @@ fun HeroesBottomNavigationBar(
                                 contentDescription = stringResource(it.label)
                             )
                         },
-                        selected = sectionViewModel.selectedItem == it,
-                        onClick = {
-                            sectionViewModel.selectedItem = it
-                        },
+                        selected = isItemSelected(it),
+                        onClick = { onItemClick(it) },
                     )
                 }
             }
@@ -127,18 +127,15 @@ fun HeroesBottomNavigationBar(
 @DarkLightPreviews
 @Composable
 fun CharactersHeroesBottomNavigationBarPreview() {
-    val sectionViewModel = SectionViewModel().apply {
-        selectedItem = HeroeBottomNavigationItem.Characters
-    }
-
-    MainTheme {
+   MainTheme {
         HeroesBottomNavigationBar(
-            sectionViewModel = sectionViewModel,
+            isItemSelected = { it == HeroesBottomNavigationItem.Characters },
+            onItemClick = {},
             items = listOf(
-                HeroeBottomNavigationItem.Characters,
-                HeroeBottomNavigationItem.Comics,
-                HeroeBottomNavigationItem.Series,
-                HeroeBottomNavigationItem.Stories,
+                HeroesBottomNavigationItem.Characters,
+                HeroesBottomNavigationItem.Comics,
+                HeroesBottomNavigationItem.Series,
+                HeroesBottomNavigationItem.Stories,
             )
         )
     }
@@ -147,18 +144,15 @@ fun CharactersHeroesBottomNavigationBarPreview() {
 @DarkLightPreviews
 @Composable
 fun ComicsHeroesBottomNavigationBarPreview() {
-    val sectionViewModel = SectionViewModel().apply {
-        selectedItem = HeroeBottomNavigationItem.Comics
-    }
-
-    MainTheme {
+   MainTheme {
         HeroesBottomNavigationBar(
-            sectionViewModel = sectionViewModel,
+            isItemSelected = { it == HeroesBottomNavigationItem.Comics },
+            onItemClick = {},
             items = listOf(
-                HeroeBottomNavigationItem.Characters,
-                HeroeBottomNavigationItem.Comics,
-                HeroeBottomNavigationItem.Series,
-                HeroeBottomNavigationItem.Stories,
+                HeroesBottomNavigationItem.Characters,
+                HeroesBottomNavigationItem.Comics,
+                HeroesBottomNavigationItem.Series,
+                HeroesBottomNavigationItem.Stories,
             )
         )
     }
@@ -167,18 +161,15 @@ fun ComicsHeroesBottomNavigationBarPreview() {
 @DarkLightPreviews
 @Composable
 fun SeriesHeroesBottomNavigationBarPreview() {
-    val sectionViewModel = SectionViewModel().apply {
-        selectedItem = HeroeBottomNavigationItem.Series
-    }
-
     MainTheme {
         HeroesBottomNavigationBar(
-            sectionViewModel = sectionViewModel,
+            isItemSelected = { it == HeroesBottomNavigationItem.Series },
+            onItemClick = {},
             items = listOf(
-                HeroeBottomNavigationItem.Characters,
-                HeroeBottomNavigationItem.Comics,
-                HeroeBottomNavigationItem.Series,
-                HeroeBottomNavigationItem.Stories,
+                HeroesBottomNavigationItem.Characters,
+                HeroesBottomNavigationItem.Comics,
+                HeroesBottomNavigationItem.Series,
+                HeroesBottomNavigationItem.Stories,
             )
         )
     }
@@ -187,18 +178,15 @@ fun SeriesHeroesBottomNavigationBarPreview() {
 @DarkLightPreviews
 @Composable
 fun StoriesHeroesBottomNavigationBarPreview() {
-    val sectionViewModel = SectionViewModel().apply {
-        selectedItem = HeroeBottomNavigationItem.Stories
-    }
-
     MainTheme {
         HeroesBottomNavigationBar(
-            sectionViewModel = sectionViewModel,
+            isItemSelected = { it == HeroesBottomNavigationItem.Stories },
+            onItemClick = {},
             items = listOf(
-                HeroeBottomNavigationItem.Characters,
-                HeroeBottomNavigationItem.Comics,
-                HeroeBottomNavigationItem.Series,
-                HeroeBottomNavigationItem.Stories,
+                HeroesBottomNavigationItem.Characters,
+                HeroesBottomNavigationItem.Comics,
+                HeroesBottomNavigationItem.Series,
+                HeroesBottomNavigationItem.Stories,
             )
         )
     }

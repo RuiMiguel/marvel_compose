@@ -14,7 +14,7 @@ import com.codelabs.marvelcompose.base.ui.DarkLightPreviews
 import com.codelabs.marvelcompose.characters.view.CharactersPage
 import com.codelabs.marvelcompose.comics.view.ComicsPage
 import com.codelabs.marvelcompose.home.viewmodel.SectionViewModel
-import com.codelabs.marvelcompose.home.widgets.HeroeBottomNavigationItem
+import com.codelabs.marvelcompose.home.widgets.HeroesBottomNavigationItem
 import com.codelabs.marvelcompose.home.widgets.HeroesAppBar
 import com.codelabs.marvelcompose.home.widgets.HeroesBottomNavigationBar
 import com.codelabs.marvelcompose.navigation.PageRoute
@@ -24,10 +24,8 @@ import com.codelabs.marvelcompose.ui.theme.MainTheme
 
 @Composable
 fun HomePage(navController: NavController? = null) {
-    val sectionViewModel = hiltViewModel<SectionViewModel>()
-
     MainTheme {
-        HomeView(navController = navController, sectionViewModel = sectionViewModel)
+        HomeView(navController = navController, sectionViewModel = hiltViewModel())
     }
 }
 
@@ -47,23 +45,24 @@ fun HomeView(navController: NavController? = null, sectionViewModel: SectionView
         },
         bottomBar = {
             HeroesBottomNavigationBar(
-                sectionViewModel = sectionViewModel,
+                isItemSelected = { sectionViewModel.selectedNavigationItem == it },
+                onItemClick = sectionViewModel::selectNavigationItem,
                 items = listOf(
-                    HeroeBottomNavigationItem.Characters,
-                    HeroeBottomNavigationItem.Comics,
-                    HeroeBottomNavigationItem.Series,
-                    HeroeBottomNavigationItem.Stories,
+                    HeroesBottomNavigationItem.Characters,
+                    HeroesBottomNavigationItem.Comics,
+                    HeroesBottomNavigationItem.Series,
+                    HeroesBottomNavigationItem.Stories,
                 ),
             )
         },
     ) { innerPadding ->
         Box(modifier = Modifier.padding(innerPadding)) {
             Surface(color = MaterialTheme.colorScheme.background) {
-                when (sectionViewModel.selectedItem) {
-                    HeroeBottomNavigationItem.Characters -> CharactersPage()
-                    HeroeBottomNavigationItem.Comics -> ComicsPage()
-                    HeroeBottomNavigationItem.Series -> SeriesPage()
-                    HeroeBottomNavigationItem.Stories -> StoriesPage()
+                when (sectionViewModel.selectedNavigationItem) {
+                    HeroesBottomNavigationItem.Characters -> CharactersPage()
+                    HeroesBottomNavigationItem.Comics -> ComicsPage()
+                    HeroesBottomNavigationItem.Series -> SeriesPage()
+                    HeroesBottomNavigationItem.Stories -> StoriesPage()
                 }
             }
         }

@@ -23,6 +23,7 @@ junitVintageEngine = "5.12.0"
 kluent = "1.73"
 kotlin = "2.0.0"
 kotlinxCoroutines = "1.10.1"
+kotlinxCollectionsImmutable = "0.3.5"
 #kotlinTest = "1.12.0"
 ksp= "2.0.0-1.0.23"
 lifecycleRuntimeKtx = "2.8.7"
@@ -90,6 +91,7 @@ junit-jupiter-params = { module = "org.junit.jupiter:junit-jupiter-params", vers
 junit-platform-suite-engine = { module = "org.junit.platform:junit-platform-suite-engine", version.ref = "junitPlatformSuiteEngine" }
 junit-vintage-engine = { module = "org.junit.vintage:junit-vintage-engine", version.ref = "junitVintageEngine" }
 kluent = { module = "org.amshove.kluent:kluent", version.ref = "kluent" }
+kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlinxCollectionsImmutable" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutines" }
 kotlinx-coroutines-core-jvm = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm", version.ref = "kotlinxCoroutines" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }

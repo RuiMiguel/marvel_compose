@@ -13,8 +13,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
-// TODO(ruimiguel): try to use Navigator from screens instead of NavHostController
-class Navigator(val navController: NavHostController) {
+class Navigator(private val navController: NavHostController) {
     private val _sharedFlow =
         MutableSharedFlow<PageRoute>(extraBufferCapacity = 1)
     val sharedFlow = _sharedFlow.asSharedFlow()

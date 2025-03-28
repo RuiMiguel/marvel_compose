@@ -17,6 +17,8 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,7 +27,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.codelabs.marvelcompose.R
 import com.codelabs.marvelcompose.base.ui.DarkLightPreviews
-import com.codelabs.marvelcompose.home.viewmodel.SectionViewModel
 import com.codelabs.marvelcompose.ui.theme.LightBlue
 import com.codelabs.marvelcompose.ui.theme.LightGreen
 import com.codelabs.marvelcompose.ui.theme.LightGrey
@@ -33,6 +34,8 @@ import com.codelabs.marvelcompose.ui.theme.LightRed
 import com.codelabs.marvelcompose.ui.theme.LightYellow
 import com.codelabs.marvelcompose.ui.theme.MainTheme
 import com.codelabs.marvelcompose.ui.theme.Red
+import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.persistentListOf
 
 enum class Section(val color: Color) {
     Characters(LightBlue),
@@ -44,7 +47,7 @@ enum class Section(val color: Color) {
 sealed class HeroesBottomNavigationItem(
     @StringRes val label: Int,
     @DrawableRes val image: Int,
-    val color: Color,
+    val color: Color
 ) {
     data object Characters : HeroesBottomNavigationItem(
         label = R.string.menu_characters,
@@ -73,10 +76,10 @@ sealed class HeroesBottomNavigationItem(
 
 @Composable
 fun HeroesBottomNavigationBar(
-    items: List<HeroesBottomNavigationItem>,
+    items: PersistentList<HeroesBottomNavigationItem>,
+    modifier: Modifier = Modifier,
     isItemSelected: (HeroesBottomNavigationItem) -> Boolean = { false },
-    onItemClick: (HeroesBottomNavigationItem) -> Unit,
-    modifier: Modifier = Modifier
+    onItemClick: (HeroesBottomNavigationItem) -> Unit
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
         Box(
@@ -127,11 +130,11 @@ fun HeroesBottomNavigationBar(
 @DarkLightPreviews
 @Composable
 fun CharactersHeroesBottomNavigationBarPreview() {
-   MainTheme {
+    MainTheme {
         HeroesBottomNavigationBar(
             isItemSelected = { it == HeroesBottomNavigationItem.Characters },
             onItemClick = {},
-            items = listOf(
+            items = persistentListOf(
                 HeroesBottomNavigationItem.Characters,
                 HeroesBottomNavigationItem.Comics,
                 HeroesBottomNavigationItem.Series,
@@ -144,11 +147,11 @@ fun CharactersHeroesBottomNavigationBarPreview() {
 @DarkLightPreviews
 @Composable
 fun ComicsHeroesBottomNavigationBarPreview() {
-   MainTheme {
+    MainTheme {
         HeroesBottomNavigationBar(
             isItemSelected = { it == HeroesBottomNavigationItem.Comics },
             onItemClick = {},
-            items = listOf(
+            items = persistentListOf(
                 HeroesBottomNavigationItem.Characters,
                 HeroesBottomNavigationItem.Comics,
                 HeroesBottomNavigationItem.Series,
@@ -165,7 +168,7 @@ fun SeriesHeroesBottomNavigationBarPreview() {
         HeroesBottomNavigationBar(
             isItemSelected = { it == HeroesBottomNavigationItem.Series },
             onItemClick = {},
-            items = listOf(
+            items = persistentListOf(
                 HeroesBottomNavigationItem.Characters,
                 HeroesBottomNavigationItem.Comics,
                 HeroesBottomNavigationItem.Series,
@@ -182,7 +185,7 @@ fun StoriesHeroesBottomNavigationBarPreview() {
         HeroesBottomNavigationBar(
             isItemSelected = { it == HeroesBottomNavigationItem.Stories },
             onItemClick = {},
-            items = listOf(
+            items = persistentListOf(
                 HeroesBottomNavigationItem.Characters,
                 HeroesBottomNavigationItem.Comics,
                 HeroesBottomNavigationItem.Series,

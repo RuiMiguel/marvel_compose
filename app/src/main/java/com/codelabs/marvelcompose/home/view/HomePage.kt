@@ -7,6 +7,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.codelabs.marvelcompose.base.ui.DarkLightPreviews
@@ -20,6 +21,7 @@ import com.codelabs.marvelcompose.navigation.Navigator
 import com.codelabs.marvelcompose.series.view.SeriesPage
 import com.codelabs.marvelcompose.stories.view.StoriesPage
 import com.codelabs.marvelcompose.ui.theme.MainTheme
+import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 fun HomePage(navigator: Navigator? = null) {
@@ -30,6 +32,15 @@ fun HomePage(navigator: Navigator? = null) {
 
 @Composable
 fun HomeView(navigator: Navigator? = null, sectionViewModel: SectionViewModel) {
+    val bottomNavItems = remember {
+        persistentListOf(
+            HeroesBottomNavigationItem.Characters,
+            HeroesBottomNavigationItem.Comics,
+            HeroesBottomNavigationItem.Series,
+            HeroesBottomNavigationItem.Stories,
+        )
+    }
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -44,12 +55,7 @@ fun HomeView(navigator: Navigator? = null, sectionViewModel: SectionViewModel) {
             HeroesBottomNavigationBar(
                 isItemSelected = { sectionViewModel.selectedNavigationItem == it },
                 onItemClick = sectionViewModel::selectNavigationItem,
-                items = listOf(
-                    HeroesBottomNavigationItem.Characters,
-                    HeroesBottomNavigationItem.Comics,
-                    HeroesBottomNavigationItem.Series,
-                    HeroesBottomNavigationItem.Stories,
-                ),
+                items = bottomNavItems,
             )
         },
     ) { innerPadding ->

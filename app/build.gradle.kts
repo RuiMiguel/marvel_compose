@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.ksp)
     alias(libs.plugins.dagger.hilt)
+    id("dev.shreyaspatil.compose-compiler-report-generator") version "1.4.1"
 }
 
 android {
@@ -45,6 +46,9 @@ android {
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.15"
+    }
+    composeCompiler {
+        enableStrongSkippingMode = true
     }
     packaging {
         resources {

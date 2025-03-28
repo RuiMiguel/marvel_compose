@@ -17,23 +17,15 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
-import com.codelabs.authentication_repository.model.PrivateKey
-import com.codelabs.authentication_repository.model.PublicKey
-import com.codelabs.authentication_repository.model.User
-import com.codelabs.marvelcompose.base.ui.DarkLightPreviews
 import com.codelabs.marvelcompose.R
 import com.codelabs.marvelcompose.home.widgets.HeroesAppBar
 import com.codelabs.marvelcompose.login.viewmodel.LoginStatus
 import com.codelabs.marvelcompose.login.viewmodel.LoginViewModel
 import com.codelabs.marvelcompose.login.widgets.AuthenticatedLoginForm
 import com.codelabs.marvelcompose.login.widgets.UnauthenticatedLoginForm
-import com.codelabs.marvelcompose.main.viewmodel.AuthenticationStatus
 import com.codelabs.marvelcompose.main.viewmodel.AuthenticationViewModel
 import com.codelabs.marvelcompose.navigation.PageRoute
 import com.codelabs.marvelcompose.ui.theme.MainTheme
-import io.mockk.every
-import io.mockk.mockk
-import kotlinx.coroutines.flow.MutableStateFlow
 
 @Composable
 fun LoginPage(
@@ -85,21 +77,26 @@ fun LoginView(
             val isAuthenticated = authenticationStatus.isAuthenticated
             val isLoading = loginStatus.isLoading
 
-            LaunchedEffect(userPrivateKey, userPublicKey){
+            LaunchedEffect(userPrivateKey, userPublicKey) {
                 loginViewModel.publicKeyChange(userPublicKey)
                 loginViewModel.privateKeyChange(userPrivateKey)
             }
 
-            LaunchedEffect(loginStatus){
+            LaunchedEffect(loginStatus) {
                 when (loginStatus) {
                     is LoginStatus.Success -> {
                         navController?.navigate(PageRoute.Home.route) {
                             popUpTo(PageRoute.Home.route) { inclusive = true }
                         }
                     }
+
                     is LoginStatus.Error -> {
-                        snackbarHostState.showSnackbar(defaultErrorMessage, duration = SnackbarDuration.Short)
+                        snackbarHostState.showSnackbar(
+                            defaultErrorMessage,
+                            duration = SnackbarDuration.Short
+                        )
                     }
+
                     else -> Unit
                 }
             }
@@ -120,59 +117,10 @@ fun LoginView(
                     publicKey = publicKey,
                     onLogin = { loginViewModel.login() },
                     onPublicKeyChange = loginViewModel::publicKeyChange,
-                    onPrivateKeyChange = loginViewModel::privateKeyChange ,
+                    onPrivateKeyChange = loginViewModel::privateKeyChange,
                     isLoading = isLoading
                 )
             }
         }
-    }
-}
-
-@DarkLightPreviews
-@Composable
-fun AuthenticatedLoginPagePreview() {
-    val authenticationViewModel = mockk<AuthenticationViewModel>(relaxed = true)
-    val loginViewModel = mockk<LoginViewModel>(relaxed = true)
-
-    val authStateFlow =
-        MutableStateFlow(
-            AuthenticationStatus.Authenticated(
-                user = User(
-                    publicKey = PublicKey("publicKey"),
-                    privateKey = PrivateKey("privateKey")
-                )
-            )
-        )
-    val loginStatusFlow = MutableStateFlow(LoginStatus.Success)
-
-    every { authenticationViewModel.status } returns authStateFlow
-    every { loginViewModel.status } returns loginStatusFlow
-
-    MainTheme {
-        LoginPage(
-            loginViewModel = loginViewModel,
-            authenticationViewModel = authenticationViewModel
-        )
-    }
-}
-
-@DarkLightPreviews
-@Composable
-fun UnauthenticatedLoginPagePreview() {
-    val authenticationViewModel = mockk<AuthenticationViewModel>(relaxed = true)
-    val loginViewModel = mockk<LoginViewModel>(relaxed = true)
-
-    val authStateFlow =
-        MutableStateFlow(AuthenticationStatus.Unauthenticated)
-    val loginStatusFlow = MutableStateFlow(LoginStatus.Success)
-
-    every { authenticationViewModel.status } returns authStateFlow
-    every { loginViewModel.status } returns loginStatusFlow
-
-    MainTheme {
-        LoginPage(
-            loginViewModel = loginViewModel,
-            authenticationViewModel = authenticationViewModel
-        )
     }
 }

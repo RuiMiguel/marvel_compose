@@ -27,9 +27,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import com.codelabs.marvelcompose.R
-import com.codelabs.marvelcompose.navigation.PageRoute
+import com.codelabs.marvelcompose.navigation.Navigator
 import com.codelabs.marvelcompose.splash.viewmodel.SplashState
 import com.codelabs.marvelcompose.splash.viewmodel.SplashViewModel
 import com.codelabs.marvelcompose.ui.theme.Red
@@ -38,16 +37,16 @@ import com.codelabs.marvelcompose.ui.theme.White
 
 @Composable
 fun SplashPage(
-    navController: NavController? = null,
+    navigator: Navigator,
     splashViewModel: SplashViewModel = hiltViewModel(),
 ) {
     SplashTheme {
-        SplashView(navController = navController, splashViewModel = splashViewModel)
+        SplashView(navigator = navigator, splashViewModel = splashViewModel)
     }
 }
 
 @Composable
-fun SplashView(navController: NavController? = null, splashViewModel: SplashViewModel) {
+fun SplashView(navigator: Navigator, splashViewModel: SplashViewModel) {
     val authState by splashViewModel.state.collectAsState()
 
     // We want to start the auth flow as soon as the app starts. Only do this once.
@@ -62,18 +61,14 @@ fun SplashView(navController: NavController? = null, splashViewModel: SplashView
     LaunchedEffect(authState) {
         when (authState) {
             SplashState.Success -> {
-                navController?.navigate(PageRoute.Home.route) {
-                    popUpTo(PageRoute.Splash.route) { inclusive = true }
-                }
+                navigator.fromSplashToHome()
             }
 
             is SplashState.Error -> {
                 val errorMessage =
                     (authState as? SplashState.Error)?.message ?: defaultErrorMessage
                 snackbarHostState.showSnackbar(errorMessage, duration = SnackbarDuration.Short)
-                navController?.navigate(PageRoute.Login.route) {
-                    popUpTo(PageRoute.Splash.route) { inclusive = true }
-                }
+                navigator.fromSplashToLogin()
             }
 
             else -> Unit

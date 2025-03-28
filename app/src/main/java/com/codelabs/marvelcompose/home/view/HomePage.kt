@@ -9,37 +9,34 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import com.codelabs.marvelcompose.base.ui.DarkLightPreviews
 import com.codelabs.marvelcompose.characters.view.CharactersPage
 import com.codelabs.marvelcompose.comics.view.ComicsPage
 import com.codelabs.marvelcompose.home.viewmodel.SectionViewModel
-import com.codelabs.marvelcompose.home.widgets.HeroesBottomNavigationItem
 import com.codelabs.marvelcompose.home.widgets.HeroesAppBar
 import com.codelabs.marvelcompose.home.widgets.HeroesBottomNavigationBar
-import com.codelabs.marvelcompose.navigation.PageRoute
+import com.codelabs.marvelcompose.home.widgets.HeroesBottomNavigationItem
+import com.codelabs.marvelcompose.navigation.Navigator
 import com.codelabs.marvelcompose.series.view.SeriesPage
 import com.codelabs.marvelcompose.stories.view.StoriesPage
 import com.codelabs.marvelcompose.ui.theme.MainTheme
 
 @Composable
-fun HomePage(navController: NavController? = null) {
+fun HomePage(navigator: Navigator? = null) {
     MainTheme {
-        HomeView(navController = navController, sectionViewModel = hiltViewModel())
+        HomeView(navigator = navigator, sectionViewModel = hiltViewModel())
     }
 }
 
 @Composable
-fun HomeView(navController: NavController? = null, sectionViewModel: SectionViewModel) {
+fun HomeView(navigator: Navigator? = null, sectionViewModel: SectionViewModel) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
             HeroesAppBar(
                 withActions = true,
                 onLoginAction = {
-                    navController?.navigate(PageRoute.Login.route) {
-                        popUpTo(PageRoute.Splash.route) { inclusive = true }
-                    }
+                    navigator?.toLogin()
                 },
             )
         },

@@ -1,120 +1,96 @@
 package com.codelabs.marvelcompose.navigation
 
-import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
-import androidx.navigation.NavOptionsBuilder
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.slot
-import io.mockk.verify
-import org.amshove.kluent.internal.assertEquals
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import kotlin.test.assertEquals
 
 internal class NavigatorTest {
-    private lateinit var mockNavController: NavHostController
+    private lateinit var navController: NavHostController
     private lateinit var navigator: Navigator
 
     @BeforeEach
-    fun setup() {
-        mockNavController = mockk {
-            every { popBackStack() } returns true
-            every { navigate(any<String>()) } returns Unit
-            every { navigate(any<String>(), any<NavOptionsBuilder.() -> Unit>()) } returns Unit
-            every { previousBackStackEntry } returns null
+    fun setUp() {
+        navController =mockk {
+            every { previousBackStackEntry } returns mockk()
         }
-        navigator = Navigator(mockNavController)
-    }
-
-    @Test
-    fun `canPop returns false when there is no previous back stack entry`() {
-        assert(!navigator.canPop)
+        navigator = Navigator(navController)
     }
 
     @Test
     fun `canPop returns true when there is a previous back stack entry`() {
-        mockNavController = mockk {
-            every { popBackStack() } returns true
-            every { previousBackStackEntry } returns mockk<NavBackStackEntry>()
-        }
-        navigator = Navigator(mockNavController)
-
         assert(navigator.canPop)
     }
 
     @Test
-    fun `goBack calls popBackStack on navController`() {
+    fun `canPop returns false when there is no previous back stack entry`() {
+        navController = mockk {
+            every { previousBackStackEntry } returns null
+        }
+        navigator = Navigator(navController)
+
+        assert(!navigator.canPop)
+    }
+
+    @Test
+    fun `goBack emits GoBack event`() = runTest {
         navigator.goBack()
-        verify { mockNavController.popBackStack() }
+        val emittedEvent = navigator.sharedFlow.replayCache.lastOrNull()
+        assertEquals(PageRoute.GoBack, emittedEvent)
     }
 
     @Test
-    fun `fromSplashToHome navigates to Home and pops up to Splash`() {
-        val expectedOptions: (NavOptionsBuilder.() -> Unit) = {
-            popUpTo(PageRoute.Splash.route) { inclusive = true }
-        }
-
+    fun `fromSplashToHome emits Home event`() {
         navigator.fromSplashToHome()
-
-        val optionsSlot = slot<NavOptionsBuilder.() -> Unit>()
-
-        verify {
-            mockNavController.navigate(
-                PageRoute.Home.route,
-                capture(optionsSlot)
-            )
-        }
-
-        val actualOptionsBuilder = NavOptionsBuilder().apply(optionsSlot.captured)
-        val expectedOptionsBuilder = NavOptionsBuilder().apply(expectedOptions)
-        assertEquals(expectedOptionsBuilder.popUpToRoute, actualOptionsBuilder.popUpToRoute)
+        val emittedEvent = navigator.sharedFlow.replayCache.lastOrNull()
+        assertEquals(PageRoute.Home, emittedEvent)
     }
 
     @Test
-    fun `fromSplashToLogin navigates to Login and pops up to Splash`() {
-        val expectedOptions: (NavOptionsBuilder.() -> Unit) = {
-            popUpTo(PageRoute.Splash.route) { inclusive = true }
-        }
-
+    fun `fromSplashToLogin emits Login event`() {
         navigator.fromSplashToLogin()
-
-        val optionsSlot = slot<NavOptionsBuilder.() -> Unit>()
-        verify {
-            mockNavController.navigate(
-                PageRoute.Login.route,
-                capture(optionsSlot)
-            )
-        }
-
-        val actualOptionsBuilder = NavOptionsBuilder().apply(optionsSlot.captured)
-        val expectedOptionsBuilder = NavOptionsBuilder().apply(expectedOptions)
-        assertEquals(expectedOptionsBuilder.popUpToRoute, actualOptionsBuilder.popUpToRoute)
+        val emittedEvent = navigator.sharedFlow.replayCache.lastOrNull()
+        assertEquals(PageRoute.Login, emittedEvent)
     }
 
     @Test
-    fun `toLogin navigates to Login`() {
+    fun `toLogin emits Login event`() {
         navigator.toLogin()
-        verify { mockNavController.navigate(PageRoute.Login.route) }
+        val emittedEvent = navigator.sharedFlow.replayCache.lastOrNull()
+        assertEquals(PageRoute.Login, emittedEvent)
     }
 
     @Test
-    fun `toHome navigates to Home and pops up to Login`() {
-        val expectedOptions: (NavOptionsBuilder.() -> Unit) = {
-            popUpTo(PageRoute.Login.route) { inclusive = true }
-        }
-
+    fun `toHome emits Home event`() {
         navigator.toHome()
-
-        val optionsSlot = slot<NavOptionsBuilder.() -> Unit>()
-        verify {
-            mockNavController.navigate(
-                PageRoute.Home.route,
-                capture(optionsSlot)
-            )
-        }
-
-        val actualOptionsBuilder = NavOptionsBuilder().apply(optionsSlot.captured)
-        val expectedOptionsBuilder = NavOptionsBuilder().apply(expectedOptions)
-        assertEquals(expectedOptionsBuilder.popUpToRoute, actualOptionsBuilder.popUpToRoute)
+        val emittedEvent = navigator.sharedFlow.replayCache.lastOrNull()
+        assertEquals(PageRoute.Home, emittedEvent)
     }
 }
+
+/**{
+val expectedOptions: (NavOptionsBuilder.() -> Unit) = {
+popUpTo(PageRoute.Splash.route) { inclusive = true }
+}
+
+navigator.fromSplashToHome()
+
+val optionsSlot = slot<NavOptionsBuilder.() -> Unit>()
+
+verify {
+mockNavController.navigate(
+PageRoute.Home.route,
+capture(optionsSlot)
+)
+}
+
+val actualOptionsBuilder = NavOptionsBuilder().apply(optionsSlot.captured)
+val expectedOptionsBuilder = NavOptionsBuilder().apply(expectedOptions)
+assertEquals(expectedOptionsBuilder.popUpToRoute, actualOptionsBuilder.popUpToRoute)
+}*/

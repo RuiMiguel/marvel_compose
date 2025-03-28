@@ -2,6 +2,10 @@ package com.codelabs.marvelcompose.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -13,11 +17,22 @@ import kotlinx.coroutines.flow.onEach
 
 @Composable
 fun AppNavigation(navController: NavHostController, navigator: Navigator) {
-    LaunchedEffect("navigation") {
+    LaunchedEffect(navigator) {
         navigator.sharedFlow.onEach { pageRoute ->
-            navController.navigate(pageRoute.route) {
-                pageRoute.popUpTo?.let {
-                    popUpTo(it.route) { inclusive = pageRoute.inclusive }
+            when (pageRoute) {
+                PageRoute.Home -> {
+                    navController.navigate(PageRoute.Home.route) {
+                        popUpTo(navController.graph.startDestinationId) { inclusive = true }
+                    }
+                }
+                PageRoute.Login -> {
+                    navController.navigate(PageRoute.Login.route)
+                }
+                is PageRoute.GoBack -> {
+                    navController.popBackStack()
+                }
+                else -> {
+                    navController.navigate(pageRoute.route)
                 }
             }
         }.launchIn(this)
@@ -39,4 +54,6 @@ sealed class PageRoute(
     data object Splash : PageRoute("splash")
     data object Home : PageRoute("home", popUpTo = Splash, inclusive = true)
     data object Login : PageRoute("login")
+
+    data object GoBack: PageRoute("goBack")
 }

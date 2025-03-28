@@ -46,9 +46,7 @@ fun HomeView(navigator: Navigator? = null, sectionViewModel: SectionViewModel) {
         topBar = {
             HeroesAppBar(
                 withActions = true,
-                onLoginAction = {
-                    navigator?.toLogin()
-                },
+                onLoginAction = { navigator?.toLogin() },
             )
         },
         bottomBar = {

@@ -13,28 +13,24 @@ class Navigator(private val navController: NavHostController) {
         get() = navController.previousBackStackEntry != null
 
     fun goBack() {
-        navController.popBackStack()
+        if (canPop) {
+            _sharedFlow.tryEmit(PageRoute.GoBack)
+        }
     }
 
     fun fromSplashToHome() {
-        navController.navigate(PageRoute.Home.route) {
-            popUpTo(PageRoute.Splash.route) { inclusive = true }
-        }
+        _sharedFlow.tryEmit(PageRoute.Home)
     }
 
     fun fromSplashToLogin() {
-        navController.navigate(PageRoute.Login.route) {
-            popUpTo(PageRoute.Splash.route) { inclusive = true }
-        }
+        _sharedFlow.tryEmit(PageRoute.Login)
     }
 
     fun toLogin() {
-        navController.navigate(PageRoute.Login.route)
+        _sharedFlow.tryEmit(PageRoute.Login)
     }
 
     fun toHome() {
-        navController.navigate(PageRoute.Home.route) {
-            popUpTo(PageRoute.Login.route) { inclusive = true }
-        }
+        _sharedFlow.tryEmit(PageRoute.Home)
     }
 }

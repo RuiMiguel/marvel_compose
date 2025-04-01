@@ -38,9 +38,8 @@ import com.codelabs.marvelcompose.ui.theme.White
 @Composable
 fun SplashPage(
     navigator: Navigator,
+    splashViewModel: SplashViewModel = hiltViewModel()
 ) {
-    val splashViewModel: SplashViewModel = hiltViewModel()
-
     SplashTheme {
         SplashView(navigator = navigator, splashViewModel = splashViewModel)
     }

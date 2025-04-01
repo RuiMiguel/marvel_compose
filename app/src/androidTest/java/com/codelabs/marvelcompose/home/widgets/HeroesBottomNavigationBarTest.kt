@@ -10,6 +10,7 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import com.codelabs.marvelcompose.R
 import com.codelabs.marvelcompose.ui.theme.MainTheme
+import kotlinx.collections.immutable.persistentListOf
 import org.junit.Rule
 import org.junit.Test
 
@@ -17,7 +18,7 @@ internal class HeroesBottomNavigationBarTest {
     @get:Rule
     val composeTestRule = createAndroidComposeRule<ComponentActivity>()
 
-    private val items = listOf(
+    private val items = persistentListOf(
         HeroesBottomNavigationItem.Characters,
         HeroesBottomNavigationItem.Comics,
         HeroesBottomNavigationItem.Series,

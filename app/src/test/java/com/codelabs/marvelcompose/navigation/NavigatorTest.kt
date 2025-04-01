@@ -3,9 +3,6 @@ package com.codelabs.marvelcompose.navigation
 import androidx.navigation.NavHostController
 import io.mockk.every
 import io.mockk.mockk
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.toList
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -17,7 +14,7 @@ internal class NavigatorTest {
 
     @BeforeEach
     fun setUp() {
-        navController =mockk {
+        navController = mockk {
             every { previousBackStackEntry } returns mockk()
         }
         navigator = Navigator(navController)
@@ -73,24 +70,3 @@ internal class NavigatorTest {
         assertEquals(PageRoute.Home, emittedEvent)
     }
 }
-
-/**{
-val expectedOptions: (NavOptionsBuilder.() -> Unit) = {
-popUpTo(PageRoute.Splash.route) { inclusive = true }
-}
-
-navigator.fromSplashToHome()
-
-val optionsSlot = slot<NavOptionsBuilder.() -> Unit>()
-
-verify {
-mockNavController.navigate(
-PageRoute.Home.route,
-capture(optionsSlot)
-)
-}
-
-val actualOptionsBuilder = NavOptionsBuilder().apply(optionsSlot.captured)
-val expectedOptionsBuilder = NavOptionsBuilder().apply(expectedOptions)
-assertEquals(expectedOptionsBuilder.popUpToRoute, actualOptionsBuilder.popUpToRoute)
-}*/

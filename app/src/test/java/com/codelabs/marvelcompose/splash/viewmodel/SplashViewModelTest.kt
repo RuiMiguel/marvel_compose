@@ -1,6 +1,8 @@
 package com.codelabs.marvelcompose.splash.viewmodel
 
 import com.codelabs.authentication_repository.AuthenticationRepository
+import com.codelabs.authentication_repository.model.PrivateKey
+import com.codelabs.authentication_repository.model.PublicKey
 import com.codelabs.marvelcompose.helpers.TestCoroutinesRule
 import io.mockk.Runs
 import io.mockk.coEvery
@@ -26,48 +28,54 @@ class SplashViewModelTest {
 
     private lateinit var authenticationRepository: AuthenticationRepository
 
-    private lateinit var mSplashViewModel: SplashViewModel
+    private lateinit var splashViewModel: SplashViewModel
 
     @BeforeEach
     fun setUp() {
         authenticationRepository = mockk(relaxed = true)
 
-        mSplashViewModel = SplashViewModel(
+        splashViewModel = SplashViewModel(
             authenticationRepository = authenticationRepository,
             dispatcher = testCoroutinesRule.testDispatcher,
         )
     }
 
     @Test
-    fun `autoLogin emits Loading then Success when login succeeds`() = runTest {
+    fun `autoLogin emits Loading then Success when login succeeds`() = testCoroutinesRule.testScope.runTest {
         coEvery { authenticationRepository.privateKey() } returns "mockPrivateKey"
         coEvery { authenticationRepository.publicKey() } returns "mockPublicKey"
-        coEvery { authenticationRepository.login(any(), any()) } just Runs
+        coEvery {
+            authenticationRepository.login(PrivateKey("mockPrivateKey"), PublicKey("mockPublicKey"))
+        } just Runs
 
-        mSplashViewModel.autoLogin()
+        splashViewModel.autoLogin()
 
-        assertEquals(SplashState.Loading, mSplashViewModel.state.first())
+        assertEquals(SplashState.Loading, splashViewModel.state.first())
 
         advanceUntilIdle()
 
-        assertEquals(SplashState.Success, mSplashViewModel.state.first())
+        assertEquals(SplashState.Success, splashViewModel.state.first())
     }
 
     @Test
-    fun `autoLogin emits Loading then Error when login fails`() = runTest {
+    fun `autoLogin emits Loading then Error when login fails`() =  testCoroutinesRule.testScope.runTest {
         val errorMessage = "Login failed"
-        coEvery { authenticationRepository.privateKey() } throws Exception(errorMessage)
+        coEvery { authenticationRepository.privateKey() } returns "mockPrivateKey"
+        coEvery { authenticationRepository.publicKey() } returns "mockPublicKey"
+        coEvery {
+            authenticationRepository.login(PrivateKey("mockPrivateKey"), PublicKey("mockPublicKey"))
+        } throws Exception(errorMessage)
 
-        mSplashViewModel.autoLogin()
+        splashViewModel.autoLogin()
 
-        assertEquals(SplashState.Loading, mSplashViewModel.state.first())
+        assertEquals(SplashState.Loading, splashViewModel.state.first())
 
         advanceUntilIdle()
 
-        assertTrue(mSplashViewModel.state.first() is SplashState.Error)
+        assertTrue(splashViewModel.state.first() is SplashState.Error)
         assertEquals(
             errorMessage,
-            (mSplashViewModel.state.first() as SplashState.Error).message
+            (splashViewModel.state.first() as SplashState.Error).message
         )
     }
 }

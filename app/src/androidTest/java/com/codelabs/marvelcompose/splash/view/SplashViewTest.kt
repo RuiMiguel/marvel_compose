@@ -1,47 +1,61 @@
 package com.codelabs.marvelcompose.splash.view
 
 import androidx.activity.ComponentActivity
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.isDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
-import androidx.navigation.NavHostController
 import com.codelabs.marvelcompose.R
 import com.codelabs.marvelcompose.helpers.hasContentDescriptionAndRole
 import com.codelabs.marvelcompose.helpers.hasProgressBar
-import com.codelabs.marvelcompose.navigation.PageRoute
+import com.codelabs.marvelcompose.navigation.Navigator
 import com.codelabs.marvelcompose.splash.viewmodel.SplashState
 import com.codelabs.marvelcompose.splash.viewmodel.SplashViewModel
+import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.mockkStatic
 import io.mockk.verify
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 
-internal class SplashPageTest {
-
+@OptIn(ExperimentalCoroutinesApi::class)
+internal class SplashViewTest {
     @get:Rule
     val composeTestRule = createAndroidComposeRule<ComponentActivity>()
 
     private lateinit var splashViewModel: SplashViewModel
-    private lateinit var navController: NavHostController
+    private lateinit var navigator: Navigator
+    private lateinit var snackbarHostState: SnackbarHostState
 
     @Before
     fun setup() {
+        mockkStatic("androidx.compose.material3.SnackbarHostState")
+        snackbarHostState = mockk {
+            coEvery { showSnackbar(any(), any(), any()) } returns androidx.compose.material3.SnackbarResult.Dismissed
+        }
+
         splashViewModel = mockk(relaxed = true)
-        navController = mockk(relaxed = true)
+        navigator = mockk(relaxed = true)
     }
 
     @Test
-    fun splashPage_showsImage() {
+    fun splashView_showsImage() {
         every { splashViewModel.state } returns MutableStateFlow(SplashState.Loading)
 
         composeTestRule.setContent {
-            SplashPage(splashViewModel = splashViewModel)
+            SplashView(navigator = navigator, splashViewModel = splashViewModel)
         }
 
         val contentDescription = composeTestRule.activity.getString(R.string.app_name)
@@ -49,13 +63,12 @@ internal class SplashPageTest {
             .assertIsDisplayed()
     }
 
-
     @Test
-    fun splashPage_showsLoadingIndicator_whenLoadingState() {
+    fun splashView_showsLoadingIndicator_whenLoadingState() {
         every { splashViewModel.state } returns MutableStateFlow(SplashState.Loading)
 
         composeTestRule.setContent {
-            SplashPage(splashViewModel = splashViewModel)
+            SplashView(navigator = navigator, splashViewModel = splashViewModel)
         }
 
         composeTestRule.onNode(hasProgressBar())
@@ -63,7 +76,7 @@ internal class SplashPageTest {
     }
 
     @Test
-    fun splashPage_showsSnackbar_whenErrorState() = runTest {
+    fun splashView_showsSnackbar_whenErrorState() = runTest {
         val errorMessage = "Login failed"
         every { splashViewModel.state } returns MutableStateFlow(
             SplashState.Error(
@@ -72,52 +85,38 @@ internal class SplashPageTest {
         )
 
         composeTestRule.setContent {
-            SplashPage(splashViewModel = splashViewModel)
+            SplashView(navigator = navigator, splashViewModel = splashViewModel)
         }
 
-        composeTestRule.awaitIdle()
+        advanceUntilIdle()
 
         composeTestRule.onNodeWithText(errorMessage)
             .assertIsDisplayed()
     }
 
     @Test
-    @Ignore("Verification failed call to navController was not called")
-    fun splashPage_navigatesToHome_whenError() = runTest {
-        every { splashViewModel.state } returns MutableStateFlow(SplashState.Error("Login failed"))
+    @Ignore("Verification failed: call 1 of 1: Navigator(#3).fromSplashToLogin()) was not called")
+    fun splashView_navigatesToLogin_whenError() = runTest {
+        val errorMessage = "Login failed"
+        every { splashViewModel.state } returns MutableStateFlow(SplashState.Error(errorMessage))
 
         composeTestRule.setContent {
-            SplashPage(navController = navController, splashViewModel = splashViewModel)
+            SplashView(navigator = navigator, splashViewModel = splashViewModel)
         }
 
-        composeTestRule.waitUntil(timeoutMillis = 5_000) {
-            navController.currentDestination?.route == PageRoute.Home.route
-        }
+        advanceUntilIdle()
 
-        verify {
-            navController.navigate(
-                route = PageRoute.Home.route,
-                navOptions = match { it.popUpToRoute == PageRoute.Splash.route && it.isPopUpToInclusive() },
-                navigatorExtras = null
-            )
-        }
+        coVerify { navigator.fromSplashToLogin() }
     }
 
     @Test
-    @Ignore("Verification failed call to navController was not called")
-    fun splashPage_navigatesToHome_whenSuccess() {
+    fun splashView_navigatesToHome_whenSuccess() {
         every { splashViewModel.state } returns MutableStateFlow(SplashState.Success)
 
         composeTestRule.setContent {
-            SplashPage(navController = navController, splashViewModel = splashViewModel)
+            SplashView(navigator = navigator, splashViewModel = splashViewModel)
         }
 
-        verify {
-            navController.navigate(
-                route = PageRoute.Home.route,
-                navOptions = match { it.popUpToRoute == PageRoute.Splash.route && it.isPopUpToInclusive() },
-                navigatorExtras = null
-            )
-        }
+        verify { navigator.fromSplashToHome() }
     }
 }

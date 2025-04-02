@@ -28,3 +28,6 @@ class DomainThumbnail(
     val path: String,
     val extension: String
 )
+
+fun DomainThumbnail.getCharacterHomePreview() = "$path/standard_xlarge.$extension"
+fun DomainThumbnail.getHomePreviewUrl() = "$path/portrait_xlarge.$extension"

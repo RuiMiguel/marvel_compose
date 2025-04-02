@@ -33,11 +33,11 @@ class SplashViewModel @Inject constructor(
     @IODispatcher private val dispatcher: CoroutineDispatcher,
 ) : BaseViewModel(dispatcher) {
 
-    private val _state = MutableStateFlow<SplashState>(SplashState.Initial)
-    val state: StateFlow<SplashState> = _state
+    private val _state = MutableStateFlow<SplashStatus>(SplashStatus.Initial)
+    val state: StateFlow<SplashStatus> = _state
 
     fun autoLogin() {
-        _state.value = SplashState.Loading
+        _state.value = SplashStatus.Loading
 
         viewModelScope.launch(coroutineContext) {
             try {
@@ -52,9 +52,9 @@ class SplashViewModel @Inject constructor(
                     privateKey = PrivateKey(privateKey),
                     publicKey = PublicKey(publicKey)
                 )
-                _state.value = SplashState.Success
+                _state.value = SplashStatus.Success
             } catch (exception: Exception) {
-                _state.value = SplashState.Error(message = exception.message)
+                _state.value = SplashStatus.Error(message = exception.message)
             }
         }
     }
@@ -68,9 +68,9 @@ class SplashViewModel @Inject constructor(
  * such as showing a loading indicator, displaying an error message, or
  * transitioning to the next screen upon success.
  */
-sealed class SplashState {
-    data object Initial : SplashState()
-    data object Loading : SplashState()
-    data object Success : SplashState()
-    data class Error(val message: String?) : SplashState()
+sealed class SplashStatus {
+    data object Initial : SplashStatus()
+    data object Loading : SplashStatus()
+    data object Success : SplashStatus()
+    data class Error(val message: String?) : SplashStatus()
 }

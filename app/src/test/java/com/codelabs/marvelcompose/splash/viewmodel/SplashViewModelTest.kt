@@ -50,11 +50,11 @@ class SplashViewModelTest {
 
         splashViewModel.autoLogin()
 
-        assertEquals(SplashState.Loading, splashViewModel.state.first())
+        assertEquals(SplashStatus.Loading, splashViewModel.state.first())
 
         advanceUntilIdle()
 
-        assertEquals(SplashState.Success, splashViewModel.state.first())
+        assertEquals(SplashStatus.Success, splashViewModel.state.first())
     }
 
     @Test
@@ -68,14 +68,14 @@ class SplashViewModelTest {
 
         splashViewModel.autoLogin()
 
-        assertEquals(SplashState.Loading, splashViewModel.state.first())
+        assertEquals(SplashStatus.Loading, splashViewModel.state.first())
 
         advanceUntilIdle()
 
-        assertTrue(splashViewModel.state.first() is SplashState.Error)
+        assertTrue(splashViewModel.state.first() is SplashStatus.Error)
         assertEquals(
             errorMessage,
-            (splashViewModel.state.first() as SplashState.Error).message
+            (splashViewModel.state.first() as SplashStatus.Error).message
         )
     }
 }

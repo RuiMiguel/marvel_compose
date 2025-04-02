@@ -61,7 +61,7 @@ fun HomeView(navigator: Navigator? = null, sectionViewModel: SectionViewModel) {
             Surface(color = MaterialTheme.colorScheme.background) {
                 when (sectionViewModel.selectedNavigationItem) {
                     HeroesBottomNavigationItem.Characters -> CharactersPage()
-                    HeroesBottomNavigationItem.Comics -> ComicsPage()
+                    HeroesBottomNavigationItem.Comics -> ComicsPage(navigator = navigator!!)
                     HeroesBottomNavigationItem.Series -> SeriesPage()
                     HeroesBottomNavigationItem.Stories -> StoriesPage()
                 }

@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
@@ -29,7 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.codelabs.marvelcompose.R
 import com.codelabs.marvelcompose.navigation.Navigator
-import com.codelabs.marvelcompose.splash.viewmodel.SplashState
+import com.codelabs.marvelcompose.splash.viewmodel.SplashStatus
 import com.codelabs.marvelcompose.splash.viewmodel.SplashViewModel
 import com.codelabs.marvelcompose.ui.theme.Red
 import com.codelabs.marvelcompose.ui.theme.SplashTheme
@@ -57,16 +58,16 @@ fun SplashView(navigator: Navigator, splashViewModel: SplashViewModel) {
     val snackbarHostState = remember { SnackbarHostState() }
     val defaultErrorMessage = stringResource(id = R.string.auto_login_fail)
 
-    // Wee only want to execute this code once, when the authState changes.
+    // We only want to execute this code once, when the authState changes.
     LaunchedEffect(authState) {
         when (authState) {
-            SplashState.Success -> {
+            SplashStatus.Success -> {
                 navigator.fromSplashToHome()
             }
 
-            is SplashState.Error -> {
+            is SplashStatus.Error -> {
                 val errorMessage =
-                    (authState as? SplashState.Error)?.message ?: defaultErrorMessage
+                    (authState as? SplashStatus.Error)?.message ?: defaultErrorMessage
                 snackbarHostState.showSnackbar(errorMessage, duration = SnackbarDuration.Short)
                 navigator.fromSplashToLogin()
             }
@@ -108,5 +109,7 @@ fun SplashContainer(snackbarHostState: SnackbarHostState = remember { SnackbarHo
 @Preview
 @Composable
 fun SplashContainerPreview() {
-    SplashContainer()
+    MaterialTheme {
+        SplashContainer()
+    }
 }

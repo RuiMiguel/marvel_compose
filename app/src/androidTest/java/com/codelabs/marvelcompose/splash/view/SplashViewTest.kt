@@ -2,17 +2,15 @@ package com.codelabs.marvelcompose.splash.view
 
 import androidx.activity.ComponentActivity
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.SnackbarResult
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.isDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import com.codelabs.marvelcompose.R
 import com.codelabs.marvelcompose.helpers.hasContentDescriptionAndRole
 import com.codelabs.marvelcompose.helpers.hasProgressBar
 import com.codelabs.marvelcompose.navigation.Navigator
-import com.codelabs.marvelcompose.splash.viewmodel.SplashState
+import com.codelabs.marvelcompose.splash.viewmodel.SplashStatus
 import com.codelabs.marvelcompose.splash.viewmodel.SplashViewModel
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -22,7 +20,6 @@ import io.mockk.mockkStatic
 import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
@@ -52,7 +49,7 @@ internal class SplashViewTest {
 
     @Test
     fun splashView_showsImage() {
-        every { splashViewModel.state } returns MutableStateFlow(SplashState.Loading)
+        every { splashViewModel.state } returns MutableStateFlow(SplashStatus.Loading)
 
         composeTestRule.setContent {
             SplashView(navigator = navigator, splashViewModel = splashViewModel)
@@ -65,7 +62,7 @@ internal class SplashViewTest {
 
     @Test
     fun splashView_showsLoadingIndicator_whenLoadingState() {
-        every { splashViewModel.state } returns MutableStateFlow(SplashState.Loading)
+        every { splashViewModel.state } returns MutableStateFlow(SplashStatus.Loading)
 
         composeTestRule.setContent {
             SplashView(navigator = navigator, splashViewModel = splashViewModel)
@@ -79,7 +76,7 @@ internal class SplashViewTest {
     fun splashView_showsSnackbar_whenErrorState() = runTest {
         val errorMessage = "Login failed"
         every { splashViewModel.state } returns MutableStateFlow(
-            SplashState.Error(
+            SplashStatus.Error(
                 errorMessage
             )
         )
@@ -98,7 +95,7 @@ internal class SplashViewTest {
     @Ignore("Verification failed: call 1 of 1: Navigator(#3).fromSplashToLogin()) was not called")
     fun splashView_navigatesToLogin_whenError() = runTest {
         val errorMessage = "Login failed"
-        every { splashViewModel.state } returns MutableStateFlow(SplashState.Error(errorMessage))
+        every { splashViewModel.state } returns MutableStateFlow(SplashStatus.Error(errorMessage))
 
         composeTestRule.setContent {
             SplashView(navigator = navigator, splashViewModel = splashViewModel)
@@ -111,7 +108,7 @@ internal class SplashViewTest {
 
     @Test
     fun splashView_navigatesToHome_whenSuccess() {
-        every { splashViewModel.state } returns MutableStateFlow(SplashState.Success)
+        every { splashViewModel.state } returns MutableStateFlow(SplashStatus.Success)
 
         composeTestRule.setContent {
             SplashView(navigator = navigator, splashViewModel = splashViewModel)

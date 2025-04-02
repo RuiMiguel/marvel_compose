@@ -5,6 +5,7 @@ import com.codelabs.comic_repository.repository.ComicRepository
 import com.codelabs.domain.model.DomainComic
 import com.codelabs.marvelcompose.base.viewmodel.BaseViewModel
 import com.codelabs.marvelcompose.di.IODispatcher
+import com.codelabs.marvelcompose.splash.viewmodel.SplashStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,13 +22,15 @@ class ComicsViewModel @Inject constructor(
     private val _state = MutableStateFlow(ComicsState())
     val state: StateFlow<ComicsState> = _state
 
+    private val limit = 50
+
     fun loadComics() {
         _state.value = _state.value.copy(status = ComicsStatus.Loading)
 
         viewModelScope.launch(coroutineContext) {
             try {
                 val result = comicRepository.getComicsResult(
-                    limit = 50,
+                    limit = limit,
                     offset = 0,
                 )
                 _state.value = _state.value.copyWith(
@@ -39,7 +42,7 @@ class ComicsViewModel @Inject constructor(
                     legal = result.attributionText,
                 )
             } catch (exception: Exception) {
-                _state.value = _state.value.copy(status = ComicsStatus.Error)
+                _state.value = _state.value.copy(status = ComicsStatus.Error(message = exception.message))
             }
         }
     }
@@ -47,12 +50,12 @@ class ComicsViewModel @Inject constructor(
     fun loadMoreComics() {
         _state.value = _state.value.copy(status = ComicsStatus.Loading)
 
-        val offset = _state.value.offset + 50
+        val offset = _state.value.offset + limit
 
         viewModelScope.launch(coroutineContext) {
             try {
                 val result = comicRepository.getComicsResult(
-                    limit = 50,
+                    limit = limit,
                     offset = offset,
                 )
                 _state.value = _state.value.copyWith(
@@ -64,7 +67,7 @@ class ComicsViewModel @Inject constructor(
                     legal = result.attributionText,
                 )
             } catch (exception: Exception) {
-                _state.value = _state.value.copy(status = ComicsStatus.Error)
+                _state.value = _state.value.copy(status = ComicsStatus.Error(message = exception.message))
             }
         }
     }
@@ -74,7 +77,7 @@ sealed class ComicsStatus {
     data object Initial : ComicsStatus()
     data object Loading : ComicsStatus()
     data object Success : ComicsStatus()
-    data object Error : ComicsStatus()
+    data class Error(val message: String?) : ComicsStatus()
 }
 
 data class ComicsState(

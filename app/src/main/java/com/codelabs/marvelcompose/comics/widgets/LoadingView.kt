@@ -15,13 +15,14 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.codelabs.marvelcompose.R
 import kotlinx.coroutines.launch
 
 @Composable
-fun LoadingView(height: Float? = 300f) {
+fun LoadingView(height: Float = 300f) {
     val rotation = remember { Animatable(0f) }
     val coroutineScope = rememberCoroutineScope()
 
@@ -48,10 +49,10 @@ fun LoadingView(height: Float? = 300f) {
     ) {
         Image(
             painter = rememberAsyncImagePainter(R.drawable.mjolnir),
-            contentDescription = null,
+            contentDescription = stringResource(R.string.loading),
             modifier = Modifier
                 .rotate(rotation.value)
-                .height(height?.dp ?: 300.dp)
+                .height(height.dp)
         )
     }
 }

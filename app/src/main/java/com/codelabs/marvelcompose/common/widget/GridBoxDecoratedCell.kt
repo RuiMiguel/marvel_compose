@@ -1,4 +1,4 @@
-package com.codelabs.marvelcompose.comics.widgets
+package com.codelabs.marvelcompose.common.widget
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
@@ -23,7 +23,7 @@ fun GridBoxDecoratedCell(
 
     Box(
         modifier = Modifier
-            .aspectRatio(3f/4f)
+            .aspectRatio(3f / 4f)
             .drawBehind {
                 val borderWidth = 1.5f
 

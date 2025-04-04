@@ -1,4 +1,4 @@
-package com.codelabs.marvelcompose.comics.widgets
+package com.codelabs.marvelcompose.common.widget
 
 import android.view.animation.LinearInterpolator
 import androidx.compose.animation.core.Animatable

@@ -1,6 +1,6 @@
-package com.codelabs.marvelcompose.base.ui
+package com.codelabs.marvelcompose.common.widget
 
-import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
@@ -8,8 +8,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshotFlow
 
 @Composable
-fun InfiniteListHandler(listSize: Int,
-    listState: LazyListState,
+fun InfiniteGridHandler(listSize: Int,
+    gridState: LazyGridState,
     onLoadMore: () -> Unit) {
     val lastItemVisible = remember { mutableStateOf(false) }
 
@@ -21,8 +21,8 @@ fun InfiniteListHandler(listSize: Int,
         onLoadMore()
     }
 
-    LaunchedEffect(listState) {
-        snapshotFlow { listState.layoutInfo }
+    LaunchedEffect(gridState) {
+        snapshotFlow { gridState.layoutInfo }
             .collect { layoutInfo ->
                 val lastVisibleItem = layoutInfo.visibleItemsInfo.lastOrNull()
                 if (

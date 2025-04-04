@@ -18,6 +18,7 @@ import com.codelabs.domain.model.DomainPrice
 import com.codelabs.domain.model.DomainThumbnail
 import com.codelabs.domain.model.DomainUrl
 import com.codelabs.marvelcompose.base.ui.DarkLightPreviews
+import com.codelabs.marvelcompose.common.widget.GridBoxDecoratedCell
 
 @Composable
 fun ComicsViewContent(

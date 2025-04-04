@@ -7,8 +7,8 @@ import androidx.compose.ui.platform.LocalConfiguration
 import com.codelabs.domain.model.DomainCharacter
 import com.codelabs.domain.model.DomainThumbnail
 import com.codelabs.domain.model.DomainUrl
-import com.codelabs.marvelcompose.base.ui.InfiniteGridHandler
-import com.codelabs.marvelcompose.base.ui.InfiniteListHandler
+import com.codelabs.marvelcompose.common.widget.InfiniteGridHandler
+import com.codelabs.marvelcompose.common.widget.InfiniteListHandler
 import com.codelabs.marvelcompose.base.ui.LandscapePortraitPreviews
 
 @Composable

@@ -6,7 +6,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -17,8 +19,13 @@ import com.codelabs.marvelcompose.base.ui.DarkLightPreviews
 import com.codelabs.marvelcompose.ui.theme.Red
 
 @Composable
-fun CharactersListView(characters: List<DomainCharacter>, onCharacterClick: (DomainCharacter) -> Unit = {}) {
+fun CharactersListView(
+    characters: List<DomainCharacter>,
+    listState: LazyListState,
+    onCharacterClick: (DomainCharacter) -> Unit = {}
+) {
     LazyColumn(
+        state = listState,
         modifier = Modifier.fillMaxSize()
     ) {
         itemsIndexed(characters) { index, character ->
@@ -51,6 +58,6 @@ fun CharactersListViewPreview() {
         )
     }
 
-    CharactersListView(characters = characters) {}
+    CharactersListView(characters = characters, listState = rememberLazyListState()) {}
 }
 

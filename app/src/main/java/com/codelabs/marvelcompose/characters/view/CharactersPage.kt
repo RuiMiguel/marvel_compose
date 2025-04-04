@@ -3,6 +3,7 @@ package com.codelabs.marvelcompose.characters.view
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
@@ -18,12 +19,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.codelabs.domain.model.DomainCharacter
 import com.codelabs.marvelcompose.R
 import com.codelabs.marvelcompose.base.ui.DarkLightPreviews
+import com.codelabs.marvelcompose.base.ui.InfiniteListHandler
 import com.codelabs.marvelcompose.base.ui.InfoView
 import com.codelabs.marvelcompose.characters.viewmodel.CharactersState
 import com.codelabs.marvelcompose.characters.viewmodel.CharactersStatus
 import com.codelabs.marvelcompose.characters.viewmodel.CharactersViewModel
 import com.codelabs.marvelcompose.characters.widgets.CharactersViewContent
-import com.codelabs.marvelcompose.comics.widgets.InfiniteListHandler
 import com.codelabs.marvelcompose.comics.widgets.LoadingView
 import com.codelabs.marvelcompose.navigation.Navigator
 
@@ -83,12 +84,13 @@ fun CharactersContainer(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Box(modifier = Modifier.weight(1f)) {
-            CharactersViewContent(characters = charactersState.characters, onCharacterClick = onCharacterClick)
+            CharactersViewContent(
+                characters = charactersState.characters,
+                onCharacterClick = onCharacterClick,
+                onLoadMore = onLoadMore
+            )
             if (charactersState.status == CharactersStatus.Loading) {
                 LoadingView()
-            }
-            if (charactersState.status == CharactersStatus.Success) {
-                InfiniteListHandler(charactersState.characters.size, onLoadMore)
             }
         }
 

@@ -1,8 +1,10 @@
 package com.codelabs.marvelcompose.comics.widgets
 
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableIntStateOf
@@ -10,17 +12,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.codelabs.domain.model.DomainCharacter
 import com.codelabs.domain.model.DomainComic
 import com.codelabs.domain.model.DomainComicImage
 import com.codelabs.domain.model.DomainPrice
 import com.codelabs.domain.model.DomainThumbnail
 import com.codelabs.domain.model.DomainUrl
 import com.codelabs.marvelcompose.base.ui.DarkLightPreviews
-import com.codelabs.marvelcompose.characters.widgets.CharactersGridView
 
 @Composable
-fun ComicsViewContent(comics: List<DomainComic>, onComicClick: (DomainComic) -> Unit = {}) {
+fun ComicsViewContent(
+    comics: List<DomainComic>,
+    gridState: LazyGridState,
+    onComicClick: (DomainComic) -> Unit = {}) {
     val screenWidth = LocalContext.current.resources.displayMetrics.widthPixels.dp
     val crossAxisCount = remember { mutableIntStateOf(2) }
 
@@ -35,6 +38,7 @@ fun ComicsViewContent(comics: List<DomainComic>, onComicClick: (DomainComic) -> 
     }
 
     LazyVerticalGrid(
+        state = gridState,
         columns = GridCells.Fixed(crossAxisCount.intValue),
     ) {
         itemsIndexed(comics) { index, comic ->
@@ -45,12 +49,11 @@ fun ComicsViewContent(comics: List<DomainComic>, onComicClick: (DomainComic) -> 
     }
 }
 
-
 @DarkLightPreviews
 @Preview(widthDp = 2500, heightDp = 1000, name = "Large screen")
 @Preview(widthDp = 1920, heightDp = 1000, name = "Medium screen")
-@Preview(widthDp = 800, heightDp = 1000 , name = "Small screen")
-@Preview(widthDp = 640, heightDp = 1000 , name = "Extra small screen")
+@Preview(widthDp = 800, heightDp = 1000, name = "Small screen")
+@Preview(widthDp = 640, heightDp = 1000, name = "Extra small screen")
 @Composable
 fun ComicsViewContentPreview() {
     val comics = List(20) { index ->
@@ -83,6 +86,6 @@ fun ComicsViewContentPreview() {
         )
     }
 
-    ComicsViewContent(comics = comics) {}
+    ComicsViewContent(comics = comics, gridState = rememberLazyGridState()) {}
 }
 

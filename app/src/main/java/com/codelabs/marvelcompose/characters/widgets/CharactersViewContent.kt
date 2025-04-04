@@ -1,22 +1,43 @@
 package com.codelabs.marvelcompose.characters.widgets
 
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalConfiguration
 import com.codelabs.domain.model.DomainCharacter
 import com.codelabs.domain.model.DomainThumbnail
 import com.codelabs.domain.model.DomainUrl
-import com.codelabs.marvelcompose.base.ui.DarkLightPreviews
+import com.codelabs.marvelcompose.base.ui.InfiniteGridHandler
+import com.codelabs.marvelcompose.base.ui.InfiniteListHandler
 import com.codelabs.marvelcompose.base.ui.LandscapePortraitPreviews
 
 @Composable
-fun CharactersViewContent(characters: List<DomainCharacter>, onCharacterClick: (DomainCharacter) -> Unit = {}) {
+fun CharactersViewContent(
+    characters: List<DomainCharacter>,
+    onCharacterClick: (DomainCharacter) -> Unit = {},
+    onLoadMore: () -> Unit = {},
+) {
     val configuration = LocalConfiguration.current
     val isLandscape = configuration.orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE
 
     if (isLandscape) {
-        CharactersGridView(characters = characters)
+        val gridState = rememberLazyGridState()
+        InfiniteGridHandler(
+            listSize = characters.size,
+            gridState = gridState,
+            onLoadMore = onLoadMore
+        )
+
+        CharactersGridView(characters = characters, gridState = gridState)
     } else {
-        CharactersListView(characters = characters)
+        val listState = rememberLazyListState()
+        InfiniteListHandler(
+            listSize = characters.size,
+            listState = listState,
+            onLoadMore = onLoadMore
+        )
+
+        CharactersListView(characters = characters, listState = listState)
     }
 }
 

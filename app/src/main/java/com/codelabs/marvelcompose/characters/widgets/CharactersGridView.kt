@@ -1,14 +1,14 @@
 package com.codelabs.marvelcompose.characters.widgets
 
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -19,7 +19,11 @@ import com.codelabs.marvelcompose.base.ui.DarkLightPreviews
 import com.codelabs.marvelcompose.comics.widgets.GridBoxDecoratedCell
 
 @Composable
-fun CharactersGridView(characters: List<DomainCharacter>, onCharacterClick: (DomainCharacter) -> Unit = {}) {
+fun CharactersGridView(
+    characters: List<DomainCharacter>,
+    gridState: LazyGridState,
+    onCharacterClick: (DomainCharacter) -> Unit = {}
+) {
     val screenWidth = LocalContext.current.resources.displayMetrics.widthPixels.dp
     val crossAxisCount = remember { mutableIntStateOf(2) }
 
@@ -34,11 +38,12 @@ fun CharactersGridView(characters: List<DomainCharacter>, onCharacterClick: (Dom
     }
 
     LazyVerticalGrid(
+        state = gridState,
         columns = GridCells.Fixed(crossAxisCount.intValue),
     ) {
         itemsIndexed(characters) { index, character ->
             GridBoxDecoratedCell(index = index, gridViewCrossAxisCount = crossAxisCount.intValue) {
-                CharacterElement(character = character, onCharacterClick = onCharacterClick,)
+                CharacterElement(character = character, onCharacterClick = onCharacterClick)
             }
         }
     }
@@ -47,8 +52,8 @@ fun CharactersGridView(characters: List<DomainCharacter>, onCharacterClick: (Dom
 @DarkLightPreviews
 @Preview(widthDp = 2500, heightDp = 1000, name = "Large screen")
 @Preview(widthDp = 1920, heightDp = 1000, name = "Medium screen")
-@Preview(widthDp = 800, heightDp = 1000 , name = "Small screen")
-@Preview(widthDp = 640, heightDp = 1000 , name = "Extra small screen")
+@Preview(widthDp = 800, heightDp = 1000, name = "Small screen")
+@Preview(widthDp = 640, heightDp = 1000, name = "Extra small screen")
 @Composable
 fun CharactersGridViewPreview() {
     val characters = List(20) { index ->
@@ -63,5 +68,5 @@ fun CharactersGridViewPreview() {
         )
     }
 
-    CharactersGridView(characters = characters) {}
+    CharactersGridView(characters = characters, gridState = rememberLazyGridState()) {}
 }

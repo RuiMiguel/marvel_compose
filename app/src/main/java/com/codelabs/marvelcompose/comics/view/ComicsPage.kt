@@ -3,6 +3,7 @@ package com.codelabs.marvelcompose.comics.view
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
@@ -18,12 +19,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.codelabs.domain.model.DomainComic
 import com.codelabs.marvelcompose.R
 import com.codelabs.marvelcompose.base.ui.DarkLightPreviews
+import com.codelabs.marvelcompose.base.ui.InfiniteGridHandler
+import com.codelabs.marvelcompose.base.ui.InfoView
 import com.codelabs.marvelcompose.comics.viewmodel.ComicsState
 import com.codelabs.marvelcompose.comics.viewmodel.ComicsStatus
 import com.codelabs.marvelcompose.comics.viewmodel.ComicsViewModel
 import com.codelabs.marvelcompose.comics.widgets.ComicsViewContent
-import com.codelabs.marvelcompose.comics.widgets.InfiniteListHandler
-import com.codelabs.marvelcompose.base.ui.InfoView
 import com.codelabs.marvelcompose.comics.widgets.LoadingView
 import com.codelabs.marvelcompose.navigation.Navigator
 
@@ -32,7 +33,6 @@ fun ComicsPage(
     navigator: Navigator,
     comicsViewModel: ComicsViewModel = hiltViewModel(),
 ) {
-
 
     ComicsView(navigator = navigator, comicsViewModel = comicsViewModel)
 }
@@ -75,21 +75,30 @@ fun ComicsContainer(
     onLoadMore: () -> Unit = {},
     onComicClick: (DomainComic) -> Unit = {},
 ) {
+    val gridState = rememberLazyGridState()
+
     val legal = remember { comicsState.legal }
     val count = remember { comicsState.count }
     val total = remember { comicsState.total }
+
+    InfiniteGridHandler(
+        listSize = comicsState.comics.size,
+        gridState = gridState,
+        onLoadMore = onLoadMore
+    )
 
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Box(modifier = Modifier.weight(1f)) {
-            ComicsViewContent(comics = comicsState.comics, onComicClick = onComicClick)
+            ComicsViewContent(
+                comics = comicsState.comics,
+                gridState = gridState,
+                onComicClick = onComicClick
+            )
             if (comicsState.status == ComicsStatus.Loading) {
                 LoadingView()
-            }
-            if(comicsState.status == ComicsStatus.Success) {
-                InfiniteListHandler(comicsState.comics.size, onLoadMore)
             }
         }
 

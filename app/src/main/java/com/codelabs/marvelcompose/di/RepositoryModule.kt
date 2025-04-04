@@ -1,7 +1,9 @@
 package com.codelabs.marvelcompose.di
 
+import com.codelabs.api_client.service.CharacterService
 import com.codelabs.api_client.service.ComicService
 import com.codelabs.authentication_repository.AuthenticationRepository
+import com.codelabs.character_repository.repository.CharacterRepository
 import com.codelabs.comic_repository.repository.ComicRepository
 import com.codelabs.secure_storage.SecureStorage
 import dagger.Module
@@ -21,6 +23,14 @@ object RepositoryModule {
         comicService: ComicService
     ): ComicRepository {
         return ComicRepository(comicService = comicService)
+    }
+
+    @Provides
+    @ViewModelScoped
+    fun provideCharacterRepository(
+        characterService: CharacterService
+    ): CharacterRepository {
+        return CharacterRepository(characterService = characterService)
     }
 }
 

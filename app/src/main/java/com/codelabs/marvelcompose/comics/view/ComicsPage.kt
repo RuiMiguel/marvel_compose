@@ -3,7 +3,6 @@ package com.codelabs.marvelcompose.comics.view
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
@@ -24,7 +23,7 @@ import com.codelabs.marvelcompose.comics.viewmodel.ComicsStatus
 import com.codelabs.marvelcompose.comics.viewmodel.ComicsViewModel
 import com.codelabs.marvelcompose.comics.widgets.ComicsViewContent
 import com.codelabs.marvelcompose.comics.widgets.InfiniteListHandler
-import com.codelabs.marvelcompose.comics.widgets.InfoView
+import com.codelabs.marvelcompose.base.ui.InfoView
 import com.codelabs.marvelcompose.comics.widgets.LoadingView
 import com.codelabs.marvelcompose.navigation.Navigator
 

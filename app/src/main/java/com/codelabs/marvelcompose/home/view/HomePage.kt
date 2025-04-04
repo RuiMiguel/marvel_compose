@@ -60,7 +60,7 @@ fun HomeView(navigator: Navigator? = null, sectionViewModel: SectionViewModel) {
         Box(modifier = Modifier.padding(innerPadding)) {
             Surface(color = MaterialTheme.colorScheme.background) {
                 when (sectionViewModel.selectedNavigationItem) {
-                    HeroesBottomNavigationItem.Characters -> CharactersPage()
+                    HeroesBottomNavigationItem.Characters -> CharactersPage(navigator = navigator!!)
                     HeroesBottomNavigationItem.Comics -> ComicsPage(navigator = navigator!!)
                     HeroesBottomNavigationItem.Series -> SeriesPage()
                     HeroesBottomNavigationItem.Stories -> StoriesPage()

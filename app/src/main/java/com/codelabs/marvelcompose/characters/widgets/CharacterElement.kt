@@ -1,4 +1,4 @@
-package com.codelabs.marvelcompose.comics.widgets
+package com.codelabs.marvelcompose.characters.widgets
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -18,28 +18,28 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.codelabs.domain.model.DomainComic
-import com.codelabs.domain.model.DomainComicImage
-import com.codelabs.domain.model.DomainPrice
+import com.codelabs.domain.model.DomainCharacter
 import com.codelabs.domain.model.DomainThumbnail
 import com.codelabs.domain.model.DomainUrl
-import com.codelabs.domain.model.getComicHomePreview
+import com.codelabs.domain.model.getCharacterHomePreview
 import com.codelabs.marvelcompose.R
 import com.codelabs.marvelcompose.base.ui.DarkLightPreviews
 import com.codelabs.marvelcompose.ui.theme.Blue
 
 @Composable
-fun ComicElement(comic: DomainComic, onComicClick: (DomainComic) -> Unit) {
-    Surface(modifier = Modifier.clickable { onComicClick(comic) }) {
+fun CharacterElement(character: DomainCharacter,
+    onCharacterClick: (DomainCharacter) -> Unit,
+    modifier: Modifier = Modifier) {
+    Surface(modifier = modifier.clickable { onCharacterClick(character) }) {
         Column {
             Box(modifier = Modifier.fillMaxWidth()) {
                 Box(modifier = Modifier.fillMaxSize()) {
                     AsyncImage(
                         modifier = Modifier.fillMaxSize(),
-                        model = comic.thumbnail.getComicHomePreview(),
+                        model = character.thumbnail.getCharacterHomePreview(),
                         placeholder = painterResource(R.drawable.placeholder),
-                        contentScale = ContentScale.FillBounds,
-                        contentDescription = comic.title,
+                        contentScale = ContentScale.Crop,
+                        contentDescription = character.name,
                     )
                     Box(
                         modifier = Modifier
@@ -51,7 +51,7 @@ fun ComicElement(comic: DomainComic, onComicClick: (DomainComic) -> Unit) {
                             modifier = Modifier
                                 .padding(5.dp)
                                 .align(Alignment.Center),
-                            text = comic.title,
+                            text = character.name,
                             style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold),
                         )
                     }
@@ -63,33 +63,15 @@ fun ComicElement(comic: DomainComic, onComicClick: (DomainComic) -> Unit) {
 
 @DarkLightPreviews
 @Composable
-fun ComicElementPreview() {
-    val comic = DomainComic(
+fun CharacterElementPreview() {
+    val character = DomainCharacter(
         id = 1,
-        title = "Avengers #1",
-        description = "Description",
-        modified = "2023-01-01",
-        issueNumber = 1.0,
-        variantDescription = "First Issue",
-        digitalId = 1,
-        format = "Comic",
-        pageCount = 1,
-        isbn = "123456789",
-        upc = "789456123",
-        diamondCode = "DIAMOND123",
-        ean = "EAN12345",
-        issn = "ISSN6789",
-        textObjects = emptyList(),
-        resourceURI = "http://example.com/comic",
-        urls = listOf(DomainUrl(type = "detail", url = "http://example.com/comic")),
-        prices = listOf(DomainPrice(type = "$", price = "9.99")),
-        thumbnail = DomainThumbnail(path = "http://example.com/comic/image", extension = "jpg"),
-        images = listOf(
-            DomainComicImage(
-                path = "http://example.com/comic/extra",
-                extension = "jpg"
-            )
-        ),
+        name = "Thor",
+        description = "The son of Odin",
+        modified = "2024-01-01T00:00:00Z",
+        resourceURI = "http://example.com",
+        urls = listOf(DomainUrl("detail", "http://example.com/detail")),
+        thumbnail = DomainThumbnail("http://example.com/image", "jpg")
     )
-    ComicElement(comic = comic) {}
+    CharacterElement(character = character, onCharacterClick = {})
 }

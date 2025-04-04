@@ -30,4 +30,4 @@ class DomainThumbnail(
 )
 
 fun DomainThumbnail.getCharacterHomePreview() = "$path/standard_xlarge.$extension"
-fun DomainThumbnail.getHomePreviewUrl() = "$path/portrait_xlarge.$extension"
+fun DomainThumbnail.getComicHomePreview() = "$path/portrait_xlarge.$extension"

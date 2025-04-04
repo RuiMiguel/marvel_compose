@@ -8,8 +8,16 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.codelabs.domain.model.DomainCharacter
 import com.codelabs.domain.model.DomainComic
+import com.codelabs.domain.model.DomainComicImage
+import com.codelabs.domain.model.DomainPrice
+import com.codelabs.domain.model.DomainThumbnail
+import com.codelabs.domain.model.DomainUrl
+import com.codelabs.marvelcompose.base.ui.DarkLightPreviews
+import com.codelabs.marvelcompose.characters.widgets.CharactersGridView
 
 @Composable
 fun ComicsViewContent(comics: List<DomainComic>, onComicClick: (DomainComic) -> Unit = {}) {
@@ -36,3 +44,45 @@ fun ComicsViewContent(comics: List<DomainComic>, onComicClick: (DomainComic) -> 
         }
     }
 }
+
+
+@DarkLightPreviews
+@Preview(widthDp = 2500, heightDp = 1000, name = "Large screen")
+@Preview(widthDp = 1920, heightDp = 1000, name = "Medium screen")
+@Preview(widthDp = 800, heightDp = 1000 , name = "Small screen")
+@Preview(widthDp = 640, heightDp = 1000 , name = "Extra small screen")
+@Composable
+fun ComicsViewContentPreview() {
+    val comics = List(20) { index ->
+        DomainComic(
+            id = index,
+            title = "Avengers #$index",
+            description = "Description",
+            modified = "2023-01-01",
+            issueNumber = 1.0,
+            variantDescription = "First Issue",
+            digitalId = index,
+            format = "Comic",
+            pageCount = 1,
+            isbn = "123456789",
+            upc = "789456123",
+            diamondCode = "DIAMOND123",
+            ean = "EAN12345",
+            issn = "ISSN6789",
+            textObjects = emptyList(),
+            resourceURI = "http://example.com/comic",
+            urls = listOf(DomainUrl(type = "detail", url = "http://example.com/comic")),
+            prices = listOf(DomainPrice(type = "$", price = "9.99")),
+            thumbnail = DomainThumbnail(path = "http://example.com/comic/image", extension = "jpg"),
+            images = listOf(
+                DomainComicImage(
+                    path = "http://example.com/comic/extra",
+                    extension = "jpg"
+                )
+            ),
+        )
+    }
+
+    ComicsViewContent(comics = comics) {}
+}
+

@@ -75,9 +75,9 @@ fun CharactersContainer(
     onLoadMore: () -> Unit = {},
     onCharacterClick: (DomainCharacter) -> Unit = {},
 ) {
-    val legal = remember { charactersState.legal }
-    val count = remember { charactersState.count }
-    val total = remember { charactersState.total }
+    val legal = charactersState.legal
+    val count = charactersState.count
+    val total = charactersState.total
 
     Column(
         modifier = Modifier.fillMaxSize(),

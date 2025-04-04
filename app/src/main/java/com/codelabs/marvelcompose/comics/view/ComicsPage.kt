@@ -77,9 +77,9 @@ fun ComicsContainer(
 ) {
     val gridState = rememberLazyGridState()
 
-    val legal = remember { comicsState.legal }
-    val count = remember { comicsState.count }
-    val total = remember { comicsState.total }
+    val legal = comicsState.legal
+    val count = comicsState.count
+    val total = comicsState.total
 
     InfiniteGridHandler(
         listSize = comicsState.comics.size,

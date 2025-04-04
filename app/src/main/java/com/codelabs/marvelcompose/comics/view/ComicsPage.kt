@@ -19,12 +19,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.codelabs.domain.model.DomainComic
 import com.codelabs.marvelcompose.R
 import com.codelabs.marvelcompose.base.ui.DarkLightPreviews
-import com.codelabs.marvelcompose.common.widget.InfiniteGridHandler
-import com.codelabs.marvelcompose.common.widget.InfoView
 import com.codelabs.marvelcompose.comics.viewmodel.ComicsState
 import com.codelabs.marvelcompose.comics.viewmodel.ComicsStatus
 import com.codelabs.marvelcompose.comics.viewmodel.ComicsViewModel
 import com.codelabs.marvelcompose.comics.widgets.ComicsViewContent
+import com.codelabs.marvelcompose.common.widget.InfiniteGridHandler
+import com.codelabs.marvelcompose.common.widget.InfoView
 import com.codelabs.marvelcompose.common.widget.LoadingView
 import com.codelabs.marvelcompose.navigation.Navigator
 
@@ -43,7 +43,8 @@ fun ComicsView(navigator: Navigator, comicsViewModel: ComicsViewModel) {
     val comicsState by comicsViewModel.state.collectAsState()
 
     LaunchedEffect(Unit) {
-        comicsViewModel.loadComics()
+        if (comicsState.total == 0)
+            comicsViewModel.loadComics()
     }
 
     val snackbarHostState = remember { SnackbarHostState() }

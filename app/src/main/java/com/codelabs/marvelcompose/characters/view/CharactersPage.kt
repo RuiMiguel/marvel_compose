@@ -18,11 +18,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.codelabs.domain.model.DomainCharacter
 import com.codelabs.marvelcompose.R
 import com.codelabs.marvelcompose.base.ui.DarkLightPreviews
-import com.codelabs.marvelcompose.common.widget.InfoView
 import com.codelabs.marvelcompose.characters.viewmodel.CharactersState
 import com.codelabs.marvelcompose.characters.viewmodel.CharactersStatus
 import com.codelabs.marvelcompose.characters.viewmodel.CharactersViewModel
 import com.codelabs.marvelcompose.characters.widgets.CharactersViewContent
+import com.codelabs.marvelcompose.common.widget.InfoView
 import com.codelabs.marvelcompose.common.widget.LoadingView
 import com.codelabs.marvelcompose.navigation.Navigator
 
@@ -41,7 +41,8 @@ fun CharactersView(navigator: Navigator, charactersViewModel: CharactersViewMode
     val charactersState by charactersViewModel.state.collectAsState()
 
     LaunchedEffect(Unit) {
-        charactersViewModel.loadCharacters()
+        if (charactersState.total == 0)
+            charactersViewModel.loadCharacters()
     }
 
     val snackbarHostState = remember { SnackbarHostState() }
